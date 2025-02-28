@@ -27,6 +27,8 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"@hackclub/icons": "^0.0.15"
+		"@hackclub/icons": "^0.0.15",
+		"@prisma/client": "^6.4.1",
+		"prisma": "^6.4.1"
 	}
 }

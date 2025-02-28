@@ -6,7 +6,7 @@
             </a>
             <div class="flex items-center lg:order-2">
                 <a style="font-family: Phantom Sans;" href="#" class="text-red-500 hover:bg-red-100 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 mr-2 font-semibold ">about</a>
-                <a style="font-family: Phantom Sans;" href="#" class="text-white bg-red-400 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 mr-2 hover:bg-red-600">sign in with slack</a>
+                <a style="font-family: Phantom Sans;" href="/api/oauth/slack/login" class="text-white bg-red-400 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 mr-2 hover:bg-red-600">sign in with slack</a>
           
             </div>
         </div>
