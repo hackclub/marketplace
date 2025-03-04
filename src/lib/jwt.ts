@@ -1,4 +1,3 @@
-
 export function parseJwt(slackIdToken: string) {
     const base64Url = slackIdToken.split('.')[1]
     if (!base64Url) {
