@@ -1,3 +1,8 @@
+<script>
+      import CardList from "./CardList.svelte";
+      import data from "./data.json"
+</script>
+
 <header>
     <nav class="border-gray-200 px-4 lg:px-6 py-5">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
@@ -24,6 +29,7 @@
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
     <!-- featured projects -->
     <span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">featured projects:</span>
-
 </div>
-
+<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+<CardList items={data} />
+</div>
