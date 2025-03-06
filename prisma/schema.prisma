@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  slackId String @id
-
-  token   String
+  slackId     String @id
+  airtable_id String
+  token       String
 }
