@@ -36,15 +36,28 @@ let ok_to_redirect = false
     //     return json({ error: "Not hackclub" }, { status: 401 });
     // }
       console.log(jwt)
- 
-    const sessionId = crypto.randomUUID().toString()
-    // create db entry here
-    prisma.user.create({
-        token: sessionId,
-        slackId: jwt["https://slack.com/user_id"]
+    // check if user has a session 
+    const userData = await prisma.user.findFirst({
+      where: {
+        slackId: jwt["https://slack.com/user_id"] || jwt.sub
+      }
     })
-    req.cookies.set("session", sessionId, { path: "/"})
-    ok_to_redirect = true;
+    if (userData) {
+      req.cookies.set("session", userData.token, { path: "/" })
+      ok_to_redirect = true;
+    }
+    else {
+      const sessionId = crypto.randomUUID().toString()
+      // create db entry here
+      await prisma.user.create({
+        data: {
+          token: sessionId,
+          slackId: jwt["https://slack.com/user_id"] || jwt.sub
+        }
+      })
+      req.cookies.set("session", sessionId, { path: "/" })
+      ok_to_redirect = true;
+    }
 } catch (e) {
     console.error(e)
     return new Response(JSON.stringify({ message: `Oops. ${e.message}`}))

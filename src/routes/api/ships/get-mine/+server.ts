@@ -21,14 +21,18 @@ export async function GET(req: Request) {
     }
     
     // query stuff
-    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
+    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`FIND("${sessionData.slackId}", ARRAYJOIN(users, ","))`)}`, {
         headers: {
             Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
         }
-    }).then(r=>r.json()).then(dd => dd.records.map((d) => ({
-        name: d.fields.Name,
-        status: d.fields.Status
-    })).filter(d => d.name))
+    }).then(r => r.json()).then(dd => {
+        console.log(dd.records[0])
+        return dd.records.map((d) => ({
+            name: d.fields.Name,
+            status: d.fields.Status,
+            id: d.id
+        })).filter(d => d.name)
+    })
     return new Response(JSON.stringify(data), {
         headers: {
             "Content-Type": "application/json"
