@@ -4,7 +4,7 @@ import { parseJwt } from "$lib/jwt";
 import { json, redirect } from "@sveltejs/kit";
 import prisma from "$lib/prisma"
 export async function GET(req) {
-    if(req.cookies.get("session")) throw redirect("/ships")
+    if(req.cookies.get("session")) throw redirect(302, "/ships")
     const code = req.url.searchParams.get("code")
 
     // exchange code 
@@ -43,7 +43,7 @@ let ok_to_redirect = false
       }
     })
     if (userData) {
-      req.cookies.set("session", userData.token, { path: "/" })
+      req.cookies.set("session", userData.token, {  path: "/", httpOnly: false  })
       ok_to_redirect = true;
     }
     else {
@@ -55,7 +55,7 @@ let ok_to_redirect = false
           slackId: jwt["https://slack.com/user_id"] || jwt.sub
         }
       })
-      req.cookies.set("session", sessionId, { path: "/" })
+      req.cookies.set("session", sessionId, { path: "/", httpOnly: false  })
       ok_to_redirect = true;
     }
 } catch (e) {

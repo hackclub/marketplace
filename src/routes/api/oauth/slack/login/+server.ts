@@ -2,7 +2,7 @@ import { PUBLIC_SLACK_CLIENT_ID, PUBLIC_REDIRECT_URL } from "$env/static/public"
 import { redirect } from "@sveltejs/kit";
 
 export function GET(req) {
-    if(req.cookies.get("session")) throw redirect("/ships")
+    if(req.cookies.get("session")) throw redirect(302, "/ships")
     console.log("slack login")
 
     // const url: URL = req.url;

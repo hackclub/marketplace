@@ -2,7 +2,7 @@ import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY } from "$env/static/
 import prisma from "$lib/prisma";
 
 export async function GET(req: Request) {
-    // check for session here -- TODO
+    // check for session here
     const session = req.cookies.get("session")
     if (!session) {
         return new Response(JSON.stringify({ message: "No session" }), {
