@@ -30,7 +30,12 @@ export async function GET(req: Request) {
         return dd.records.map((d) => ({
             name: d.fields.Name,
             status: d.fields.Status,
-            id: d.id
+            id: d.id,
+            assignee: d.Assignee ? d.Assignee.name : null,
+            reviewer_feedback: d.reviewer_feedback,
+            featured: d.featured || false,
+            notes_for_reviewer: d.notes_for_reviewer,
+            description: d.description,
         })).filter(d => d.name)
     })
     return new Response(JSON.stringify(data), {

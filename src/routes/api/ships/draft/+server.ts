@@ -52,5 +52,5 @@ export async function POST(req: Request) {
         })
     }).then(r => r.json())
     console.log(reqq)
-    return new Response("what")
+    return new Response("OK CREATED", { status: 201 })
 }
