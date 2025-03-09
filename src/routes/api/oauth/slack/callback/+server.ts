@@ -1,5 +1,5 @@
 import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from "$env/static/public"
-import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_SLACK_CLIENT_SECRET } from "$env/static/private";
+import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_SLACK_BOT_TOKEN, PRIVATE_SLACK_CLIENT_SECRET } from "$env/static/private";
 import { parseJwt } from "$lib/jwt";
 import { json, redirect } from "@sveltejs/kit";
 import prisma from "$lib/prisma"
@@ -28,7 +28,7 @@ let ok_to_redirect = false
     const rjson = await exchangeResponse.json()
     console.log(rjson)
     if (rjson.error) {
-        return json({ error: rjson.error }, { status: 500 });
+        return json({ error: rjson.error  }, { status: 500 });
     }
       // jwt
     const jwt = parseJwt(rjson.id_token)
@@ -48,9 +48,17 @@ let ok_to_redirect = false
     }
     else {
       const sessionId = crypto.randomUUID().toString()
+      // get slack user name
+      const data = await fetch(`https://slack.com/api/users.info?user=${jwt["https://slack.com/user_id"] || jwt.sub}`, {
+        headers: {
+          Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`
+        }
+      }).then(r => r.json())
+  console.log(data)      
       const structuredBody = {
         slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
-        session_token: sessionId
+        session_token: sessionId,
+        slack_name: data.user.real_name,
           }
           const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users`, {
               method: "POST",
