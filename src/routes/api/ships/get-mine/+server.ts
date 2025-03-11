@@ -28,15 +28,16 @@ export async function GET(req: Request) {
     }).then(r => r.json()).then(dd => {
         console.log(dd.records[0])
         return dd.records.map((d) => ({
-            name: d.fields.Name,
+            title: d.fields.Name,
             status: d.fields.Status,
+            coverLink: d.fields.cover_image,
             id: d.id,
-            assignee: d.Assignee ? d.Assignee.name : null,
-            reviewer_feedback: d.reviewer_feedback,
-            featured: d.featured || false,
-            notes_for_reviewer: d.notes_for_reviewer,
-            description: d.description,
-        })).filter(d => d.name)
+            assignee: d.fields.Assignee ? d.fields.Assignee.name : null,
+            reviewer_feedback: d.fields.reviewer_feedback,
+            featured: d.fields.featured || false,
+            notes_for_reviewer: d.fields.notes_for_reviewer,
+            description: d.fields.description,
+        })).filter(d => d.title)
     })
     return new Response(JSON.stringify(data), {
         headers: {
