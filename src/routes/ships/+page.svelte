@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
+	import { PUBLIC_DEBUG } from '$env/static/public';
 	// Initialize data as an empty array (ensures reactivity)
 	let data: any[] = [];
 
@@ -27,7 +27,10 @@
                 <img src="{item.coverLink}" alt="Cover " class="h-40 bg-orange-500 rounded-lg" />
                 <h1 class="font-bold text-2xl">{item.title}</h1>
                 <p>{item.description}</p>
-            </div>
+				{#if PUBLIC_DEBUG} 
+				<span>ID: {item.id} </span>
+				{/if}
+			</div>
 		{/each}
 	{:else}
 		<p>Loading...</p>
