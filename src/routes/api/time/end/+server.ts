@@ -1,3 +1,4 @@
+import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from "$env/static/private"
 import prisma from "$lib/prisma"
 export async function POST(req: Request) {
     // validate session moment 
