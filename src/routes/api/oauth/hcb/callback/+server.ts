@@ -51,7 +51,7 @@ export async function GET(req: Request) {
             "Authorization": `Bearer ${yummyAuthData.access_token}`
         }
     }).then(r => r.json())
-    console.log(userData, yummyAuthData)
+    // console.log(userData, yummyAuthData)
 
     if (userData.error) {
         return json({ error: userData.error }, { status: 500 })

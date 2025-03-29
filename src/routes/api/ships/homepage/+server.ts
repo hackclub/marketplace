@@ -9,7 +9,7 @@ export async function GET(req: Request) {
             Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
         }
     }).then(r => r.json()).then(dd => {
-        console.log(dd.records[0])
+        // console.log(dd.records[0])
         return dd.records.map((d) => ({
             title: d.fields.Name,
             id: d.id,

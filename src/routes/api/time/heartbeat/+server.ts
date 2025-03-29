@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     }
     const body = await req.request.json()
     
-    console.log(body)
+    // console.log(body)
     if (!body) return new Response("no body")
      const timerecorder = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/timerecorder?filterByFormula=${encodeURIComponent(`AND(slack_id="${sessionData.slackId}",NOT(isDone))`)}`, {
             headers: {

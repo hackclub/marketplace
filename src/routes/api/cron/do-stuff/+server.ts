@@ -86,6 +86,61 @@ async function sendHCBGrants() {
         })
     })
 }
+async function draftAllRejectedShips() {
+    // query airtable with formula
+    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({rejected} = 1, {Status} != "Draft")`)}`, {
+        headers: {
+            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+        }
+    }).then(r => r.json())
+    // console.log(data)
+    const recordsToUpdate = []
+    // send msg to oauth2 with hcb if no email on file
+    for (const d of data.records) {
+        // yipee u have made it or smthing now send a message
+        fetch(`https://slack.com/api/chat.postMessage`, {
+            headers: {
+                Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}> your ship (${d.fields.Name}) was rejected!`,
+                channel: d.fields.slack_user_id
+            })
+        }).then(r => r.json())       
+        fetch(`https://slack.com/api/chat.postMessage`, {
+            headers: {
+                Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}>  ship (${d.fields.Name}) was rejected!`,
+                channel: "C08GZ6QF97Z"
+            })
+        }).then(r => r.json())   
+        recordsToUpdate.push({
+            id: d.id,
+            fields: {
+                Status: "draft",
+                rejected: false,
+            }
+        })
+    }
+    // update airtable
+    fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+        },
+        body: JSON.stringify({
+            records: recordsToUpdate
+        })
+    })
+
+}
 async function promoteUsersFromDigitalReview() {
     // query airtable with formula
     const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({Digital review approve} = TRUE(), {_automation_digital_sent} = FALSE())`)}`, {
@@ -146,9 +201,10 @@ export async function GET(req: Request) {
         return new Response("401 Unauthorized", { status: 401 })
     }
     console.debug(`CRON RAAAA (*/15)`)
-    await Promise.all([
-        sendHCBGrants(),
-        promoteUsersFromDigitalReview()
-    ])
+    await draftAllRejectedShips()
+    // await Promise.all([
+    //     sendHCBGrants(),
+    //     promoteUsersFromDigitalReview()
+    // ])
     return new Response("200 OK")
 }
