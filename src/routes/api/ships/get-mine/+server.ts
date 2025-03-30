@@ -37,6 +37,9 @@ export async function GET(req: Request) {
             featured: d.fields.featured || false,
             notes_for_reviewer: d.fields.notes_for_reviewer,
             description: d.fields.description,
+            avatar: `https://cachet.dunkirk.sh/users/${d.fields.slack_user_id}/r`,
+            author: d.fields.slack_user_name,
+            author_slack_id: d.fields.slack_user_id,
         })).filter(d => d.title)
     })
     return new Response(JSON.stringify(data), {

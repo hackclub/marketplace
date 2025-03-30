@@ -1,32 +1,29 @@
-<script lang="ts">
-		import CardList from '../CardList.svelte';
-
-//	import "../utils/check-if-logged-in"
+<script>
+	import CardList from '../CardList.svelte';
+	let data = [];
+	let loading = true;
+	let loggedIn = false;
 	import { onMount } from 'svelte';
-	import { PUBLIC_DEBUG } from '$env/static/public';
-	// Initialize data as an empty array (ensures reactivity)
-	let data: any[] = [];
 
-	// Fetch data once component mounts
 	onMount(async () => {
 		try {
-			const res = await fetch('/api/ships/get-mine');
-
-			if (!res.ok) {
-				throw new Error(`Failed to fetch data: ${res.status}`);
+			const res = await fetch('/api/ships/homepage');
+			if (res.ok) {
+				data = await res.json();
+			} else {
+				console.error('Failed to fetch data');
 			}
-			data = await res.json();
-            console.log(data);
 		} catch (error) {
-			console.error(error);
+			console.error('Error fetching data:', error);
+		} finally {
+			loading = false;
 		}
-	});
+		function getCookie(name) {
+            return document.cookie.split('; ').find(row => row.startsWith(name + '=')) !== undefined;
+        }
 
-	
-  // shorten desc and add ...
-  const shortenDesc = (text, maxChars = 75) => {
-      return text.length > maxChars ? text.slice(0, maxChars) + '...' : text;
-  };
+        loggedIn = getCookie("session");
+	});
 </script>
 
 <header>
@@ -41,28 +38,30 @@
 			<div class="flex items-center lg:order-2">
 				<a
 					style="font-family: Phantom Sans;"
-					href="#"
+					href="/about"
 					class="text-red-500 hover:bg-red-100 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
 					>about</a
 				>
-			
-			<a
+				{#if !loggedIn}
+				<a
+					style="font-family: Phantom Sans;"
+					href="/api/oauth/slack/login"
+					class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
+					>sign in with slack</a
+				>
+				{:else}
+				<a
 					style="font-family: Phantom Sans;"
 					href="/ships"
 					class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
 					>Go to your ships</a
 				>
-
+				{/if}
 			</div>
 		</div>
 	</nav>
 </header>
 
-<span style="font-family: Phantom Sans; margin-left: 80px; " class="text-4xl font-semibold text-red-500"
->your ships:</span
->
-
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data} isAllMine={true} />
+	<CardList items={data} />
 </div>
-

@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+@theme {
+	--color-hcred: #ec3750;
+}
+
 @font-face {
 	font-family: 'Phantom Sans';
 	src:

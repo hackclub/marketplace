@@ -5,5 +5,7 @@ export interface HomepageShip {
   avatar: string;
   coverLink: string;
     featured?: boolean
-    id: string;
+  id: string;
+  author_slack_id: string; 
+  status: string;
 }

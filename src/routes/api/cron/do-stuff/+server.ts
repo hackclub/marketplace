@@ -105,7 +105,7 @@ async function draftAllRejectedShips() {
             },
             method: "POST",
             body: JSON.stringify({
-                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}> your ship (${d.fields.Name}) was rejected!`,
+                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}> your ship (${d.fields.Name}) was rejected!\n> ${d.fields.rejection_reason}`,
                 channel: d.fields.slack_user_id
             })
         }).then(r => r.json())       
@@ -116,7 +116,7 @@ async function draftAllRejectedShips() {
             },
             method: "POST",
             body: JSON.stringify({
-                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}>  ship (${d.fields.Name}) was rejected!`,
+                text: `${dev?`[DEV]`:""} <@${d.fields.slack_user_id}>  ship (${d.fields.Name}) was rejected!\n> ${d.fields.rejection_reason}`,
                 channel: "C08GZ6QF97Z"
             })
         }).then(r => r.json())   
@@ -201,10 +201,11 @@ export async function GET(req: Request) {
         return new Response("401 Unauthorized", { status: 401 })
     }
     console.debug(`CRON RAAAA (*/15)`)
-    await draftAllRejectedShips()
-    // await Promise.all([
-    //     sendHCBGrants(),
-    //     promoteUsersFromDigitalReview()
-    // ])
+    // await draftAllRejectedShips()
+    await Promise.all([
+        sendHCBGrants(),
+        promoteUsersFromDigitalReview(),
+        draftAllRejectedShips()
+    ])
     return new Response("200 OK")
 }

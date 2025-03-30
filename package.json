@@ -28,7 +28,9 @@
 	},
 	"dependencies": {
 		"@hackclub/icons": "^0.0.15",
+		"@mdi/js": "^7.4.47",
 		"@prisma/client": "^6.4.1",
+		"mdi-svelte": "^1.1.2",
 		"prisma": "^6.4.1"
 	}
 }
