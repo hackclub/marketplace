@@ -6,8 +6,8 @@ services:
     hostname: postgres_db
     container_name: postgres_db
     restart: always
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
     ports:
       - '54330:5432'
     # healthcheck:
@@ -29,5 +29,5 @@ services:
     # depends_on:
     #   postgres_db:
     #     condition: service_healthy
-    env_file:
-      - .env
+    # env_file:
+    #   - .env
