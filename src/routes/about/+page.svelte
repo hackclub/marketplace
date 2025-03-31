@@ -49,7 +49,7 @@
 				<a
 					style="font-family: Phantom Sans;"
 					href="/api/oauth/slack/login"
-					class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
+					class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
 					>sign in with slack</a
 				>
 			{:else}

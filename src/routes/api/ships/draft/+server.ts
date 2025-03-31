@@ -37,9 +37,11 @@ export async function POST(req: Request) {
         "Status": "draft",
         "users": [user.id],
         description: body.description,
-        cover_image: body.image_url,
-        slack_user_name: user.fields.slack_name,
-        slack_user_id: sessionData.slackId,
+        // cover_image: body.image_url,
+        // slack_user_name: user.fields.slack_name,
+        // slack_user_id: sessionData.slackId,
+        github_url: body.github_url,
+        readme_url: body.readme_url,
         ships_to: ships_to_in_correct_format
     }
     const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
@@ -53,7 +55,7 @@ export async function POST(req: Request) {
                 fields: structuredBody
             }],
         })
-    }).then(r => r.json())
+    }).then(r => r.json()) 
     console.log(reqq)
     return new Response("OK CREATED", { status: 201 })
 }

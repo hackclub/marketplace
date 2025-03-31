@@ -5,7 +5,7 @@ import { deleteExpiredCache, draftAllRejectedShips, promoteUsersFromDigitalRevie
 export async function GET(req: Request) {
     const headers = Object.fromEntries(req.request.headers.entries());
     console.log(headers)
-    if(headers.Authorization !== `Bearer ${PRIVATE_CRON_SECRET}` && !dev) {
+    if(headers.authorization !== PRIVATE_CRON_SECRET && !dev) {
         return new Response("401 Unauthorized", { status: 401 })
     }
     console.debug(`CRON RAAAA (*/15)`)
