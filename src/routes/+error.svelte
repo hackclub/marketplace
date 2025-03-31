@@ -6,7 +6,7 @@
 	<div class="mt-4">
 		<button
 			style="font-family: Phantom Sans;"
-			class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl"
+			class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl"
 		>
 			go back home
 		</button>

@@ -1,55 +1,54 @@
 @import 'tailwindcss';
 
-@font-face {
-    font-family: 'Phantom Sans';
-    src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff')
-        format('woff'),
-      url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2')
-        format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Phantom Sans';
-    src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff')
-        format('woff'),
-      url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2')
-        format('woff2');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Phantom Sans';
-    src: url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff')
-        format('woff'),
-      url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2')
-        format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-  }
+@theme {
+	--color-hcred: #ec3750;
+}
 
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Regular.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Italic.woff2') format('woff2');
+	font-weight: normal;
+	font-style: italic;
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Phantom Sans';
+	src:
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff') format('woff'),
+		url('https://assets.hackclub.com/fonts/Phantom_Sans_0.7/Bold.woff2') format('woff2');
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
 
 .helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-    margin-bottom: 80px;
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-bottom: 80px;
 }
 
 img {
- 
-    vertical-align: middle;
-
+	vertical-align: middle;
 }
 
 .boxtext {
-    font-family: 'Phantom Sans', sans-serif;
-    color: #33D6A6;
-    font-size: 40px;  
-    margin: 0; 
-    padding: 10px;
-    font-weight: 600;
+	font-family: 'Phantom Sans', sans-serif;
+	color: #33d6a6;
+	font-size: 40px;
+	margin: 0;
+	padding: 10px;
+	font-weight: 600;
 }

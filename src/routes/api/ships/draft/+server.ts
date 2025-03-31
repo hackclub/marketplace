@@ -23,20 +23,24 @@ export async function POST(req: Request) {
     console.log(body)
     if (!body) return new Response("no body")
     // query users airtable 
-    const user_id = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users?filterByFormula=${encodeURIComponent(`slack_id="${sessionData.slackId}"`)}`, {
+    const user = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users?filterByFormula=${encodeURIComponent(`slack_id="${sessionData.slackId}"`)}`, {
         headers: {
             Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
         }
-    }).then(r => r.json()).then(udata => udata.records[0].id)
+    }).then(r => r.json()).then(udata => udata.records[0])
     // console.log()
+
+    //todo: ummmmkmmm
+    const ships_to_in_correct_format = body.ships_to.filter((s:string)=>["US", "EU", "AU", "CA", "TESTCODE"].includes(s))
     const structuredBody = {
         "Name": body.name,
         "Status": "draft",
-        "users": [user_id],
+        "users": [user.id],
         description: body.description,
         cover_image: body.image_url,
-        slack_user_name: sessionData.slackId,
-        slack_user_id: sessionData.slackId
+        slack_user_name: user.fields.slack_name,
+        slack_user_id: sessionData.slackId,
+        ships_to: ships_to_in_correct_format
     }
     const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
         method: "POST",
@@ -48,7 +52,6 @@ export async function POST(req: Request) {
             records: [{
                 fields: structuredBody
             }],
-            // fields: structuredBody
         })
     }).then(r => r.json())
     console.log(reqq)
