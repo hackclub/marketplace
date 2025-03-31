@@ -13,7 +13,7 @@ export async function GET(req: Request) {
             console.log("Cache expired, deleting")
             await prisma.cacheObject.delete({
                 where: {
-                    id: "homepage-ships"
+                    id: doesCacheVersionExist.id
                 }
             })
         }

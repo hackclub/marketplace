@@ -89,6 +89,8 @@
         class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
         >message me on slack</a>
         <p class="text-xl text-black" style="margin-left: 870px; margin-top: 20px; margin-bottom:20px; margin-right: 5px; font-family: Phantom Sans;">{shipData.description}</p>
+       
+        {#if loggedIn}
         <button
         style="font-family: Phantom Sans; margin-left: 870px;"
         on:click={
@@ -102,6 +104,16 @@
         }
         class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
         >buy now!!!</button>
+        {:else} 
+        <button
+        style="font-family: Phantom Sans; margin-left: 870px;"
+        on:click={
+        window.location.href="/api/oauth/slack/login"
+        }
+        class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
+        >buy now!!!</button>
+        {/if}
+
     </div>
 {:else} 
 
