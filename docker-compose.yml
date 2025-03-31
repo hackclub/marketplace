@@ -9,7 +9,7 @@ services:
     env_file:
       - .env.db
     ports:
-      - '5433:5432'
+      - '54330:5432'
     networks:
       - prisma-network
     healthcheck:
