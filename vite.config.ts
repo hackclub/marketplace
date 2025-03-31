@@ -8,6 +8,6 @@ export default defineConfig({
 		allowedHosts: ['.ngrok-free.app']
 	},
 	preview: {
-		allowedHosts: ['h4ko0os0w4ccckgsk8gcw0wo.a.selfhosted.hackclub.com']
+		allowedHosts: ['market.a.selfhosted.hackclub.com']
 	}
 });
