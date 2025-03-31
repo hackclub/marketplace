@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  slackId     String @id
+  airtable_id String
+  token       String
+}
+
+// cache because we cannot depend on airtable
+model CacheObject {
+  id   String   @id @default(uuid())
+  key  String
+  ttl  DateTime @default(dbgenerated("NOW() + interval '1 hour'"))
+  data Json // what u thought i was a good coder??
+}
