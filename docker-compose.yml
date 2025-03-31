@@ -18,6 +18,7 @@ services:
 
   market:
     environment:
+      - SERVICE_FQDN_MARKET
       - SERVICE_FQDN_MARKET_4173
     build:
       context: .
