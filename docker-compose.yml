@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '443:4173'
+      - '4173:4173'
     #    stdin_open: true
     #    tty: true # Keeps the container running for debugging
     # depends_on:
