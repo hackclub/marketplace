@@ -18,9 +18,6 @@ const config = {
 		env: {
 			dir: './'
 		}
-	},
-	preview: {
-		allowedHosts: ['h4ko0os0w4ccckgsk8gcw0wo.a.selfhosted.hackclub.com']
 	}
 };
 
