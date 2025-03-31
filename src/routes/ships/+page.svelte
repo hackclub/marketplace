@@ -41,7 +41,7 @@
 			<div class="flex items-center lg:order-2">
 				<a
 					style="font-family: Phantom Sans;"
-					href="#"
+					href="/about"
 					class="text-red-500 hover:bg-red-100 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
 					>about</a
 				>
@@ -58,6 +58,7 @@
 	</nav>
 </header>
 
+
 <span style="font-family: Phantom Sans; margin-left: 80px; " class="text-4xl font-semibold text-red-500"
 >your ships:</span
 >
@@ -66,3 +67,8 @@
 	<CardList items={data} isAllMine={true} />
 </div>
 
+<div class="flex justify-center items-center mt-5">
+	<a href="/create-ship" style="font-family: Phantom Sans; margin-bottom: 50px;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-140 py-2 mr-2 hover:bg-red-600">
+		ship a project
+	</a>
+</div>

@@ -88,7 +88,6 @@
 	<CardList items={data.filter(d=>!d.featured && d.status !== "shipped!")} />
 </div>
 
-<!-- Centered link at the bottom of the page -->
 <div class="flex justify-center items-center mt-16">
 	<a href="/allships" style="font-family: Phantom Sans; margin-bottom: 50px;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-140 py-2 mr-2 hover:bg-red-600">
 		see all projects

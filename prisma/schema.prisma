@@ -18,3 +18,11 @@ model User {
   airtable_id String
   token       String
 }
+
+// cache because we cannot depend on airtable
+model CacheObject {
+  id   String   @id @default(uuid())
+  key  String
+  ttl  DateTime @default(dbgenerated("NOW() + interval '1 hour'"))
+  data Json // what u thought i was a good coder??
+}

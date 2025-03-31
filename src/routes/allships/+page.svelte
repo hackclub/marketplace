@@ -62,6 +62,6 @@
 	</nav>
 </header>
 
-<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+<div class="flex flex-wrap justify-between mx-auto max-w-screen-xl">
 	<CardList items={data} />
 </div>

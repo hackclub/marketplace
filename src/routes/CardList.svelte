@@ -13,7 +13,7 @@
   };
 </script>
 
-<div class="flex flex-wrap gap-4">
+<div class="flex flex-wrap gap-4" style="font-family: Phantom Sans;">
   {#each items as item}
       <div class="w-80 rounded-lg p-4 relative">
         {#if isAllMine}
@@ -44,6 +44,7 @@
             </div>
         </div>
         {:else}
+        {#if item.status == "shipped!"}
         <a href="/buy?id={item.id}">
             <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink} alt="Cover" />
             <img src={item.avatar} alt="Avatar" class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white">
@@ -53,6 +54,18 @@
                 <p class="text-orange-700">{shortenDesc(item.description) }</p>
             </div>
         </a>
+        {/if}
+        {#if item.status !== "shipped!"}
+        <a href="#">
+            <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink} alt="Cover" />
+            <img src={item.avatar} alt="Avatar" class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white">
+            <div class="mt-6">
+                <h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
+                <p class="text-gray-700">@{item.author}</p>
+                <p class="text-orange-700">{shortenDesc(item.description) }</p>
+            </div>
+        </a>
+        {/if}
         {/if}
       </div>
   {/each}
