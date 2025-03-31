@@ -1,3 +1,4 @@
+import { dev } from "$app/environment";
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_CRON_SECRET, PRIVATE_HCB_AUTH_BODY_TOKEN, PRIVATE_HCB_COOKIE, PRIVATE_HCB_CSRF_TOKEN, PRIVATE_SLACK_BOT_TOKEN } from "$env/static/private";
 import prisma from "./prisma";
 
