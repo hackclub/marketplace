@@ -4,11 +4,12 @@
 	</h1>
 	<p style="font-family: Phantom Sans;">strange, orpheus surely isn't told about this page...</p>
 	<div class="mt-4">
-		<button
+		<a
 			style="font-family: Phantom Sans;"
 			class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl"
+			href="/"
 		>
 			go back home
-		</button>
+	</a>
 	</div>
 </div>

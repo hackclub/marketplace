@@ -67,10 +67,6 @@
 
 </header>
 
-
-<body class="text-red-500 text-center mt-20">
-    <div>
-     <h1 class="text-red-500 font-bold text-4xl">What is this??!/h1>
-     <div class="text-red-500 font-bold">loads of yapping here on what this is. what u have to actually do. etc.</div>
+    <div style="font-family: Phantom Sans;" class="text-red-500 text-center mt-20">
+     <h1 class="text-red-500 font-bold text-5xl">Welcome to Hack club Market!</h1>
     </div>
- </body>
