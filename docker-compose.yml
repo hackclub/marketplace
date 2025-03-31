@@ -19,10 +19,11 @@ services:
   market:
     environment:
       - SERVICE_FQDN_MARKET
-      - SERVICE_FQDN_MARKET_4173
     build:
       context: .
       dockerfile: Dockerfile
+    ports:
+      - '4173:4173'
     #    stdin_open: true
     #    tty: true # Keeps the container running for debugging
     # depends_on:
