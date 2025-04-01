@@ -13,13 +13,13 @@ export async function POST(req: Request) {
         where: {
             token: session
         }
-    }) 
-    if (!sessionData || !sessionData.slackId) { 
+    })
+    if (!sessionData || !sessionData.slackId) {
         return new Response(JSON.stringify({ message: "No session data" }), {
             status: 401
         })
     }
-   const body = await req.request.json()
+    const body = await req.request.json()
     console.log(body)
     if (!body) return new Response("no body")
     // query users airtable 
@@ -45,26 +45,27 @@ export async function POST(req: Request) {
         // ships_to: ships_to_in_correct_format,
         requested_grant_amount: body.cost
     }
-    for (const key in structuredBody) { 
+    for (const key in structuredBody) {
         //@ts-expect-error
         if (!structuredBody[key]) {
-          return new Response(JSON.stringify({ message: `Missing field ${key}` }), {
-            status: 400
-        })
+            return new Response(JSON.stringify({ message: `Missing field ${key}` }), {
+                status: 400
+            })
         }
+    }
         
-    const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            records: [{
-                fields: structuredBody
-            }],
-        })
-    }).then(r => r.json()) 
-    console.log(reqq)
-    return new Response("OK CREATED", { status: 201 })
+        const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                records: [{
+                    fields: structuredBody
+                }],
+            })
+        }).then(r => r.json())
+        console.log(reqq)
+        return new Response("OK CREATED", { status: 201 })
 }
