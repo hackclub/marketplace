@@ -45,6 +45,14 @@ export async function POST(req: Request) {
         // ships_to: ships_to_in_correct_format,
         requested_grant_amount: body.cost
     }
+    for (const key in structuredBody) { 
+        //@ts-expect-error
+        if (!structuredBody[key]) {
+          return new Response(JSON.stringify({ message: `Missing field ${key}` }), {
+            status: 400
+        })
+        }
+        
     const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
         method: "POST",
         headers: {
