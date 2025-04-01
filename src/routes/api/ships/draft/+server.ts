@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     // console.log()
 
     //todo: ummmmkmmm
-    const ships_to_in_correct_format = body.ships_to.filter((s:string)=>["US", "EU", "AU", "CA", "TESTCODE"].includes(s))
+    // const ships_to_in_correct_format = body.ships_to.filter((s:string)=>["US", "EU", "AU", "CA", "TESTCODE"].includes(s))
     const structuredBody = {
         "Name": body.name,
         "Status": "draft",
@@ -42,7 +42,8 @@ export async function POST(req: Request) {
         // slack_user_id: sessionData.slackId,
         github_url: body.github_url,
         readme_url: body.readme_url,
-        ships_to: ships_to_in_correct_format
+        // ships_to: ships_to_in_correct_format,
+        requested_grant_amount: body.cost
     }
     const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
         method: "POST",

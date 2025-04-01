@@ -32,6 +32,7 @@ export async function PATCH(req: Request) {
             fields: {
                 address: body.address,
                 region_for_shipping_and_receiving: body.region_for_shipping_and_receiving,
+                hcb_email: body.hcb_email,
             }
         })
     }).then(r => r.json()).then(dd => {

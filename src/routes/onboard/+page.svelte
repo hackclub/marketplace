@@ -2,6 +2,7 @@
 	let data = [];
 	let loading = true;
 	let loggedIn = false;
+	import NavBar from '../NavBar.svelte';
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
@@ -29,42 +30,75 @@
 	});
 </script>
 
-<header>
-	<nav class="border-gray-200 px-4 lg:px-6 py-5">
-		<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-			<a href="#" class="flex items-center">
-				<span style="font-family: Phantom Sans;" class="text-5xl font-semibold text-red-500"
-					>hack club market</span
-				>
-			</a>
-			
-			<div class="flex items-center lg:order-2">
-				<a
-					style="font-family: Phantom Sans;"
-					href="/about"
-					class="text-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
-					>about</a
-				>
-				{#if !loggedIn}
-				<a
-					style="font-family: Phantom Sans;"
-					href="/api/oauth/slack/login"
-					class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-					>sign in with slack</a
-				>
-				{:else}
-				<a
-					style="font-family: Phantom Sans;"
-					href="/ships"
-					class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-					>Go to your ships</a
-				>
-				{/if}
-			</div>
+<NavBar/>
+
+<div style="margin-left: 150px;" class="text-left">
+    <h1 class="text-4xl font-bold" style="font-family: Phantom Sans;margin-left: 0px">Hi, welcome to Hack Club Market!</h1>
+    <p class="py-10 text-wrap w-1/2">Welcome to Hack Club Market, we are excited to have you participate in this new event! we will need to collect your address, the country you live for shipments (please note if ordering from a international seller, their will be customs), and the email you use for hcb. Once you have filled out this form, you will be able to start working!</p>
+	<form style="background-color: #FFECDA; font-family: Phantom Sans; padding-top: 10px;" class="rounded-xl w-1/2" onsubmit={e => {
+		e.preventDefault();
+		const formData = new FormData(e.target);
+		const data = Object.fromEntries(formData.entries());
+		console.log(data); // Log the form data to the console (for debugging)
+		fetch("/api/settings/update", {
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				hcb_email: data["hcb-email"],
+				address: data["address"],
+				region_for_shipping_and_receiving: [data["country"]],
+			})
+		}).then(r=>r.json()).then(() => {
+			location.pathname = "/ships"
+		})
+	}}>
+		<div>
+			<label for="hcb-email" class="text-xl font-bold ml-10">HCB email</label>
+			<br />
+		<input 
+			  id="hcb-email" 
+			  name="hcb-email"
+			  type="email" 
+			  placeholder="hcb@hackclub.com"
+			  required 
+			  class="max-w-3xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" 
+			/>
 		</div>
-	</nav>
-</header>
-<div style="margin-left: 20px;" class="text-left">
-    <h1 class="text-4xl font-bold" style="font-family: Phantom Sans;margin-left: 50px">Hi, welcome to hackermarket!</h1>
-    <p>Welcome to hackermarket, we are excited to have you participate in this ysws.. ill need your address, country you live for shipments (if u select other countries please note u accept the risk of customs), and your hcb email! Once u have finished this onboarding process u will be moved onto the next step!</p>
+		<div>
+			<div class="ml-10">
+				<label for="address"  class="text-xl font-bold">Address</label>
+				<p>(please make sure its formated correctly and if u dont have a province/city please put N/A)</p>
+			</div>
+		
+		<input 
+			  id="address" 
+			  name="address"
+			  type="text" 
+			  placeholder="15 Falls Rd, Shelburne, VT 05482 USA" 
+			  class="max-w-3xl w-xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+			/>
+		</div>
+		<div>
+			<label for="country" class="text-xl font-bold ml-10">Country</label>
+			<br />
+			<select class="max-w-3xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" id="country" name="country">
+				<option value="US" selected>USA</option>
+				<option value="CA">Canada</option>
+				<option value="UK">United Kingdom</option>
+				<option value="AU">Australia</option>
+				<option value="EU">Europe</option>
+				<option value="IN">India</option>
+				<option value="Everywhere">Anywhere! (note this may include having to pay customs)</option>
+			</select>
+			</div>
+		<div class="flex justify-center items-center mt-5">
+			<button  style="font-family: Phantom Sans; margin-bottom: 40px;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-10 pt-2 pb-2 hover:bg-red-600">
+			   Next step!
+			</button>
+		  </div>
+		  </form>
+		
+	
 </div>

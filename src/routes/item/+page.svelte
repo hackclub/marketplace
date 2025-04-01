@@ -1,21 +1,7 @@
 <script>
       import data from "../data.json"
+      import NavBar from './NavBar.svelte';
+
 </script>
 
-<header>
-    <nav class="border-gray-200 px-4 lg:px-6 py-5">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-            <a href="https://flowbite.com" class="flex items-center">
-                <span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">hack club market</span>
-            </a>
-            <div class="flex items-center lg:order-2">
-                <a style="font-family: Phantom Sans;" href="#" class="text-red-500 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 mr-2 font-semibold ">
-                    about
-                </a>
-                <a style="font-family: Phantom Sans;" href="/api/oauth/slack/login" class="text-white bg-red-500 font-medium rounded-lg text-lg px-4 lg:px-5 py-2 mr-2 hover:bg-red-600">
-                    sign in with slack
-                </a>
-            </div>
-        </div>
-    </nav>
-</header>
+<Navbar/>

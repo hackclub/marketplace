@@ -21,7 +21,7 @@
             export let showPopup = false;
             </script>
         <div>
-            <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink} alt="Cover" />
+            <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink || "https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png"} alt="Cover" />
             <!-- <img src={item.avatar} alt="Avatar" class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"> -->
             <div class="mt-6">
                 <h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
@@ -57,7 +57,7 @@
         {/if}
         {#if item.status !== "shipped!"}
         <a href="#">
-            <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink} alt="Cover" />
+            <img class="h-40 bg-orange-500 rounded-lg" src={item.coverLink || "https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png"} alt="Cover" />
             <img src={item.avatar} alt="Avatar" class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white">
             <div class="mt-6">
                 <h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>

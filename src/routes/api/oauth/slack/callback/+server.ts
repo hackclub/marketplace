@@ -4,26 +4,26 @@ import { parseJwt } from "$lib/jwt";
 import { json, redirect } from "@sveltejs/kit";
 import prisma from "$lib/prisma"
 export async function GET(req) {
-    if(req.cookies.get("session")) throw redirect(302, "/ships")
-    const code = req.url.searchParams.get("code")
+  if (req.cookies.get("session")) throw redirect(302, "/ships")
+  const code = req.url.searchParams.get("code")
 
-    // exchange code 
-    console.log(code)
+  // exchange code 
+  console.log(code)
 
-    if (!code) {
-        return new Response(JSON.stringify({ message: "Missing code"}), {
-            status: 400
-        })
-    }
+  if (!code) {
+    return new Response(JSON.stringify({ message: "Missing code" }), {
+      status: 400
+    })
+  }
     
-    const exchangeURL = `https://slack.com/api/openid.connect.token?client_id=${PUBLIC_SLACK_CLIENT_ID}&client_secret=${PRIVATE_SLACK_CLIENT_SECRET}&code=${code}&redirect_uri=${PUBLIC_REDIRECT_URL + "/api/oauth/slack/callback"}&grant_type=authorization_code`
-    const exchangeResponse = await fetch(exchangeURL, { method: "POST"})
-    if(exchangeResponse.status !== 200) {
-        return new Response(JSON.stringify({ message: "Bad Oauth2 Response"}), {
-            status: 400
-        })
-    }
-let ok_to_redirect = false
+  const exchangeURL = `https://slack.com/api/openid.connect.token?client_id=${PUBLIC_SLACK_CLIENT_ID}&client_secret=${PRIVATE_SLACK_CLIENT_SECRET}&code=${code}&redirect_uri=${PUBLIC_REDIRECT_URL + "/api/oauth/slack/callback"}&grant_type=authorization_code`
+  const exchangeResponse = await fetch(exchangeURL, { method: "POST" })
+  if (exchangeResponse.status !== 200) {
+    return new Response(JSON.stringify({ message: "Bad Oauth2 Response" }), {
+      status: 400
+    })
+  }
+  let ok_to_redirect: boolean|string = false
   try {
     const rjson = await exchangeResponse.json()
     console.log(rjson)
@@ -44,7 +44,8 @@ let ok_to_redirect = false
     })
     if (userData) {
       req.cookies.set("session", userData.token, {  path: "/", httpOnly: false  })
-      ok_to_redirect = true;
+      // throw redirect(301, "/ships")
+      ok_to_redirect = "/ships";
     }
     else {
       const sessionId = crypto.randomUUID().toString()
@@ -81,15 +82,15 @@ let ok_to_redirect = false
         }
       })
       req.cookies.set("session", sessionId, { path: "/", httpOnly: false  })
-      ok_to_redirect = true;
+      // throw redirect(301, "/onboard")
+      ok_to_redirect = "/onboard";
     }
 } catch (e) {
     console.error(e)
     return new Response(JSON.stringify({ message: `Oops. ${e.message}`}))
-  }
-  finally {
+  } finally {
     if(ok_to_redirect) {
-        throw redirect(301, "/ships")
+      throw redirect(302, ok_to_redirect)
     }
   }
 }

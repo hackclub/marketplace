@@ -1,4 +1,6 @@
 <script>
+	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from '$env/static/public';
+
 	// let data = [];
 	let loading = true;
 	let loggedIn = false;
@@ -47,7 +49,7 @@
 				{#if !loggedIn}
 				<a
 					style="font-family: Phantom Sans;"
-					href="/api/oauth/slack/login"
+					href={ `https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + "/api/oauth/slack/callback")}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
 					class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
 					>sign in with slack</a
 				>

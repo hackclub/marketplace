@@ -49,7 +49,8 @@ export async function GET(req: Request) {
             description: d.fields.description,
             coverLink: d.fields.cover_image,
             avatar: `https://cachet.dunkirk.sh/users/${d.fields.slack_user_id}/r`,
-            author: d.fields.slack_user_name
+            author: d.fields.slack_user_name,
+            ships_to: d.fields.ships_to,
         }
         await prisma.cacheObject.create({
             data: {

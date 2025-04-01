@@ -4,7 +4,7 @@
     let loggedIn = false;
     let id = null; 
     let shipData = null; 
-
+	import NavBar from '../NavBar.svelte';
     import { onMount } from 'svelte';
 
     onMount(async () => {
@@ -14,13 +14,13 @@
         console.log('URL ID:', id);
 
         try {
-            const res = await fetch('/api/ships/homepage');
+            const res = await fetch('/api/ships/get-product?shipId='+id);
             if (res.ok) {
                 data = await res.json();
                 console.log('Fetched Data:', data);
 
                 // find correct ship with id
-                shipData = data.find(ship => ship.id === id) || null;
+                shipData = data;
                 console.log('Filtered Ship:', shipData);
 
             } else {
@@ -40,39 +40,7 @@
     });
 </script>
 
-<header>
-    <nav class="border-gray-200 px-4 lg:px-6 py-5">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-            <a href="/" class="flex items-center">
-                <span style="font-family: Phantom Sans;" class="text-5xl font-semibold text-red-500">
-                    hack club market
-                </span>
-            </a>
-
-            <div class="flex items-center lg:order-2">
-                <a
-                    style="font-family: Phantom Sans;"
-                    href="/about"
-                    class="text-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
-                >about</a>
-
-                {#if !loggedIn}
-                <a
-                    style="font-family: Phantom Sans;"
-                    href="/api/oauth/slack/login"
-                    class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-                >sign in with slack</a>
-                {:else}
-                <a
-                    style="font-family: Phantom Sans;"
-                    href="/ships"
-                    class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-                >Go to your ships</a>
-                {/if}
-            </div>
-        </div>
-    </nav>
-</header>
+<NavBar/>
 
 {#if loading}
     <p>Loading...</p>
@@ -115,7 +83,10 @@
         {/if}
 
     </div>
+    <p class="text-lg text-black font-light" style="margin-left: 1090px; margin-top: 5px; margin-bottom:20px; margin-right: 5px; font-family: Phantom Sans;">(ships to {shipData.ships_to})</p>
+
 {:else} 
+
 
     <p>No ship found with the given ID.</p>
 
