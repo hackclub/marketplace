@@ -15,16 +15,94 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  slackId     String @id
-  airtable_id String
-  token       String
+enum TimeStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
-// cache because we cannot depend on airtable
-model CacheObject {
-  id   String   @id @default(uuid())
-  key  String
-  ttl  DateTime @default(dbgenerated("NOW() + interval '1 hour'"))
-  data Json // what u thought i was a good coder??
+enum Reigions {
+  EVERYWHERE
+  US
+  AU
+  IN
+  EU
+  CA
+  UK
+}
+
+enum StatusString {
+  DRAFT
+  UNDER_HQ_DIGITAL_REVIEW
+  UNDER_HQ_GRANT_REVIEW
+  UNDER_HQ_REVIEW
+  SHIPPED
+}
+
+model User {
+  slackId               String        @id
+  airtable_id           String
+  token                 String
+  slack_id              String
+  slack_name            String
+  hcb_email             String?
+  reigions_for_shipping Reigions?
+  currency              Float         @default(0.0)
+  Purchase              Purchase[]
+  HeidiEscrow           HeidiEscrow[]
+  Ship                  Ship[]
+}
+
+model Ship {
+  id                     String        @id @default(cuid())
+  Name                   String
+  Description            String
+  Reviewer               String? // name or smthing
+  grant_amount           Float         @default(30.0)
+  requested_grant_amount Float
+  status                 StatusString  @default(DRAFT)
+  approved_for_grant     Boolean       @default(false)
+  approved_for_hq        Boolean       @default(false)
+  approved_for_digital   Boolean       @default(false)
+  github_url             String
+  demo_url               String
+  cover_image_url        String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
+  readme_url             String
+  Purchase               Purchase[]
+  HeidiEscrow            HeidiEscrow[]
+  userId                 String
+  user                   User          @relation(fields: [userId], references: [slackId])
+}
+
+model Purchase {
+  id          String        @id @default(cuid())
+  shipId      String
+  userId      String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  ship        Ship          @relation(fields: [shipId], references: [id])
+  user        User          @relation(fields: [userId], references: [slackId])
+  HeidiEscrow HeidiEscrow[]
+  Time        Time[]
+}
+
+model HeidiEscrow {
+  id         String @id @default(cuid())
+  purchaseId String
+
+  purchase    Purchase @relation(fields: [purchaseId], references: [id])
+  User        User?    @relation(fields: [userSlackId], references: [slackId])
+  userSlackId String?
+  Ship        Ship?    @relation(fields: [shipId], references: [id])
+  shipId      String?
+}
+
+model Time {
+  id                    String     @id @default(cuid())
+  shipId                String
+  Purchase              Purchase?  @relation(fields: [purchaseId], references: [id])
+  purchaseId            String?
+  video_link            String
+  status                TimeStatus @default(PENDING)
+  total_time_in_seconds Float
 }
