@@ -7,10 +7,10 @@
 	onMount(async () => {
 		loading = true;
 		function getCookie(name) {
-            return document.cookie.split('; ').find(row => row.startsWith(name + '=')) !== undefined;
-        }
+			return document.cookie.split('; ').find((row) => row.startsWith(name + '=')) !== undefined;
+		}
 
-        loggedIn = getCookie("session");
+		loggedIn = getCookie('session');
 	});
 </script>
 
@@ -22,7 +22,7 @@
 					>hack club market</span
 				>
 			</a>
-			
+
 			<div class="flex items-center lg:order-2">
 				<a
 					style="font-family: Phantom Sans;"
@@ -31,19 +31,19 @@
 					>about</a
 				>
 				{#if !loggedIn}
-				<a
-					style="font-family: Phantom Sans;"
-					href={ `https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + "/api/oauth/slack/callback")}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
-					class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-					>sign in with slack</a
-				>
+					<a
+						style="font-family: Phantom Sans;"
+						href={`https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + '/api/oauth/slack/callback')}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
+						class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
+						>sign in with slack</a
+					>
 				{:else}
-				<a
-					style="font-family: Phantom Sans;"
-					href="/ships"
-					class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-					>Go to your ships</a
-				>
+					<a
+						style="font-family: Phantom Sans;"
+						href="/ships"
+						class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
+						>Go to your ships</a
+					>
 				{/if}
 			</div>
 		</div>

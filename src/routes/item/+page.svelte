@@ -1,7 +1,6 @@
 <script>
-      import data from "../data.json"
-      import NavBar from '../NavBar.svelte';
-
+	import data from '../data.json';
+	import NavBar from '../NavBar.svelte';
 </script>
 
-<Navbar/>
+<NavBar />
