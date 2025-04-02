@@ -57,12 +57,6 @@ export async function GET(req) {
         }
       }).then(r => r.json())
   console.log(data)      
-      const structuredBody = {
-        slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
-        session_token: sessionId,
-        slack_name: data.user.real_name,
-        dev_account: dev,
-          }
       // create db entry here
       await prisma.user.create({
         data: {
@@ -70,7 +64,6 @@ export async function GET(req) {
           slackId: jwt["https://slack.com/user_id"] || jwt.sub,
           slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
           slack_name: data.user.real_name,
-          
         }
       })
       req.cookies.set("session", sessionId, { path: "/", httpOnly: false  })

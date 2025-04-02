@@ -41,7 +41,6 @@ enum StatusString {
 
 model User {
   slackId               String        @id
-  airtable_id           String
   token                 String
   slack_id              String
   slack_name            String
@@ -77,11 +76,12 @@ model Ship {
 model Purchase {
   id          String        @id @default(cuid())
   shipId      String
-  userId      String
+  buyerId     String
+  sellerId    String
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   ship        Ship          @relation(fields: [shipId], references: [id])
-  user        User          @relation(fields: [userId], references: [slackId])
+  seller      User          @relation(fields: [sellerId], references: [slackId])
   HeidiEscrow HeidiEscrow[]
   Time        Time[]
 }
