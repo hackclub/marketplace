@@ -19,27 +19,23 @@ export async function POST(req: Request) {
     }
     const body = await req.request.json()
     // fetch the ship from airtable
-    const ship = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships/${body.id}`, {
-        headers: {
-            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-        }
-    }).then(r => r.json())
-    // console.log(ship)
-    if (!ship.fields) return new Response("404 Not Found")
-    if (ship.fields.Status !== "draft") return new Response("400 Bad Request")
-    // return;
-    await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships/${body.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",       
-            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-        },
-        body: JSON.stringify({
-            fields: {
-                "Status": "under grant review"
-            }
-        })
+    let ship = null;
+ try {
+    ship  = await prisma.ship.update({
+    where: {
+        id: body.id,
+        status: "UNDER_HQ_DIGITAL_REVIEW",
+        approved_for_digital: true,
+    },
+    data: {
+        status: "UNDER_HQ_GRANT_REVIEW"
+    }
+  })
+} catch (e) {
+    return new Response(JSON.stringify({ message: "Ship not found" }), {
+        status: 404
     })
+}
     //  send noti to slack channel
        await fetch(`https://slack.com/api/chat.postMessage`, {
             headers: {
@@ -59,7 +55,7 @@ export async function POST(req: Request) {
         },
         method: "POST",
        body: JSON.stringify({
-            text: `Your ship (${ship.fields.Name}) is in the pending grant review!`,
+            text: `Your ship (${ship.Name}) is in the pending grant review!`,
             channel: sessionData.slackId
         })
       }).then(r => r.json()).then(console.log)

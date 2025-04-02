@@ -21,25 +21,25 @@ export async function GET(req: Request) {
     }
     
     // query stuff
-    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`FIND("${sessionData.slackId}", ARRAYJOIN(users, ","))`)}`, {
-        headers: {
-            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+    const data = await prisma.ship.findMany({ 
+        where: {
+            userId: sessionData.slackId
         }
-    }).then(r => r.json()).then(dd => {
+    }).then(dd => {
         // console.log(dd.records[0])
-        return dd.records.map((d) => ({
-            title: d.fields.Name,
-            status: d.fields.Status,
-            coverLink: d.fields.cover_image,
+        return dd.map((d) => ({
+            title: d.Name,
+            status: d.status,
+            coverLink: d.cover_image_url,
             id: d.id,
-            assignee: d.fields.Assignee ? d.fields.Assignee.name : null,
-            reviewer_feedback: d.fields.reviewer_feedback,
-            featured: d.fields.featured || false,
-            notes_for_reviewer: d.fields.notes_for_reviewer,
-            description: d.fields.description,
-            avatar: `https://cachet.dunkirk.sh/users/${d.fields.slack_user_id}/r`,
-            author: d.fields.slack_user_name,
-            author_slack_id: d.fields.slack_user_id,
+            assignee: d.Reviewer,
+            reviewer_feedback: d.reviewer_feedback,
+            featured: d.featured || false,
+            // notes_for_reviewer: d.notes_for_reviewer,
+            description: d.Description,
+            avatar: `https://cachet.dunkirk.sh/users/${d.userId}/r`,
+            author: d.slack_user_name,
+            author_slack_id: d.userId,
         })).filter(d => d.title)
     })
     return new Response(JSON.stringify(data), {

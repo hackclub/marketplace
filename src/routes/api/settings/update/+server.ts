@@ -22,26 +22,36 @@ export async function PATCH(req: Request) {
     const body = await req.request.json()
     console.log(body)
     // to be done
-    return await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users/${sessionData.airtable_id}`, {
-        headers: {
-            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json",
+    // return await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users/${sessionData.airtable_id}`, {
+    //     headers: {
+    //         Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
+    //         "Content-Type": "application/json",
+    //     },
+    //     method: "PATCH",
+    //     body: JSON.stringify({
+    //         fields: {
+    //             address: body.address,
+    //             region_for_shipping_and_receiving: body.region_for_shipping_and_receiving,
+    //             hcb_email: body.hcb_email,
+    //         }
+    //     })
+    // }).then(r => r.json()).then(dd => {
+    //     console.log(dd)
+    //     return new Response(JSON.stringify({message:"OK"}), {
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         }
+    //     })
+    // }
+    // )
+    return await prisma.user.update({
+        where: {
+            slackId: sessionData.slackId
         },
-        method: "PATCH",
-        body: JSON.stringify({
-            fields: {
-                address: body.address,
-                region_for_shipping_and_receiving: body.region_for_shipping_and_receiving,
-                hcb_email: body.hcb_email,
-            }
-        })
-    }).then(r => r.json()).then(dd => {
-        console.log(dd)
-        return new Response(JSON.stringify({message:"OK"}), {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-    }
-    )
+        data: {
+            hcb_email: body.hcb_email,
+            reigions_for_shipping: body.region_for_shipping_and_receiving[0],
+            address: body.address
+        }
+    })
 }

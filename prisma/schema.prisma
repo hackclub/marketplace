@@ -47,15 +47,19 @@ model User {
   hcb_email             String?
   reigions_for_shipping Reigions?
   currency              Float         @default(0.0)
+  address               String?
   Purchase              Purchase[]
   HeidiEscrow           HeidiEscrow[]
   Ship                  Ship[]
+
+  @@unique([slackId, slack_name])
 }
 
 model Ship {
   id                     String        @id @default(cuid())
   Name                   String
   Description            String
+  featured               Boolean       @default(false)
   Reviewer               String? // name or smthing
   grant_amount           Float         @default(30.0)
   requested_grant_amount Float
@@ -64,13 +68,15 @@ model Ship {
   approved_for_hq        Boolean       @default(false)
   approved_for_digital   Boolean       @default(false)
   github_url             String
-  demo_url               String
+  demo_url               String?
   cover_image_url        String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
   readme_url             String
   Purchase               Purchase[]
   HeidiEscrow            HeidiEscrow[]
   userId                 String
-  user                   User          @relation(fields: [userId], references: [slackId])
+  slack_user_name        String
+  reviewer_feedback      String?
+  user                   User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
 }
 
 model Purchase {
@@ -83,7 +89,6 @@ model Purchase {
   ship        Ship          @relation(fields: [shipId], references: [id])
   seller      User          @relation(fields: [sellerId], references: [slackId])
   HeidiEscrow HeidiEscrow[]
-  Time        Time[]
 }
 
 model HeidiEscrow {
@@ -100,9 +105,9 @@ model HeidiEscrow {
 model Time {
   id                    String     @id @default(cuid())
   shipId                String
-  Purchase              Purchase?  @relation(fields: [purchaseId], references: [id])
-  purchaseId            String?
-  video_link            String
+  video_link            String?
   status                TimeStatus @default(PENDING)
-  total_time_in_seconds Float
+  total_time_in_seconds Float?
+  createdAt             DateTime   @default(now()) 
+  updatedAt             DateTime   @updatedAt
 }

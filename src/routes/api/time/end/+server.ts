@@ -27,27 +27,48 @@ export async function POST(req: Request) {
         //     }
         // }).then(r => r.json()).then(udata => udata.records[0])
     // grab user data moment
-    const structuredBody = {
-        // video_link: body.link,
-        Status: "not_approved",
-        "user": [sessionData.airtable_id],
-        ship: [body.ship_id],
-        isPaused: false,
-        // pausedAt: null,
+    // const structuredBody = {
+    //     // video_link: body.link,
+    //     Status: "not_approved",
+    //     "user": [sessionData.airtable_id],
+    //     ship: [body.ship_id],
+    //     isPaused: false,
+    //     // pausedAt: null,
+    // }
+    // const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/timerecorder`, {
+    //     method: "PATCH",
+    //     headers: {
+    //         "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
+    //         "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify({
+    //         records: [{
+    //             fields: structuredBody
+    //         }],
+    //     })
+    // }).then(r => r.text())
+
+//gotta do this for fraud protection
+const timeData = await prisma.time.findFirst({
+    where: {
+        id: body.id
     }
-    const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/timerecorder`, {
-        method: "PATCH",
-        headers: {
-            "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json"
+})
+if(!timeData) return new Response("No time data found", {
+    status: 404
+})
+
+
+    await prisma.time.update({
+        where: {
+            id: body.id
         },
-        body: JSON.stringify({
-            records: [{
-                fields: structuredBody
-            }],
-        })
-    }).then(r => r.text())
-    return new Response(reqq, {
+        data: {
+           video_link: body.video_link,
+           total_time_in_seconds: Math.round((Date.now()/1000) - timeData.createdAt.getTime() ),
+        }
+    })
+    return new Response("OK BYE BYE", {
         headers: {
             "Content-Type": "application/json"
         }
