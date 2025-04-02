@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     console.log(body)
     if (!body) return new Response("no body")
     // check for seller product ID (ship id??)
-    const productInfo = await fetch(`https://api.airtable.com/v0/app2v1g3x4j5h8/ships/${body.shipId}`, {
+    const productInfo = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships/${body.shipId}`, {
         headers: {
             Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
         }
