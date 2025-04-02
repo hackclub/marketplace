@@ -23,8 +23,8 @@ export async function GET(req: Request) {
         })
         // console.log(dd.records[0])
         return new Response(JSON.stringify({
-            title: d.id,
-            id: d.Name,
+            title: d.Name,
+            id: d.id,
             status: d.status,
             featured: d.featured || false,
             description: d.Description,

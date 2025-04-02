@@ -65,7 +65,7 @@ if(!timeData) return new Response("No time data found", {
         },
         data: {
            video_link: body.video_link,
-           total_time_in_seconds: Math.round((Date.now()/1000) - timeData.createdAt.getTime() ),
+           total_time_in_seconds: Math.round((Date.now()/1000) - (timeData.createdAt.getTime() / 1000) ),
         }
     })
     return new Response("OK BYE BYE", {
