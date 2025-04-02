@@ -3,6 +3,7 @@ import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_SLACK_BOT_T
 import { parseJwt } from "$lib/jwt";
 import { json, redirect } from "@sveltejs/kit";
 import prisma from "$lib/prisma"
+import {dev} from "$app/environment";
 export async function GET(req) {
   if (req.cookies.get("session")) throw redirect(302, "/ships")
   const code = req.url.searchParams.get("code")
@@ -39,7 +40,7 @@ export async function GET(req) {
     // check if user has a session 
     const userData = await prisma.user.findFirst({
       where: {
-        slackId: jwt["https://slack.com/user_id"] || jwt.sub
+        slackId: jwt["https://slack.com/user_id"] || jwt.sub,
       }
     })
     if (userData) {
@@ -60,6 +61,7 @@ export async function GET(req) {
         slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
         session_token: sessionId,
         slack_name: data.user.real_name,
+        dev_account: dev,
           }
           const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users`, {
               method: "POST",
@@ -83,6 +85,7 @@ export async function GET(req) {
       })
       req.cookies.set("session", sessionId, { path: "/", httpOnly: false  })
       // throw redirect(301, "/onboard")
+      req.cookies.set('on-board', 'true', { path: '/', httpOnly: false })
       ok_to_redirect = "/onboard";
     }
 } catch (e) {

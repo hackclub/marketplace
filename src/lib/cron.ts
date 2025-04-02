@@ -210,3 +210,24 @@ export async function deleteExpiredCache() {
         }
     }
 }
+
+export async function garbageCleanupForDeletedUsers() {
+    //TODO: add this to the longer cron (one day)
+    // query airtable for ships with no users, and delete them
+    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`NOT({users})`)}`, {
+        headers: {
+            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+        }
+    }).then(r => r.json()).then(d => d.records.map(r => r.id))
+    
+    for(let i = 0; i < data.length; i++) {
+        const id = data[i]
+        await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+            }
+        })
+        await new Promise((r) => setTimeout(r, 1500)) // wait 1.5 second between requests
+    }
+}

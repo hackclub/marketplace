@@ -36,7 +36,7 @@ export async function POST(req: Request) {
         },
         body: JSON.stringify({
             fields: {
-                "Status": "under hq digital review"
+                "Status": "under grant review"
             }
         })
     })
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
             },
             method: "POST",
            body: JSON.stringify({
-                text: `User <@${sessionData.slackId}> has promoted a ship (${body.id}) to HQ Digital Review -- please review it or something`,
+                text: `User <@${sessionData.slackId}> has promoted a ship (${body.id}) to Grant review??! (please adjust there grant amount) -- please review it or something`,
                 channel: `C08GZ6QF97Z`
             })
        }).then(r => r.json())
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
         },
         method: "POST",
        body: JSON.stringify({
-            text: `Your ship (${ship.fields.Name}) is in the pending digital review!`,
+            text: `Your ship (${ship.fields.Name}) is in the pending grant review!`,
             channel: sessionData.slackId
         })
       }).then(r => r.json()).then(console.log)

@@ -37,14 +37,14 @@
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">featured projects:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>d.featured)} />
+	<CardList items={data.filter(d=>d.featured).slice(0,6)} />
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">projects that are out rn:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>!d.featured && d.status == "shipped!")} />
+	<CardList items={data.filter(d=>!d.featured && d.status == "shipped!").slice(0,9)} />
 </div>
 
 
@@ -52,7 +52,7 @@
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">projects in progress:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>!d.featured && d.status !== "shipped!")} />
+	<CardList items={data.filter(d=>!d.featured && d.status !== "shipped!").reverse().slice(0,12)} />
 </div>
 
 <div class="flex justify-center items-center mt-16">
