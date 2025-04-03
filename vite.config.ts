@@ -12,7 +12,7 @@ function getGitCommitHash() {
 export default defineConfig({
 	plugins: [sveltekit(), tailwindcss()],
 	server: {
-		allowedHosts: ['.ngrok-free.app']
+		allowedHosts: ['.ngrok-free.app', ".loca.lt"]
 	},
 	preview: {
 		allowedHosts: ['market.a.selfhosted.hackclub.com']

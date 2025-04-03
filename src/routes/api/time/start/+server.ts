@@ -28,27 +28,13 @@ export async function POST(req: Request) {
         //     }
         // }).then(r => r.json()).then(udata => udata.records[0])
     // grab user data moment
-    const structuredBody = {
-        // video_link: body.link,
-        Status: "not_approved",
-        "user": [sessionData.airtable_id],
-        ship: [body.ship_id],
-        isPaused: false,
-        // pausedAt: null,
-    }
-    const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/timerecorder`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            records: [{
-                fields: structuredBody
-            }],
-        })
-    }).then(r => r.text())
-    return new Response(reqq, {
+   await prisma.time.create({
+        data: {
+shipId: body.shipId,
+        }
+   })
+    return new Response("OK CREATED", {
+         status: 201,
         headers: {
             "Content-Type": "application/json"
         }

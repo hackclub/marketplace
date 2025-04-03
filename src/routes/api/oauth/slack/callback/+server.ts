@@ -57,30 +57,13 @@ export async function GET(req) {
         }
       }).then(r => r.json())
   console.log(data)      
-      const structuredBody = {
-        slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
-        session_token: sessionId,
-        slack_name: data.user.real_name,
-        dev_account: dev,
-          }
-          const reqq = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users`, {
-              method: "POST",
-              headers: {
-                  "Authorization": `Bearer ${PRIVATE_AIRTABLE_API_KEY}`,
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                  records: [{
-                      fields: structuredBody
-                  }],
-              })
-          }).then(r => r.json())
       // create db entry here
       await prisma.user.create({
         data: {
           token: sessionId,
           slackId: jwt["https://slack.com/user_id"] || jwt.sub,
-          airtable_id: reqq.records[0].id
+          slack_id: jwt["https://slack.com/user_id"] || jwt.sub,
+          slack_name: data.user.real_name,
         }
       })
       req.cookies.set("session", sessionId, { path: "/", httpOnly: false  })

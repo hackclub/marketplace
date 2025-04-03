@@ -21,19 +21,14 @@ export async function GET(req: Request) {
     }
 
     // now fetch the users settings from the airtable
-    const data = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users/${sessionData.airtable_id}`, {
-        headers: {
-            Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-        }
-    }).then(r => r.json())
+    const data = sessionData
     return new Response(JSON.stringify({
-        id: data.id,
-        slackId: data.fields.slack_id,
-        has_authed_with_hcb: data.fields.has_authed_with_hcb,
-        hcb_email: data.fields.hcb_email,
-        slack_name: data.fields.slack_name,
-        address: data.fields.address,
-        reigons: data.fields.region_for_shipping_and_receiving
+        // id: data.id,
+        slackId: data.slack_id,
+        hcb_email: data.hcb_email,
+        slack_name: data.slack_name,
+        address: data.address,
+        reigons: data.reigions_for_shipping
     }), {
         headers: {
             "Content-Type": "application/json"

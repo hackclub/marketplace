@@ -1,4 +1,5 @@
 <script>
+	import { dev } from '$app/environment';
 
 	let data = [];
 	let loading = true;
@@ -108,9 +109,22 @@
   </div>
 
   <div class="flex justify-center items-center mt-5">
-  <button  style="font-family: Phantom Sans; margin-bottom: 50px;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-87 py-2 hover:bg-red-600">
+  <button type="submit" style="font-family: Phantom Sans; margin-bottom: 50px;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-87 py-2 hover:bg-red-600">
 	  ship a project
   </button>
 </div>
+
 </div>
 </form>
+{#if dev} 
+<button  style="font-family: Phantom Sans;" class="text-white bg-red-400 rounded-lg text-2xl font-bold px-2 py-2 hover:bg-red-600" onclick={
+  () => {
+	const allInputs = document.querySelectorAll("input");
+	allInputs.forEach(input => {
+		input.value = input.placeholder;
+	});
+  }
+}>
+  autofill with dummy data
+</button>
+{/if}
