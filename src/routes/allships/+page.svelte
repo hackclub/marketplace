@@ -20,14 +20,14 @@
 			loading = false;
 		}
 		function getCookie(name) {
-            return document.cookie.split('; ').find(row => row.startsWith(name + '=')) !== undefined;
-        }
+			return document.cookie.split('; ').find((row) => row.startsWith(name + '=')) !== undefined;
+		}
 
-        loggedIn = getCookie("session");
+		loggedIn = getCookie('session');
 	});
 </script>
 
-<NavBar/>
+<NavBar />
 
 <div class="flex flex-wrap justify-between mx-auto max-w-screen-xl">
 	<CardList items={data} />
