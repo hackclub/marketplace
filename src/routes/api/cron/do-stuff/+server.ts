@@ -1,7 +1,6 @@
 import { PRIVATE_CRON_SECRET } from '$env/static/private';
 import { dev } from '$app/environment';
 import {
-	deleteExpiredCache,
 	draftAllRejectedShips,
 	promoteUsersFromDigitalReview,
 	sendHCBGrants
@@ -19,7 +18,6 @@ export async function GET(req: Request) {
 		sendHCBGrants(),
 		promoteUsersFromDigitalReview(),
 		draftAllRejectedShips(),
-		deleteExpiredCache()
 	]);
 	return new Response('200 OK');
 }
