@@ -1,6 +1,6 @@
 import { PRIVATE_CRON_SECRET } from "$env/static/private";
 import { dev } from '$app/environment';
-import { deleteExpiredCache, draftAllRejectedShips, promoteUsersFromDigitalReview, sendHCBGrants } from "$lib/cron";
+import {  draftAllRejectedShips, promoteUsersFromDigitalReview, sendHCBGrants } from "$lib/cron";
 
 export async function GET(req: Request) {
     const headers = Object.fromEntries(req.request.headers.entries());
@@ -14,7 +14,6 @@ export async function GET(req: Request) {
         sendHCBGrants(),
         promoteUsersFromDigitalReview(),
         draftAllRejectedShips(),
-        deleteExpiredCache()
     ])
     return new Response("200 OK")
 }
