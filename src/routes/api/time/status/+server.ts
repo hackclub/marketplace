@@ -1,7 +1,8 @@
 import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY } from '$env/static/private';
 import prisma from '$lib/prisma';
+import { json } from '@sveltejs/kit';
 
-export async function POST(req: Request) {
+export async function GET(req: Request) {
 	// validate session moment
 	const session = req.cookies.get('session');
 	if (!session) {
@@ -19,25 +20,33 @@ export async function POST(req: Request) {
 			status: 401
 		});
 	}
-	const body = await req.request.json();
-	console.log(body);
-	if (!body) return new Response('no body');
+	// const body = await req.request.json();
+	// console.log(body);
+	// if (!body) return new Response('no body');
 	// const user = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users?filterByFormula=${encodeURIComponent(`slack_id="${sessionData.slackId}"`)}`, {
 	//     headers: {
 	//         Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
 	//     }
 	// }).then(r => r.json()).then(udata => udata.records[0])
 	// grab user data moment
-	await prisma.time.create({
-		data: {
-			shipId: body.shipId,
-			userId: sessionData.slackId,
-		}
-	});
-	return new Response('OK CREATED', {
-		status: 201,
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	});
+const statusData = await prisma.time.findFirst({
+    where: {
+        userId: sessionData.slackId,
+        'AND': {
+            video_link: null
+        }
+    }
+});
+// json
+if(!statusData) return json({ message: `no json data`, session: false });
+return json({
+    ...statusData,
+    session: true
+});
+	// return new Response('OK CREATED', {
+	// 	status: 201,
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	}
+	// });
 }

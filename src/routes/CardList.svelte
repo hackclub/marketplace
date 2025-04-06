@@ -1,11 +1,16 @@
 <script>
   import Icon from 'mdi-svelte';
+  import Timer from '../components/Timer.svelte';
   import { mdiTimer } from '@mdi/js';
+  import { Modal, Content, Trigger} from 'sv-popup'
   export function getColor(status) {
     return status === "SHIPPED" ? "green" : status === "in progress" ? "yellow" : "red";
   }
   // import Popup from '$lib/Popup.svelte';
-  export let items = [];
+  /**
+	 * @type {any[]}
+	 */
+   export let items = [];
   export let isAllMine = false;
   // shorten desc and add ...
   const shortenDesc = (text, maxChars = 75) => {
@@ -13,6 +18,8 @@
   };
 </script>
 
+
+  
 <div class="flex flex-wrap gap-4" style="font-family: Phantom Sans;">
   {#each items as item}
       <div class="w-80 rounded-lg p-4 relative">
@@ -26,8 +33,16 @@
             <div class="mt-6">
                 <h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
                 <!-- <p class="text-gray-700">@{item.author}</p> -->
+               
                 {#if item.status !== "SHIPPED"}
-                <button class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"><Icon path={mdiTimer } /></button>
+                <Modal basic>
+                    <Content>
+<Timer shipId={item.id} />
+                    </Content>
+                    <Trigger>
+                        <button class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"><Icon path={mdiTimer } /></button>
+                    </Trigger>
+                  </Modal>
                 {/if}
                 <p class="text-orange-700">{shortenDesc(item.description)}</p>
                 <div id="attributes">

@@ -196,3 +196,47 @@ fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
     })
 })
 }
+export async function cleanUpOldTimers() {
+    const data = await prisma.time.findMany({
+        where: {
+       // how can i check if updatedAt is older than 15 mins?
+       updatedAt: {
+            lt: new Date(Date.now() - 15 * 60 * 1000)
+        }
+        }
+    })
+    for(const d of data) {
+        // dm the user about it
+        await fetch(`https://slack.com/api/chat.postMessage`, {
+            headers: {
+                Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                text: `${dev?`[DEV]`:""} <@${d.userId}> your timer has expired and ur time session with (ship ${d.shipId}) has been deleted`,
+                channel: d.userId
+            })
+        })
+        // also to the other channel
+        await fetch(`https://slack.com/api/chat.postMessage`, {
+            headers: {
+                Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+                "Content-Type": "application/json; charset=utf-8"
+            },
+            method: "POST",
+            body: JSON.stringify({
+                text: `${dev?`[DEV]`:""} <@${d.userId}>  timer  expired and  has been deleted`,
+                channel: "C08GZ6QF97Z"
+            })
+        })
+      await  prisma.time.delete({
+            where: {
+                id: d.id,
+                userId: d.userId
+            }
+        })
+    }
+
+    // console.log(data)
+}

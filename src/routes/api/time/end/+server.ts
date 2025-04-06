@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 	//gotta do this for fraud protection
 	const timeData = await prisma.time.findFirst({
 		where: {
-			id: body.id
+			userId: sessionData.slackId,
 		}
 	});
 	if (!timeData)
@@ -65,6 +65,7 @@ export async function POST(req: Request) {
 		},
 		data: {
 			video_link: body.video_link,
+			memo: body.memo,
 			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
 		}
 	});

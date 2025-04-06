@@ -105,6 +105,8 @@ model HeidiEscrow {
 model Time {
   id                    String     @id @default(cuid())
   shipId                String
+  userId                String
+  memo                  String?
   video_link            String?
   status                TimeStatus @default(PENDING)
   total_time_in_seconds Float?
