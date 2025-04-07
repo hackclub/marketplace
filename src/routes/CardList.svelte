@@ -21,6 +21,11 @@
 
   
 <div class="flex flex-wrap gap-4" style="font-family: Phantom Sans;">
+  {#if items.length == 0} 
+  <div class="flex justify-center items-center w-full h-64">
+      <h1 class="text-2xl font-bold text-gray-700">No items found, maybe some will be here soon?</h1>
+  </div>
+  {/if}
   {#each items as item}
       <div class="w-80 rounded-lg p-4 relative">
         {#if isAllMine}

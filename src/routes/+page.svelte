@@ -5,12 +5,17 @@
 	let loading = true;
 	let loggedIn = false;
 	import { onMount } from 'svelte';
-
+	let featured = [];
+	let inProgress = [];
+	let shipped = [];
 	onMount(async () => {
 		try {
 			const res = await fetch('/api/ships/homepage');
 			if (res.ok) {
 				data = await res.json();
+				featured = data.filter(d => d.featured).slice(0, 6);
+				inProgress = data.filter(d => !d.featured && d.status !== "SHIPPED").reverse().slice(0, 12);
+				shipped = data.filter(d => !d.featured && d.status == "SHIPPED").slice(0, 9);
 			} else {
 				console.error('Failed to fetch data');
 			}
@@ -25,6 +30,7 @@
 
         loggedIn = getCookie("session");
 	});
+	
 </script>
 
 <NavBar/>
@@ -37,14 +43,14 @@
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">featured projects:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>d.featured).slice(0,6)} />
+	<CardList items={featured} />
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">projects that are out rn:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>!d.featured && d.status == "SHIPPED").slice(0,9)} />
+	<CardList items={shipped} />
 </div>
 
 
@@ -52,7 +58,7 @@
 	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500">projects in progress:</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data.filter(d=>!d.featured && d.status !== "SHIPPED").reverse().slice(0,12)} />
+	<CardList items={inProgress} />
 </div>
 
 <div class="flex justify-center items-center mt-16">

@@ -1,18 +1,85 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
-  // output        = "../generated/prisma_client"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  slackId               String        @id
+  token                 String
+  currency              Float         @default(0.0)
+  hcb_email             String?
+  reigions_for_shipping Reigions?
+  slack_id              String
+  slack_name            String
+  address               String?
+  HeidiEscrow           HeidiEscrow[]
+  Purchase              Purchase[]
+  Ship                  Ship[]
+
+  @@unique([slackId, slack_name])
+}
+
+model Ship {
+  id                     String        @id @default(cuid())
+  Name                   String
+  Description            String
+  Reviewer               String?
+  grant_amount           Float         @default(30.0)
+  requested_grant_amount Float
+  status                 StatusString  @default(DRAFT)
+  approved_for_grant     Boolean       @default(false)
+  approved_for_hq        Boolean       @default(false)
+  approved_for_digital   Boolean       @default(false)
+  github_url             String
+  demo_url               String?
+  cover_image_url        String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
+  readme_url             String
+  userId                 String
+  featured               Boolean       @default(false)
+  reviewer_feedback      String?
+  slack_user_name        String
+  HeidiEscrow            HeidiEscrow[]
+  Purchase               Purchase[]
+  user                   User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
+}
+
+model Purchase {
+  id          String        @id @default(cuid())
+  shipId      String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  buyerId     String
+  sellerId    String
+  HeidiEscrow HeidiEscrow[]
+  seller      User          @relation(fields: [sellerId], references: [slackId])
+  ship        Ship          @relation(fields: [shipId], references: [id])
+}
+
+model HeidiEscrow {
+  id          String   @id @default(cuid())
+  purchaseId  String
+  userSlackId String?
+  shipId      String?
+  purchase    Purchase @relation(fields: [purchaseId], references: [id])
+  Ship        Ship?    @relation(fields: [shipId], references: [id])
+  User        User?    @relation(fields: [userSlackId], references: [slackId])
+}
+
+model Time {
+  id                    String     @id @default(cuid())
+  shipId                String
+  video_link            String?
+  status                TimeStatus @default(PENDING)
+  total_time_in_seconds Float?
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  userId                String
+  memo                  String?
 }
 
 enum TimeStatus {
@@ -37,79 +104,4 @@ enum StatusString {
   UNDER_HQ_GRANT_REVIEW
   UNDER_HQ_REVIEW
   SHIPPED
-}
-
-model User {
-  slackId               String        @id
-  token                 String
-  slack_id              String
-  slack_name            String
-  hcb_email             String?
-  reigions_for_shipping Reigions?
-  currency              Float         @default(0.0)
-  address               String?
-  Purchase              Purchase[]
-  HeidiEscrow           HeidiEscrow[]
-  Ship                  Ship[]
-
-  @@unique([slackId, slack_name])
-}
-
-model Ship {
-  id                     String        @id @default(cuid())
-  Name                   String
-  Description            String
-  featured               Boolean       @default(false)
-  Reviewer               String? // name or smthing
-  grant_amount           Float         @default(30.0)
-  requested_grant_amount Float
-  status                 StatusString  @default(DRAFT)
-  approved_for_grant     Boolean       @default(false)
-  approved_for_hq        Boolean       @default(false)
-  approved_for_digital   Boolean       @default(false)
-  github_url             String
-  demo_url               String?
-  cover_image_url        String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
-  readme_url             String
-  Purchase               Purchase[]
-  HeidiEscrow            HeidiEscrow[]
-  userId                 String
-  slack_user_name        String
-  reviewer_feedback      String?
-  user                   User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
-}
-
-model Purchase {
-  id          String        @id @default(cuid())
-  shipId      String
-  buyerId     String
-  sellerId    String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  ship        Ship          @relation(fields: [shipId], references: [id])
-  seller      User          @relation(fields: [sellerId], references: [slackId])
-  HeidiEscrow HeidiEscrow[]
-}
-
-model HeidiEscrow {
-  id         String @id @default(cuid())
-  purchaseId String
-
-  purchase    Purchase @relation(fields: [purchaseId], references: [id])
-  User        User?    @relation(fields: [userSlackId], references: [slackId])
-  userSlackId String?
-  Ship        Ship?    @relation(fields: [shipId], references: [id])
-  shipId      String?
-}
-
-model Time {
-  id                    String     @id @default(cuid())
-  shipId                String
-  userId                String
-  memo                  String?
-  video_link            String?
-  status                TimeStatus @default(PENDING)
-  total_time_in_seconds Float?
-  createdAt             DateTime   @default(now()) 
-  updatedAt             DateTime   @updatedAt
 }
