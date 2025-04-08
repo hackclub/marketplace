@@ -74,6 +74,7 @@ model Time {
   id                    String     @id @default(cuid())
   shipId                String
   video_link            String?
+  wormhole_link         String?
   status                TimeStatus @default(PENDING)
   total_time_in_seconds Float?
   createdAt             DateTime   @default(now())

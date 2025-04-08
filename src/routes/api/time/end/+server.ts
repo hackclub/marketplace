@@ -65,6 +65,7 @@ export async function POST(req: Request) {
 		},
 		data: {
 			video_link: body.video_link,
+			wormhole_link: body.wormhole_link,
 			memo: body.memo,
 			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
 		}
