@@ -1,6 +1,6 @@
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
 import prisma from '$lib/prisma';
-export async function POST(req: Request) {
+export async function DELETE(req: Request) {
 	// validate session moment
 	const session = req.cookies.get('session');
 	if (!session) {
@@ -59,17 +59,22 @@ export async function POST(req: Request) {
 			status: 404
 		});
 
-	await prisma.time.update({
-		where: {
-			id: timeData.id
-		},
-		data: {
-			video_link: body.video_link,
-			wormhole_link: body.wormhole_link,
-			memo: body.memo,
-			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
-		}
-	});
+	// await prisma.time.update({
+	// 	where: {
+	// 		id: body.id
+	// 	},
+	// 	data: {
+	// 		video_link: body.video_link,
+	// 		wormhole_link: body.wormhole_link,
+	// 		memo: body.memo,
+	// 		total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
+	// 	}
+	// });
+    await prisma.time.delete({
+        where: {
+            id:timeData.id
+        }
+    })
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'
