@@ -52,6 +52,9 @@ export async function POST(req: Request) {
 	const timeData = await prisma.time.findFirst({
 		where: {
 			userId: sessionData.slackId,
+			'AND': {
+				video_link: null
+			}
 		}
 	});
 	if (!timeData)

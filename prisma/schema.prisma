@@ -42,6 +42,7 @@ model Ship {
   userId                 String
   featured               Boolean       @default(false)
   reviewer_feedback      String?
+  total_time_in_seconds  String? // why string? integer overflow scares me
   slack_user_name        String
   HeidiEscrow            HeidiEscrow[]
   Purchase               Purchase[]

@@ -52,6 +52,9 @@ export async function DELETE(req: Request) {
 	const timeData = await prisma.time.findFirst({
 		where: {
 			userId: sessionData.slackId,
+			'AND': {
+				video_link: null
+			}
 		}
 	});
 	if (!timeData)
@@ -75,6 +78,7 @@ export async function DELETE(req: Request) {
             id:timeData.id
         }
     })
+	
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'
