@@ -42,8 +42,8 @@ model Ship {
   userId                 String
   featured               Boolean       @default(false)
   reviewer_feedback      String?
-  total_time_in_seconds  String? // why string? integer overflow scares me
   slack_user_name        String
+  total_time_in_seconds  String?       @default("0")
   HeidiEscrow            HeidiEscrow[]
   Purchase               Purchase[]
   user                   User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
@@ -75,13 +75,13 @@ model Time {
   id                    String     @id @default(cuid())
   shipId                String
   video_link            String?
-  wormhole_link         String?
   status                TimeStatus @default(PENDING)
   total_time_in_seconds Float?
   createdAt             DateTime   @default(now())
   updatedAt             DateTime   @updatedAt
   userId                String
   memo                  String?
+  wormhole_link         String?
 }
 
 enum TimeStatus {

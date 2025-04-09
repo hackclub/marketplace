@@ -42,7 +42,10 @@ export async function GET(req: Request) {
 					description: d.Description,
 					avatar: `https://cachet.dunkirk.sh/users/${d.userId}/r`,
 					author: d.slack_user_name,
-					author_slack_id: d.userId
+					author_slack_id: d.userId,
+					total_time_in_seconds: d.total_time_in_seconds,
+					// js pretty string it please
+					total_time: new Date(parseInt(d.total_time_in_seconds || "0") * 1000).toISOString().substr(11, 8),
 				}))
 				.filter((d) => d.title);
 		});

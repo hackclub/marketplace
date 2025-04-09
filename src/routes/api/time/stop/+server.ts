@@ -1,4 +1,5 @@
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
+import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
 export async function DELETE(req: Request) {
 	// validate session moment
@@ -78,7 +79,7 @@ export async function DELETE(req: Request) {
             id:timeData.id
         }
     })
-	
+	reSyncUsersShipTime(body.shipId);
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'

@@ -22,7 +22,7 @@ export async function reSyncUsersShipTime(shipId: string) {
             id: shipId
         },
         data: {
-            total_time_in_seconds: timeDataWithVideos_num
+            total_time_in_seconds: timeDataWithVideos_num.toString()
         }
 })
 }

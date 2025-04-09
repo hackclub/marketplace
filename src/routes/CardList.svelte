@@ -37,8 +37,9 @@
             <!-- <img src={item.avatar} alt="Avatar" class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"> -->
             <div class="mt-6">
                 <h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
+                <p class="text-gray-700">{item.total_time}</p>
                 <!-- <p class="text-gray-700">@{item.author}</p> -->
-               
+                
                 {#if item.status !== "SHIPPED"}
                 <Modal basic>
                     <Content>

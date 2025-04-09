@@ -1,4 +1,5 @@
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
+import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
 export async function POST(req: Request) {
 	// validate session moment
@@ -73,6 +74,7 @@ export async function POST(req: Request) {
 			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
 		}
 	});
+	reSyncUsersShipTime(timeData.shipId);
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'
