@@ -8,7 +8,7 @@ RUN apk add --no-cache openssl
 RUN ln -s /usr/lib/libssl.so.3 /lib/libssl.so.3
 EXPOSE 4173
 EXPOSE 3000
-RUN npm ci
+RUN npm install
 
 COPY . .
 
