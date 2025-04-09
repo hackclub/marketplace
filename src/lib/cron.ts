@@ -202,7 +202,8 @@ export async function cleanUpOldTimers() {
        // how can i check if updatedAt is older than 15 mins?
        updatedAt: {
             lt: new Date(Date.now() - 15 * 60 * 1000)
-        }
+            },
+            video_link: null
         }
     })
     for(const d of data) {
