@@ -1,6 +1,20 @@
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
 import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
+import { z } from "zod"
+function parseSlackMessageUrl(url) {
+	const match = url.match(/archives\/(.*?)\/p(\d{16})/);
+	if (!match) throw new Error("Invalid Slack message URL format");
+	const channel = match[1];
+	const rawTs = match[2];
+	const ts = `${rawTs.slice(0, 10)}.${rawTs.slice(10)}`;
+	return { channel, ts };
+}
+const ztime = z.object({
+	video_link: z.string().url().startsWith("https"),
+	memo: z.string().min(2).max(500),
+	wormhole_link: z.string().url().startsWith("https").regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i)
+  })
 export async function POST(req: Request) {
 	// validate session moment
 	const session = req.cookies.get('session');

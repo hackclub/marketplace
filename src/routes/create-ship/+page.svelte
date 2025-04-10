@@ -44,7 +44,7 @@
 			alert('Ship created!');
 			window.location.href = '/ships';
 		} else {
-			alert('Error creating ship, please try again.');
+			alert(response);
 		}
 	}}
 	style="font-family: Phantom Sans; padding-top: 10px;"
@@ -67,6 +67,7 @@
 				id="project-desc"
 				name="description"
 				type="text"
+				minlength="10"
 				placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
 				class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/> <br />

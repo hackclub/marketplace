@@ -1,7 +1,14 @@
 import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY } from '$env/static/private';
 import prisma from '$lib/prisma';
+import { z} from "zod"
 import { json } from '@sveltejs/kit';
-
+const zShip = z.object({
+	name: z.string().min(2).max(50),
+	description: z.string().min(2).max(500),
+	cost: z.number().min(0).max(1000),
+	github_url: z.string().url().startsWith("https"),
+	readme_url: z.string().url().startsWith("https"),
+})
 export async function POST(req: Request) {
 	const session = req.cookies.get('session');
 	if (!session) {
@@ -22,6 +29,14 @@ export async function POST(req: Request) {
 	const body = await req.request.json();
 	console.log(body);
 	if (!body) return new Response('no body');
+	// validate da body
+	const parsedBody = zShip.safeParse(body);
+	if (!parsedBody.success) {
+		console.log(parsedBody.error, 'a');
+		return new Response(parsedBody.error.errors.map(e=>e.message).join('\n'), {
+			status: 400
+		});
+	}
 	// query users airtable
 	// const user = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users?filterByFormula=${encodeURIComponent(`slack_id="${sessionData.slackId}"`)}`, {
 	//     headers: {
