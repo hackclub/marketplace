@@ -41,7 +41,7 @@
 
 	export async function sendOutTheData(e: Event) {
 		e.preventDefault();
-		const form = e.target as HTMLFormElement;
+		const form = e.target;
 		const formData = new FormData(form);
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);

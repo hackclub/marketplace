@@ -1,13 +1,13 @@
-<script lang="ts">
-	export let data: {
-		shipId?: string;
-		id?: string;
-		userId?: string;
-		video_link?: string;
-		total_time_in_seconds?: number;
-		wormhole_link?: string;
-	} = {};
-	export let properData: { title: string; author: string } | null = null;
+<script>
+	export let data = {
+		shipId: undefined,
+		id: undefined,
+		userId: undefined,
+		video_link: undefined,
+		total_time_in_seconds: undefined,
+		wormhole_link: undefined
+	};
+	export let properData = null;
 	export async function onOpen() {
 		if (properData) return;
 		properData = await fetch('/api/ships/get-product?shipId=' + data.shipId, {
@@ -17,7 +17,7 @@
 		}).then((r) => r.json());
 		console.log(properData);
 	}
-	export async function onAction(action: string) {
+	export async function onAction(action) {
 		fetch('/api/time/action', {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('_secret_watchword')}`
