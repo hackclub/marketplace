@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 	await prisma.time.create({
 		data: {
 			shipId: body.shipId,
-			userId: sessionData.slackId,
+			userId: sessionData.slackId
 		}
 	});
 	return new Response('OK CREATED', {
