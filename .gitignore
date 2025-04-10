@@ -24,3 +24,5 @@ vite.config.ts.timestamp-*
 neons-tests
 generated
 full_backup.sql
+# Sentry Config File
+.env.sentry-build-plugin

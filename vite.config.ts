@@ -1,3 +1,4 @@
+import { sentrySvelteKit } from "@sentry/sveltekit";
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { readFileSync } from 'fs';
@@ -10,7 +11,12 @@ function getGitCommitHash() {
 	}
 }
 export default defineConfig({
-	plugins: [sveltekit(), tailwindcss()],
+	plugins: [sentrySvelteKit({
+        sourceMapsUploadOptions: {
+            org: "neon-h1",
+            project: "hackermarket-fj"
+        }
+    }), sveltekit(), tailwindcss()],
 	server: {
 		allowedHosts: ['.ngrok-free.app', '.loca.lt']
 	},
