@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import CardList from '../CardList.svelte';
 	import NavBar from '../NavBar.svelte';
-	let data = [];
+	let data: any[] = [];
 	let loading = true;
 	let loggedIn = false;
 	import { onMount } from 'svelte';
@@ -19,7 +19,7 @@
 		} finally {
 			loading = false;
 		}
-		function getCookie(name) {
+		function getCookie(name: string) {
 			return document.cookie.split('; ').find((row) => row.startsWith(name + '=')) !== undefined;
 		}
 

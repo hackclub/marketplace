@@ -1,10 +1,13 @@
-<script>
+<script lang="ts">
+    // This is a Svelte component for a timer that tracks the time spent on a task.
+    // It allows starting, stopping, and sending data related to the timer session.
+    // The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
 	import { onMount } from "svelte";
 
     export let timeString = "00:00:00";
     export let startedAt = Date.now();
-    export let timeData = null;
-    export let shipId = null;
+    export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
+    export let shipId: string | null = null;
     setInterval(() => {
         timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
     }, 1000)
@@ -73,17 +76,17 @@ onMount(async () => {
  <!-- show input for "video url" -->
   <form on:submit={sendOutTheData}>
     <div>
-        <label>Video URL (cant be ur wormhole video, please record a video at the end showing progress)</label>
-        <input name="video_link" type="url" required minlength="2" class="border-2 border-gray-400 rounded-lg"placeholder="https://geezthesecdnurlsaresolong.com"  bind:value={timeData.video_link}>
+        <label for="video_link">Video URL (cant be ur wormhole video, please record a video at the end showing progress)</label>
+        <input id="video_link" name="video_link" type="url" required minlength="2" class="border-2 border-gray-400 rounded-lg" placeholder="https://longasscdnuserplshere.com" bind:value={timeData.video_link}>
       </div>
       <div>
-        <label>Wormhole URL</label>
-        <input name="wormhole_link" type="url" required minlength="60" class="border-2 border-gray-400 rounded-lg"  placeholder="https://hackclub.slack.com/archives/C08MC7PQ40G/p1744073240800789" />
+        <label for="wormhole_link">Wormhole URL</label>
+        <input id="wormhole_link" name="wormhole_link" type="url" required minlength="60" class="border-2 border-gray-400 rounded-lg"  placeholder="https://hackclub.slack.com/archives/C08MC7PQ40G/p1744073240800789" />
      </div>
      <div>
-        <label>Memo (what did you do??)</label>
+        <label for="memo">Memo (what did you do??)</label>
         <br  />
-        <textarea name="memo" required minlength="5" rows="2" class=""></textarea>
+        <textarea id="memo" name="memo" required minlength="5" rows="2" class=""></textarea>
         </div>
 <button type="submit" class="bg-red-400 text-white rounded-lg px-4 py-2 font-bold" >End!</button>
 
