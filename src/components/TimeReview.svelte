@@ -1,5 +1,12 @@
 <script lang="ts">
-	export let data: { shipId?: string; id?: string; userId?: string; video_link?: string; total_time_in_seconds?: number; wormhole_link?: string } = {};
+	export let data: {
+		shipId?: string;
+		id?: string;
+		userId?: string;
+		video_link?: string;
+		total_time_in_seconds?: number;
+		wormhole_link?: string;
+	} = {};
 	export let properData: { title: string; author: string } | null = null;
 	export async function onOpen() {
 		if (properData) return;
@@ -48,17 +55,13 @@
 			{:else}
 				<h1 class="font-bold text-2xl">{properData.title}</h1>
 				<p class="text-gray-700">
-					@{properData.author} -- session lasted for {((data.total_time_in_seconds ?? 0) / 60).toFixed(2)} minutes
-					-- <a href={data.wormhole_link}>Wormhole link (please check this and the footage)</a>
+					@{properData.author} -- session lasted for {(
+						(data.total_time_in_seconds ?? 0) / 60
+					).toFixed(2)} minutes --
+					<a href={data.wormhole_link}>Wormhole link (please check this and the footage)</a>
 				</p>
 				<br />
-				<video
-					muted
-					class="w-full h-64 rounded-lg"
-					autoplay
-					loop
-					controls
-					src={data.video_link}>
+				<video muted class="w-full h-64 rounded-lg" autoplay loop controls src={data.video_link}>
 				</video>
 				<br />
 				<!-- make me a button group for 2 buttons-->
