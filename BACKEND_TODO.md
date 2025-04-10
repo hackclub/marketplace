@@ -6,7 +6,9 @@
 - [ ] add prisma caching please
 - [ ] make sure it works on coolify
 - [ ] docker
-      Endpoint status of completion
+
+# Endpoint status of completion
+
 - [x] /api/settings
 - [x] /api/oauth/slack
 - [ ] /api/oauth/hcb (have not tested in prod)
