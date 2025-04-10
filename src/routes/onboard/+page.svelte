@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	let data = [];
 	let loading = true;
 	let loggedIn = false;
@@ -18,7 +18,7 @@
 		} finally {
 			loading = false;
 		}
-		function getCookie(name) {
+		function getCookie(name: string) {
 			return document.cookie.split('; ').find((row) => row.startsWith(name + '=')) !== undefined;
 		}
 

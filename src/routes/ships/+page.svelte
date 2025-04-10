@@ -24,7 +24,7 @@
 	});
 
 	// shorten desc and add ...
-	const shortenDesc = (text, maxChars = 75) => {
+	const shortenDesc = (text: string, maxChars = 75) => {
 		return text.length > maxChars ? text.slice(0, maxChars) + '...' : text;
 	};
 </script>
