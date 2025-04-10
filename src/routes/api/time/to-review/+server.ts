@@ -6,7 +6,7 @@ export async function GET(req: Request) {
     // if()
     const headers = Object.fromEntries(req.request.headers.entries());
 	console.log(headers);
-	if (headers.authorization !== PRIVATE_MASTER_KEY && !dev) {
+	if (headers.authorization !== `Bearer ${PRIVATE_MASTER_KEY}`) {
 		return new Response('401 Unauthorized', { status: 401 });
     }
     // pull all time which is 'PENDING'

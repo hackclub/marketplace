@@ -1,7 +1,9 @@
+import { PRIVATE_MASTER_KEY } from '$env/static/private';
 import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
 import prisma from '$lib/prisma';
 
 export async function GET(req: Request) {
+	const headers = Object.fromEntries(req.request.headers.entries());
 	// fetch DIRECT from airtable
 	const id = req.url.searchParams.get('shipId');
 	if (!id) {
@@ -13,12 +15,15 @@ export async function GET(req: Request) {
 	return await prisma.ship
 		.findFirst({
 			where: {
-				status: {
-					equals: 'SHIPPED'
-				},
 				id: {
 					equals: id
-				}
+				},
+				...(headers.authorization !== `Bearer ${PRIVATE_MASTER_KEY}` ?
+					{
+						status: {
+							equals: 'SHIPPED'
+						},	
+					} : {})
 			}
 		})
 		.then((d) => {
