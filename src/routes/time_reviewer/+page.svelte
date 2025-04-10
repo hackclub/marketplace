@@ -8,15 +8,15 @@
 	let data: any[] = [];
 	// Fetch data once component mounts
 	onMount(async () => {
-		// umm very secure 
-//		window.prisma = prisma;
-		if(!localStorage.getItem("_secret_watchword")) {
-			location.href = "/"
+		// umm very secure
+		//		window.prisma = prisma;
+		if (!localStorage.getItem('_secret_watchword')) {
+			location.href = '/';
 		}
 		try {
 			const res = await fetch('/api/time/to-review', {
 				headers: {
-					'Authorization': `Bearer ${localStorage.getItem("_secret_watchword")}`,
+					Authorization: `Bearer ${localStorage.getItem('_secret_watchword')}`,
 					'Content-Type': 'application/json'
 				}
 			});
@@ -30,8 +30,6 @@
 			console.error(error);
 		}
 	});
-
-
 </script>
 
 <NavBar />
@@ -43,7 +41,6 @@
 
 <div class="flex flex-col items-center mx-auto space-y-4">
 	{#each data as item}
-<TimeReview data={item} />
+		<TimeReview data={item} />
 	{/each}
-
 </div>
