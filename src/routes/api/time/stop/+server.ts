@@ -53,7 +53,7 @@ export async function DELETE(req: Request) {
 	const timeData = await prisma.time.findFirst({
 		where: {
 			userId: sessionData.slackId,
-			'AND': {
+			AND: {
 				video_link: null
 			}
 		}
@@ -74,11 +74,11 @@ export async function DELETE(req: Request) {
 	// 		total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
 	// 	}
 	// });
-    await prisma.time.delete({
-        where: {
-            id:timeData.id
-        }
-    })
+	await prisma.time.delete({
+		where: {
+			id: timeData.id
+		}
+	});
 	reSyncUsersShipTime(body.shipId);
 	return new Response('OK BYE BYE', {
 		headers: {

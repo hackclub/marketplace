@@ -18,12 +18,13 @@ export async function GET(req: Request) {
 				id: {
 					equals: id
 				},
-				...(headers.authorization !== `Bearer ${PRIVATE_MASTER_KEY}` ?
-					{
-						status: {
-							equals: 'SHIPPED'
-						},	
-					} : {})
+				...(headers.authorization !== `Bearer ${PRIVATE_MASTER_KEY}`
+					? {
+							status: {
+								equals: 'SHIPPED'
+							}
+						}
+					: {})
 			}
 		})
 		.then((d) => {

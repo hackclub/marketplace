@@ -29,20 +29,20 @@ export async function GET(req: Request) {
 	//     }
 	// }).then(r => r.json()).then(udata => udata.records[0])
 	// grab user data moment
-const statusData = await prisma.time.findFirst({
-    where: {
-        userId: sessionData.slackId,
-        'AND': {
-            video_link: null
-        }
-    }
-});
-// json
-if(!statusData) return json({ message: `no json data`, session: false });
-return json({
-    ...statusData,
-    session: true
-});
+	const statusData = await prisma.time.findFirst({
+		where: {
+			userId: sessionData.slackId,
+			'AND': {
+				video_link: null
+			}
+		}
+	});
+	// json
+	if (!statusData) return json({ message: `no json data`, session: false });
+	return json({
+		...statusData,
+		session: true
+	});
 	// return new Response('OK CREATED', {
 	// 	status: 201,
 	// 	headers: {
