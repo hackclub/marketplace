@@ -8,40 +8,40 @@
 	export let startedAt = Date.now();
 	export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
 	export let shipId: string | null = null;
+
 	setInterval(() => {
 		timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
 	}, 1000);
+
 	export async function startSession() {
 		const timerData = await fetch('/api/time/start', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				shipId: shipId
-			})
+			body: JSON.stringify({ shipId })
 		}).then((r) => r.text());
 		startedAt = Date.now();
 		console.log(timerData);
 		timeData = await fetch('/api/time/status').then((r) => r.json());
 	}
+
 	export async function stopSession() {
 		await fetch('/api/time/stop', {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({
-				shipId: shipId
-			})
+			body: JSON.stringify({ shipId })
 		});
 		timeData = null;
 		startedAt = Date.now();
 		alert('Session stopped!');
 	}
-	export async function sendOutTheData(e) {
+
+	export async function sendOutTheData(e: Event) {
 		e.preventDefault();
-		const form = e.target;
+		const form = e.target as HTMLFormElement;
 		const formData = new FormData(form);
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
@@ -55,6 +55,7 @@
 		alert('Session ended!');
 		timeData = null;
 	}
+
 	onMount(async () => {
 		const timerData = await fetch('/api/time/status');
 		const timer = await timerData.json();
@@ -67,60 +68,74 @@
 </script>
 
 <h2 class="font-bold text-lg">Timer</h2>
-<p class="italic">
-	Once u start the timer, if no heartbeats are recived from a tab in 15 mins it will delete ur
-	session and dm u
+<p class="italic text-gray-600">
+	Once you start the timer, if no heartbeats are received from a tab in 15 minutes, it will delete
+	your session and DM you.
 </p>
 <br />
-<!-- <p>{timeString}</p> -->
+
 {#if timeData}
 	{#if timeData.session}
-		<!-- if there is a session show active time string -->
-		<!-- show input for "video url" -->
-		<form on:submit={sendOutTheData}>
+		<form on:submit={sendOutTheData} class="space-y-4">
 			<div>
-				<label for="video_link"
-					>Video URL (cant be ur wormhole video, please record a video at the end showing progress)</label
-				>
+				<label for="video_link" class="block font-medium text-gray-700">
+					Video URL (cannot be your wormhole video, please record a video at the end showing
+					progress)
+				</label>
 				<input
 					id="video_link"
 					name="video_link"
 					type="url"
 					required
 					minlength="2"
-					class="border-2 border-gray-400 rounded-lg"
+					class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					placeholder="https://longasscdnuserplshere.com"
 					bind:value={timeData.video_link}
 				/>
 			</div>
 			<div>
-				<label for="wormhole_link">Wormhole URL</label>
+				<label for="wormhole_link" class="block font-medium text-gray-700">Wormhole URL</label>
 				<input
 					id="wormhole_link"
 					name="wormhole_link"
 					type="url"
 					required
 					minlength="60"
-					class="border-2 border-gray-400 rounded-lg"
+					class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					placeholder="https://hackclub.slack.com/archives/C08MC7PQ40G/p1744073240800789"
 				/>
 			</div>
 			<div>
-				<label for="memo">Memo (what did you do??)</label>
-				<br />
-				<textarea id="memo" name="memo" required minlength="5" rows="2" class=""></textarea>
+				<label for="memo" class="block font-medium text-gray-700">Memo (what did you do?)</label>
+				<textarea
+					id="memo"
+					name="memo"
+					required
+					minlength="5"
+					rows="2"
+					class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				></textarea>
 			</div>
-			<button type="submit" class="bg-red-400 text-white rounded-lg px-4 py-2 font-bold"
-				>End!</button
+			<button
+				type="submit"
+				class="bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
 			>
+				End!
+			</button>
 		</form>
-		<p>Current time: {timeString}</p>
-		<button class="bg-red-400 text-white rounded-lg px-4 py-2 font-bold" on:click={stopSession}
-			>Stop!</button
+		<p class="mt-4 text-gray-700">Current time: {timeString}</p>
+		<button
+			class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
+			on:click={stopSession}
 		>
+			Stop!
+		</button>
 	{:else}
-		<button class="bg-red-400 text-white rounded-lg px-4 py-2 font-bold" on:click={startSession}
-			>Start!</button
+		<button
+			class="bg-green-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-green-600"
+			on:click={startSession}
 		>
+			Start!
+		</button>
 	{/if}
 {/if}
