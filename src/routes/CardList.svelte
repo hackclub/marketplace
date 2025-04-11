@@ -3,6 +3,7 @@
 	import Timer from '../components/Timer.svelte';
 	import { mdiPencil, mdiTimer } from '@mdi/js';
 	import { Modal, Content, Trigger } from 'sv-popup';
+	import EditPopup from '../components/EditPopup.svelte';
 	export function getColor(status) {
 		return status === 'SHIPPED' ? 'green' : status === 'in progress' ? 'yellow' : 'red';
 	}
@@ -57,9 +58,9 @@
 									>
 								</Trigger>
 							</Modal>
-						<Modal basic >
-							<Content>
-								<p>shush</p>
+						<Modal >
+							<Content>							
+									<EditPopup data={item} />
 							</Content>
 							<Trigger>
 								<button

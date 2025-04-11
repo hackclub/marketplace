@@ -44,6 +44,9 @@ export async function GET(req: Request) {
 					author: d.slack_user_name,
 					author_slack_id: d.userId,
 					total_time_in_seconds: d.total_time_in_seconds,
+					readme_url: d.readme_url,
+					github_url: d.github_url,
+					cost: d.requested_grant_amount,
 					// js pretty string it please
 					total_time: new Date(parseInt(d.total_time_in_seconds || '0') * 1000)
 						.toISOString()

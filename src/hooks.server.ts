@@ -7,6 +7,7 @@ Sentry.init({
   dsn: 'https://77f6aed8c8164ba7e7c3aa47b7e839f6@o4508373315026944.ingest.us.sentry.io/4509129843671040',
 
   tracesSampleRate: 1.0,
+  environment: process.env.NODE_ENV === 'production' ? 'production' : 'development',
 
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: import.meta.env.DEV,
