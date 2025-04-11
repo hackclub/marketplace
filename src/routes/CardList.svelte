@@ -1,7 +1,7 @@
 <script>
 	import Icon from 'mdi-svelte';
 	import Timer from '../components/Timer.svelte';
-	import { mdiTimer } from '@mdi/js';
+	import { mdiPencil, mdiTimer } from '@mdi/js';
 	import { Modal, Content, Trigger } from 'sv-popup';
 	export function getColor(status) {
 		return status === 'SHIPPED' ? 'green' : status === 'in progress' ? 'yellow' : 'red';
@@ -57,7 +57,19 @@
 									>
 								</Trigger>
 							</Modal>
-						{/if}
+						<Modal basic >
+							<Content>
+								<p>shush</p>
+							</Content>
+							<Trigger>
+								<button
+									class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+									><Icon path={mdiPencil} /></button
+								>
+							</Trigger>
+						</Modal>
+							{/if}
+
 						<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						<div id="attributes">
 							<!-- is there a better way to do this? yes, did it work? no. -->

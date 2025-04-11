@@ -2,10 +2,11 @@
 	let data = [];
 	let loading = true;
 	let loggedIn = false;
+	let displayWarningMessage = false;
 	import NavBar from '../NavBar.svelte';
 	import { onMount } from 'svelte';
-
 	onMount(async () => {
+		displayWarningMessage = new URL(window.location.href).searchParams.get('a') == '1'
 		try {
 			const res = await fetch('/api/ships/homepage');
 			if (res.ok) {
@@ -42,6 +43,14 @@
 		international seller, their will be customs), and the email you use for hcb. Once you have
 		filled out this form, you will be able to start working!
 	</p>
+	{#if displayWarningMessage}
+		<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-1/2">
+			<strong class="font-bold">Hey!</strong>
+			<span class="block sm:inline">
+			You are tryna do stuff without being fully onboarded, 
+			</span>
+		</div>
+	{/if}
 	<form
 		style="background-color: #FFECDA; font-family: Phantom Sans; padding-top: 10px;"
 		class="rounded-xl w-1/2"
