@@ -1,4 +1,5 @@
-import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
+import { dev } from '$app/environment';
+import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
 import { z } from "zod"
@@ -36,6 +37,13 @@ export async function POST(req: Request) {
 	const body = await req.request.json();
 	console.log(body);
 	if (!body) return new Response('no body');
+	const parsedBody = ztime.safeParse(body);
+	if (!parsedBody.success) {
+		console.log(parsedBody.error, 'a');
+		return new Response(parsedBody.error.errors.map(e=>e.message).join('\n'), {
+			status: 400
+		});
+	}
 	// const user = await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/users?filterByFormula=${encodeURIComponent(`slack_id="${sessionData.slackId}"`)}`, {
 	//     headers: {
 	//         Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
@@ -76,6 +84,69 @@ export async function POST(req: Request) {
 		return new Response('No time data found', {
 			status: 404
 		});
+	// validate wormhole msg
+	const msgId = parseSlackMessageUrl(body.wormhole_link);
+	if (msgId.channel !== "C08MC7PQ40G" && !dev) {
+		return new Response('Invalid wormhole link (WRONG CHANNEL)', {
+			status: 400
+		});
+	}
+	try {
+		// check if msg exists
+		await fetch("https://slack.com/api/conversations.history", {
+			method: "POST",
+			headers: {
+				"Authorization": `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({
+				channel: msgId.channel,
+				latest: msgId.ts,
+				inclusive: true,
+				limit: 1
+			})
+		}).then(r => r.json()).then(async data => {
+			console.log(data.messages)
+			if (!data.ok) {
+				throw new Error(data.error);
+			}
+			if (data.messages.length === 0) {
+				throw new Error("Message not found");
+			}
+			if (!data.messages[0].text.includes(sessionData.slackId)) {
+				throw new Error("Message does not contain user ID");
+			}
+			// check if the userId is equal to xyz
+			if (data.messages[0].user !== "U08L96NQPCN") {
+				throw new Error("Message author is invalid")
+			 }
+		// send msg to threaded msg
+		await fetch(`https://slack.com/api/chat.postMessage`, {
+			method: 'POST',
+			body: JSON.stringify({
+				channel: msgId.channel,
+				text: `${dev?"[DEV]":""} :done: Your wormhole link is being used for hackermarket - <@${sessionData.slackId}>`,
+				thread_ts: msgId.ts,
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`
+			}
+		}).then(r => r.json()).then(data => {
+			if (!data.ok) {
+				throw new Error(data.error);
+			}
+		})
+		})
+
+	} catch (e:any) { 
+		console.log(e);
+		return new Response('Invalid wormhole link:\n'+e.message, {
+			status: 400
+		});
+	}
+
+
 
 	await prisma.time.update({
 		where: {
@@ -88,6 +159,7 @@ export async function POST(req: Request) {
 			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
 		}
 	});
+
 	reSyncUsersShipTime(timeData.shipId);
 	return new Response('OK BYE BYE', {
 		headers: {

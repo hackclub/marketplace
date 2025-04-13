@@ -1,9 +1,10 @@
 <script>
 	import Icon from 'mdi-svelte';
 	import Timer from '../components/Timer.svelte';
-	import { mdiPencil, mdiTimer } from '@mdi/js';
+	import { mdiPencil, mdiRocket, mdiTimer } from '@mdi/js';
 	import { Modal, Content, Trigger } from 'sv-popup';
 	import EditPopup from '../components/EditPopup.svelte';
+	import PromoteToXyz from '../components/PromoteToXYZ.svelte';
 	export function getColor(status) {
 		return status === 'SHIPPED' ? 'green' : status === 'in progress' ? 'yellow' : 'red';
 	}
@@ -69,7 +70,21 @@
 								>
 							</Trigger>
 						</Modal>
+
+						<Modal basic>
+							<Content>							
+						<PromoteToXyz newPromotion={item.status} />
+							</Content>
+							<Trigger>
+								<button
+									class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+									><Icon path={mdiRocket} /></button
+								>
+							</Trigger>
+						</Modal>
+						
 							{/if}
+
 
 						<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						<div id="attributes">
@@ -116,7 +131,7 @@
 					</a>
 				{/if}
 				{#if item.status !== 'SHIPPED'}
-					<a href="#">
+					<div>
 						<img
 							class="h-40 bg-orange-500 rounded-lg"
 							src={item.coverLink ||
@@ -133,7 +148,7 @@
 							<p class="text-gray-700">@{item.author}</p>
 							<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						</div>
-					</a>
+					</div>
 				{/if}
 			{/if}
 		</div>

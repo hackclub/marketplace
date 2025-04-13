@@ -51,9 +51,15 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
+		}).then(r=>{
+if(r.ok) {
+	alert('Session ended!');
+	timeData = null;
+} else {
+	r.text().then(alert)
+}
+
 		});
-		alert('Session ended!');
-		timeData = null;
 	}
 
 	onMount(async () => {
