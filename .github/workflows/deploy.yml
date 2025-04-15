@@ -9,6 +9,7 @@ on:
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,8 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to Coolify
-      #    exec
-      - run: bash deploy-to-coolify.sh
+        run: bash deploy-to-coolify.sh "$COOLIFY_UUID" "$COOLIFY_API_TOKEN"
         env:
           COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
-          COOLIFY_APP_ID: ${{ secrets.COOLIFY_API_KEY }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_KEY }}
