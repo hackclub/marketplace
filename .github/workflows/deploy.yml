@@ -24,5 +24,4 @@ jobs:
         with:
           uuid: ${{ secrets.COOLIFY_UUID }}
           api-key: ${{ secrets.COOLIFY_API_KEY }}
-          wait: 600
-          tag: 'app'
+#          wait: 600
