@@ -6,7 +6,8 @@ import {
 	PRIVATE_HCB_AUTH_BODY_TOKEN,
 	PRIVATE_HCB_COOKIE,
 	PRIVATE_HCB_CSRF_TOKEN,
-	PRIVATE_SLACK_BOT_TOKEN
+	PRIVATE_SLACK_BOT_TOKEN,
+	PRIVATE_MASTER_KEY
 } from '$env/static/private';
 import prisma from './prisma';
 
@@ -25,37 +26,24 @@ export async function sendHCBGrants() {
 	for (const record of data.records) {
 		// so we send hcb record hypothetically
 		// console.log(record)
-		fetch('https://hcb.hackclub.com/market-ysws/card-grants', {
+		fetch('https://api.saahild.com/api/hcb_revers/grant', {
 			method: 'POST',
 			headers: {
-				accept: 'text/vnd.turbo-stream.html, text/html, application/xhtml+xml',
-				'accept-language': 'en-US,en;q=0.9',
-				'content-type': 'application/x-www-form-urlencoded;charset=UTF-8',
-				origin: 'https://hcb.hackclub.com',
-				referer: 'https://hcb.hackclub.com/market-ysws/transfers',
-				'sec-ch-ua': '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"',
-				'user-agent':
-					'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
-				'x-csrf-token': PRIVATE_HCB_CSRF_TOKEN,
-				// if this is supposed to be private well fu-
-				//   'x-turbo-request-id': '08058ecb-79c3-4d17-8439-2c5e2c779889',
-				cookie: PRIVATE_HCB_COOKIE
+			Authorization: PRIVATE_MASTER_KEY
 			},
 			body: new URLSearchParams({
-				authenticity_token: PRIVATE_HCB_AUTH_BODY_TOKEN,
-				'card_grant[email]': 'neon@saahild.com',
-				'card_grant[amount_cents]': dev ? '0.01' : record.fields.grant_amount,
-				'card_grant[purpose]': 'ummmmmmmmmmmm MUSTARDDDD',
-				commit: 'Send grant'
+				// authenticity_token: PRIVATE_HCB_AUTH_BODY_TOKEN,
+				// 'card_grant[email]': 'neon@saahild.com',
+				// 'card_grant[amount_cents]': dev ? '0.01' : record.fields.grant_amount,
+				// 'card_grant[purpose]': 'ummmmmmmmmmmm MUSTARDDDD',
+				// commit: 'Send grant'
 			})
 		}).then(async (d) => {
 			console.log(d.status);
 			const text = await d.text();
 			//   console.log(text)
 			if (
-				text.includes('Sign In') ||
-				text.includes('Log In') ||
-				text.includes(`<meta property="og:description" content="Sign in to HCB.">`)
+				text.includes("BAD")
 			) {
 				await fetch(`https://slack.com/api/chat.postMessage`, {
 					headers: {
