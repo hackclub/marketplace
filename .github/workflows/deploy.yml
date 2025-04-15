@@ -20,8 +20,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to Coolify
-        uses: ./
-        with:
-          uuid: ${{ secrets.COOLIFY_UUID }}
-          api-key: ${{ secrets.COOLIFY_API_KEY }}
-#          wait: 600
+      #    exec
+      - run: bash deploy-to-coolify.sh
+        env:
+          COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
+          COOLIFY_APP_ID: ${{ secrets.COOLIFY_API_KEY }}
