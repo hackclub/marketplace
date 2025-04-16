@@ -32,7 +32,14 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
             location: '/onboard?a=1'
           }
         });
-      } 
+      }
+      if (!event.cookies.get('user-info')) { 
+         event.cookies.set(`user-info`, JSON.stringify({
+          slack_name: userData.slack_name,
+          slack_id: userData.slack_id,
+        }), { path: "/", expires: new Date(Date.now() + 60 * 1000),  httpOnly: false })
+      }
+     
     }
     
   } 

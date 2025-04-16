@@ -2,16 +2,26 @@
 	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from '$env/static/public';
 	let loading = true;
 	let loggedIn = false;
+	let avatarUrl = null;
+	let userName = null;
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		loading = true;
 		function getCookie(name) {
-			return document.cookie.split('; ').find((row) => row.startsWith(name + '=')) !== undefined;
+			return document.cookie.split('; ').find((row) => row.startsWith(name + '='));
 		}
 
 		loggedIn = getCookie('session');
-	});
+		const ustring = getCookie('user-info')
+	if(ustring) {
+		const userData = JSON.parse(decodeURIComponent(ustring.split("=")[1]))
+		if(userData) {
+			avatarUrl = `https://cachet.dunkirk.sh/users/${userData.slack_id}/r`;
+			userName = userData.slack_name;
+		}
+	}
+		});
 </script>
 
 <header>
@@ -45,6 +55,10 @@
 						>Go to your ships</a
 					>
 				{/if}
+				<div class="inline-flex text-center flex">
+			<img src={avatarUrl} class="rounded-full w-15" alt={`${userName}'s avatar`} />
+<span class="font-bold text-xl text-center">{userName}</span>
+				</div>
 			</div>
 		</div>
 	</nav>
