@@ -25,3 +25,5 @@ jobs:
         env:
           COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
           COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_KEY }}
+          SLACK_CHANNEL: C08GZ6QF97Z
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
