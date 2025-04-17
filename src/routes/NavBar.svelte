@@ -56,8 +56,10 @@
 					>
 				{/if}
 				<div class="inline-flex text-center flex">
-			<img src={avatarUrl} class="rounded-full w-15" alt={`${userName}'s avatar`} />
+		{#if userName}
+		<img src={avatarUrl} class="rounded-full w-15" alt={`${userName}'s avatar`} />
 <span class="font-bold text-xl text-center">{userName}</span>
+		{/if}
 				</div>
 			</div>
 		</div>

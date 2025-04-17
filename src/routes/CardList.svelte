@@ -8,6 +8,9 @@
 	export function getColor(status) {
 		return status === 'SHIPPED' ? 'green' : status === 'in progress' ? 'yellow' : 'red';
 	}
+	function formatName(name) {
+        return name.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+    }
 	// import Popup from '$lib/Popup.svelte';
 	/**
 	 * @type {any[]}
@@ -73,7 +76,7 @@
 
 						<Modal basic>
 							<Content>							
-						<PromoteToXyz newPromotion={item.status} />
+						<PromoteToXyz status={item.status} />
 							</Content>
 							<Trigger>
 								<button
@@ -92,18 +95,18 @@
 							{#if item.status === 'SHIPPED'}
 								<span
 									class={`my-2 inline-block rounded-full px-6 pb-2 pt-2.5 font-medium shadow-md transition duration-150 ease-in-out hover:bg-green-500 hover:shadow-lg bg-green-400 text-white`}
-									>{item.status}</span
+									>{formatName(item.status)}</span
 								>
 							{:else if item.status !== 'SHIPPED' && item.status !== 'draft'}
 								<span
 									class={`my-2 inline-block rounded-full px-6 pb-2 pt-2.5 font-medium shadow-md transition duration-150 ease-in-out hover:bg-yellow-500 hover:shadow-lg bg-yellow-400 text-yellow-700`}
-									>{item.status}</span
+									>{formatName(item.status)}</span
 								>
 							{/if}
 							{#if item.status === 'draft'}
 								<span
 									class={`my-2 inline-block rounded-full px-6 pb-2 pt-2.5 font-medium shadow-md transition duration-150 ease-in-out hover:bg-red-500 hover:shadow-lg bg-red-400 text-white`}
-									>{item.status}</span
+									>{formatName(item.status)}</span
 								>
 							{/if}
 						</div>
