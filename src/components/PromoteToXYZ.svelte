@@ -14,5 +14,8 @@
 </script>
 
 <div>
+<p>
     Would you like to promote your ship from {formatName(status)} ->  {formatName(newPromotion)}?
+</p>
+<button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Yes</button>
 </div>

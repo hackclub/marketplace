@@ -1,11 +1,32 @@
 <script>
 	import { onMount } from "svelte";
 export let data = {}
-export let isUnderSomeReview = false;
+export let isUnderSomeReview = data.status !== "SHIPPED" && data.status !== "DRAFT";
+function submitForm(e) {
+e.preventDefault();
+const formData = new FormData(e.target);
+const formObject = Object.fromEntries(formData.entries());
+console.log(formObject, data);
+fetch("/api/ships/update", {
+method: "POST",
+headers: {
+"Content-Type": "application/json",
+},
+body: JSON.stringify({
+id: data.id,
+...formObject,
+}),
+}).then(r=>r.text()).then(json => {
+    console.log(json)
+})
+}
+// for isUnderSomeReview please check if its being activly reviwed in its status..
+
 </script>
 <form
 		style="background-color: #FFECDA; font-family: Phantom Sans;margin: 0px;"
 		class="rounded-xl"
+        on:submit={submitForm}
         >
         <div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-full">
             <div class="grid">
@@ -18,7 +39,7 @@ export let isUnderSomeReview = false;
                     disabled={isUnderSomeReview}
                     type="text"
                     placeholder="My amazing PCB"
-                    class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />
                 <span class="text-xl font-bold">Description</span>
                 <input
@@ -30,7 +51,7 @@ export let isUnderSomeReview = false;
                     type="text"
                     minlength="10"
                     placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
-                    class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />
                 <span class="text-xl font-bold">Git Repo</span>
                 <input
@@ -41,7 +62,7 @@ export let isUnderSomeReview = false;
                     type="url"
                     name="gitRepo"
                     placeholder="https://github.com/hackclub/site/"
-                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />
                 <span class="text-xl font-bold">README URL</span>
                 <input
@@ -52,18 +73,18 @@ export let isUnderSomeReview = false;
                     disabled={isUnderSomeReview}
                     name="readmeUrl"
                     placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />
                 <span class="text-xl font-bold">Cover link</span>
                 <input
                     style="margin-bottom: 5px;"
                     id="project-coverlink"
+                    name="image_url"
                     type="url"
                     value={data.coverLink}
                     disabled={isUnderSomeReview}
-                    name="coverLink"
                     placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />
                 <!-- <span class="text-xl font-bold">Locations you will ship to</span>
         <input 
@@ -83,7 +104,7 @@ export let isUnderSomeReview = false;
                     value={data.cost}
                     placeholder="30"
                     required
-                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 />
             </div>
     
@@ -91,7 +112,7 @@ export let isUnderSomeReview = false;
                 <button
                     type="submit"
                     style="font-family: Phantom Sans; margin-bottom: 50px;"
-                    class="text-white bg-red-400 rounded-lg text-2xl font-bold px-20 py-2 hover:bg-red-600"
+                    class="text-white bg-red-400 rounded-lg text-2xl font-bold px-20 py-2 hover:bg-red-600 disabled:bg-[#EADAC7]"
                 >
                   Update
                 </button>
