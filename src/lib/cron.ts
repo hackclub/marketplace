@@ -12,18 +12,25 @@ import {
 import prisma from './prisma';
 
 export async function sendHCBGrants() {
-	const data = await fetch(
-		`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({HCB grant approve} = TRUE(), {_automation_grant_sent} = FALSE())`)}`,
-		{
-			headers: {
-				Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-			}
+	// const data = await fetch(
+	// 	`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({HCB grant approve} = TRUE(), {_automation_grant_sent} = FALSE())`)}`,
+	// 	{
+	// 		headers: {
+	// 			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+	// 		}
+	// 	}
+	// ).then((r) => r.json());
+	const data = await prisma.ship.findMany({
+		where: {
+			approved_for_grant: true,
+			automation_approved_for_grant: false,
+			is_under_some_review_rn: true,
 		}
-	).then((r) => r.json());
-	const recordsToUpdate = [];
+	})
+	const recordsToUpdate:string[] = [];
 	// console.log(data.records, `records :3`)
 	// loop thru allat records
-	for (const record of data.records) {
+	for (const record of data) {
 		// so we send hcb record hypothetically
 		// console.log(record)
 		fetch('https://api.saahild.com/api/hcb_revers/grant', {
@@ -67,44 +74,52 @@ export async function sendHCBGrants() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''}  <@${record.fields.slack_user_id}> has been sent there grant for there ship ${record.fields.Name} (${record.id})`,
+				text: `${dev ? `[DEV]` : ''}  <@${record.userId}> has been sent there grant for there ship ${record.Name} (${record.id})`,
 				channel: `C08GZ6QF97Z`
 			})
 		}).then((r) => r.json());
-
-		recordsToUpdate.push({
-			id: record.id,
-			fields: {
-				_automation_grant_sent: true
-			}
-		});
+	recordsToUpdate.push(record.id);
 	}
-	// update airtable
-	await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+	await prisma.ship.updateMany({
+		where: {
+			id: {
+			in: recordsToUpdate
+			},
 		},
-		body: JSON.stringify({
-			records: recordsToUpdate
-		})
+		data: {
+			automation_approved_for_grant: true,
+			is_under_some_review_rn: false,
+			// status: "UNDER_HQ_GRANT_REVIEW",
+		}
 	});
+
+	// update airtable
+	// await fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
+	// 	method: 'PATCH',
+	// 	headers: {
+	// 		'Content-Type': 'application/json',
+	// 		Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+	// 	},
+	// 	body: JSON.stringify({
+	// 		records: recordsToUpdate
+	// 	})
+	// });
 }
 export async function draftAllRejectedShips() {
 	// query airtable with formula
-	const data = await fetch(
-		`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({rejected} = 1, {Status} != "Draft")`)}`,
-		{
-			headers: {
-				Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-			}
+	const data = await prisma.ship.findMany({
+		where: {
+			rejected_for_something: {
+				not: null
+			},
+			is_under_some_review_rn: true
 		}
-	).then((r) => r.json());
+	});
+
 	// console.log(data)
 	const recordsToUpdate = [];
 	// send msg to oauth2 with hcb if no email on file
-	for (const d of data.records) {
+	for (const d of data) {
 		// yipee u have made it or smthing now send a message
 		fetch(`https://slack.com/api/chat.postMessage`, {
 			headers: {
@@ -113,8 +128,8 @@ export async function draftAllRejectedShips() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''} <@${d.fields.slack_user_id}> your ship (${d.fields.Name}) was rejected!\n> ${d.fields.rejection_reason}`,
-				channel: d.fields.slack_user_id
+				text: `${dev ? `[DEV]` : ''} <@${d.userId}> your ship (${d.Name}) was rejected!\n> ${d.rejected_for_something}`,
+				channel: d.userId
 			})
 		}).then((r) => r.json());
 		fetch(`https://slack.com/api/chat.postMessage`, {
@@ -124,43 +139,37 @@ export async function draftAllRejectedShips() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''} <@${d.fields.slack_user_id}>  ship (${d.fields.Name}) was rejected!\n> ${d.fields.rejection_reason}`,
+				text: `${dev ? `[DEV]` : ''} <@${d.userId}>  ship (${d.Name}) was rejected!\n> ${d.rejected_for_something}`,
 				channel: 'C08GZ6QF97Z'
 			})
 		}).then((r) => r.json());
-		recordsToUpdate.push({
-			id: d.id,
-			fields: {
-				Status: 'draft',
-				rejected: false
-			}
-		});
+		recordsToUpdate.push(d.id);
 	}
-	// update airtable
-	fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+	await prisma.ship.updateMany({
+		where: {
+			id: {
+				in: recordsToUpdate
+			}
 		},
-		body: JSON.stringify({
-			records: recordsToUpdate
-		})
+		data: {
+			is_under_some_review_rn: false,
+			status: 'DRAFT',
+			rejected_for_something: null
+		}
 	});
 }
 export async function promoteUsersFromDigitalReview() {
 	// query airtable with formula
-	const data = await fetch(
-		`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({Digital review approve} = TRUE(), {_automation_digital_sent} = FALSE())`)}`,
-		{
-			headers: {
-				Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
-			}
+	const data = await prisma.ship.findMany({
+		where: {
+			approved_for_digital: true,
+			automation_approved_for_digital: false,
+			is_under_some_review_rn: true,
 		}
-	).then((r) => r.json());
+	})
 	const recordsToUpdate = [];
 	// send msg to oauth2 with hcb if no email on file
-	for (const d of data.records) {
+	for (const d of data) {
 		// yipee u have made it or smthing now send a message
 		fetch(`https://slack.com/api/chat.postMessage`, {
 			headers: {
@@ -169,7 +178,7 @@ export async function promoteUsersFromDigitalReview() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''} <@${d.fields.slack_user_id}> has been promoted from digital review to HQ Digital Review!`,
+				text: `${dev ? `[DEV]` : ''} <@${d.userId}> has been promoted from digital review to HQ Digital Review!`,
 				channel: `C08GZ6QF97Z`
 			})
 		}).then((r) => r.json());
@@ -180,28 +189,24 @@ export async function promoteUsersFromDigitalReview() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''}  <@${d.fields.slack_user_id}> has been promoted from digital review to HQ Digital Review!`,
-				channel: d.fields.slack_user_id
+				text: `${dev ? `[DEV]` : ''}  <@${d.userId}> has been promoted from digital review to HQ Digital Review!`,
+				channel: d.userId
 			})
 		}).then((r) => r.json());
-		recordsToUpdate.push({
-			id: d.id,
-			fields: {
-				_automation_digital_sent: true,
-				Status: 'under grant review'
-			}
-		});
+		recordsToUpdate.push(d.id);
 	}
 	// otherwise promote and mark as done
-	fetch(`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships`, {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+	await prisma.ship.updateMany({
+		where: {
+			id: {
+				in: recordsToUpdate
+			}
 		},
-		body: JSON.stringify({
-			records: recordsToUpdate
-		})
+		data: {
+			is_under_some_review_rn: false,
+			status: 'UNDER_HQ_DIGITAL_REVIEW',
+			automation_approved_for_digital: true
+		}
 	});
 }
 export async function cleanUpOldTimers() {

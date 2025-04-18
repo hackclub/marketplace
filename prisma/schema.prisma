@@ -25,28 +25,33 @@ model User {
 }
 
 model Ship {
-  id                     String        @id @default(cuid())
-  Name                   String
-  Description            String
-  Reviewer               String?
-  grant_amount           Float         @default(30.0)
-  requested_grant_amount Float
-  status                 StatusString  @default(DRAFT)
-  approved_for_grant     Boolean       @default(false)
-  approved_for_hq        Boolean       @default(false)
-  approved_for_digital   Boolean       @default(false)
-  github_url             String
-  demo_url               String?
-  cover_image_url        String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
-  readme_url             String
-  userId                 String
-  featured               Boolean       @default(false)
-  reviewer_feedback      String?
-  slack_user_name        String
-  total_time_in_seconds  String?       @default("0")
-  HeidiEscrow            HeidiEscrow[]
-  Purchase               Purchase[]
-  user                   User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
+  id                              String        @id @default(cuid())
+  Name                            String
+  Description                     String
+  Reviewer                        String?
+  grant_amount                    Float         @default(30.0)
+  requested_grant_amount          Float
+  status                          StatusString  @default(DRAFT)
+  approved_for_grant              Boolean       @default(false)
+  approved_for_hq                 Boolean       @default(false)
+  approved_for_digital            Boolean       @default(false)
+  is_under_some_review_rn         Boolean       @default(false)
+  automation_approved_for_grant   Boolean       @default(false)
+  automation_approved_for_hq      Boolean       @default(false)
+  automation_approved_for_digital Boolean       @default(false)
+  github_url                      String
+  demo_url                        String?
+  cover_image_url                 String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
+  readme_url                      String
+  userId                          String
+  featured                        Boolean       @default(false)
+  reviewer_feedback               String?
+  slack_user_name                 String
+  rejected_for_something          String?
+  total_time_in_seconds           String?       @default("0")
+  HeidiEscrow                     HeidiEscrow[]
+  Purchase                        Purchase[]
+  user                            User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
 }
 
 model Purchase {

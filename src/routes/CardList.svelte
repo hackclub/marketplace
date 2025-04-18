@@ -34,9 +34,6 @@
 	{#each items as item}
 		<div class="w-80 rounded-lg p-4 relative">
 			{#if isAllMine}
-				<script>
-					export let showPopup = false;
-				</script>
 				<div>
 					<img
 						class="h-40 bg-orange-500 rounded-lg"

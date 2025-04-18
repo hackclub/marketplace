@@ -29,14 +29,16 @@ export async function POST(req: Request) {
 			where: {
 				id: body.id,
 				status: 'DRAFT',
+				is_under_some_review_rn: false,
 				approved_for_digital: false
 			},
 			data: {
-				status: 'UNDER_HQ_DIGITAL_REVIEW'
+				status: 'UNDER_HQ_DIGITAL_REVIEW',
+				is_under_some_review_rn: true,
 			}
 		});
 	} catch (e) {
-		return new Response(JSON.stringify({ message: 'Ship not found' }), {
+		return new Response(JSON.stringify({ message: 'Ship not found or not ready ;p' }), {
 			status: 404
 		});
 	}
