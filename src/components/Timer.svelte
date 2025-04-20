@@ -70,6 +70,9 @@ if(r.ok) {
 		if (timer.session) {
 			startedAt = new Date(timer.createdAt).getTime();
 		}
+		setInterval(() => {
+		 fetch('/api/time/beat')
+		}, 60 * 1000)
 	});
 </script>
 

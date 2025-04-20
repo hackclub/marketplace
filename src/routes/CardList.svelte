@@ -17,6 +17,7 @@
 	 */
 	export let items = [];
 	export let isAllMine = false;
+	export let timerShipId = null;
 	// shorten desc and add ...
 	const shortenDesc = (text, maxChars = 75) => {
 		return text.length > maxChars ? text.slice(0, maxChars) + '...' : text;
@@ -53,8 +54,8 @@
 									<Timer shipId={item.id} />
 								</Content>
 								<Trigger>
-									<button
-										class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+									<button disabled={timerShipId && timerShipId !== item.id}
+										class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600 disabled:bg-gray-400"
 										><Icon path={mdiTimer} /></button
 									>
 								</Trigger>

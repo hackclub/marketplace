@@ -7,7 +7,7 @@
 	// import { PUBLIC_DEBUG } from '$env/static/public';
 	// Initialize data as an empty array (ensures reactivity)
 	let data: any[] = [];
-
+	let isInASessionRn = false;
 	// Fetch data once component mounts
 	onMount(async () => {
 		try {
@@ -21,6 +21,7 @@
 		} catch (error) {
 			console.error(error);
 		}
+		isInASessionRn = await fetch('/api/time/status').then(r=>r.json()).then(r=>r.shipId)
 	});
 
 	// shorten desc and add ...
@@ -30,14 +31,18 @@
 </script>
 
 <NavBar />
-
+{#if isInASessionRn}
+<div class="bg-red-300 p-5 m-2 rounded-lg">
+	<h2 class="font-bold font-2xl text-red-700">You have an active session! please open the timer for that ship before it gets deleted!</h2>
+	</div>
+	{/if}
 <span
-	style="font-family: Phantom Sans; margin-left: 80px; "
+	style="font-family: Phantom Sans; margin-left: 8px; "
 	class="text-4xl font-semibold text-red-500">your ships:</span
 >
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-	<CardList items={data} isAllMine={true} />
+	<CardList items={data} isAllMine={true} timerShipId={isInASessionRn} />
 </div>
 
 <div class="flex justify-center items-center mt-5">
