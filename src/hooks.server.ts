@@ -21,7 +21,7 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
   console.log(event.url.pathname)
   if (isinMaintinince) {
     const auth = event.request.headers.get("Authorization");
-    if (auth !== `Basic ${btoa(ADMIN_LOGIN)}` && !dev) {
+    if (auth !== `Basic ${btoa(ADMIN_LOGIN)}` && !dev && !event.url.pathname.startsWith("/api/")) {
         return new Response("Not authorized", {
             status: 401,
             headers: {
