@@ -70,3 +70,4 @@ export async function POST(req: Request) {
 		.then(console.log);
 	return new Response('200 OK');
 }
+

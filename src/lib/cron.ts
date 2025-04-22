@@ -178,7 +178,7 @@ export async function promoteUsersFromDigitalReview() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''} <@${d.userId}> has been promoted from digital review to HQ Digital Review!`,
+				text: `${dev ? `[DEV]` : ''}  <@${d.userId}> has been approved from digital review and now has to submit there grant request!`,
 				channel: `C08GZ6QF97Z`
 			})
 		}).then((r) => r.json());
@@ -189,7 +189,7 @@ export async function promoteUsersFromDigitalReview() {
 			},
 			method: 'POST',
 			body: JSON.stringify({
-				text: `${dev ? `[DEV]` : ''}  <@${d.userId}> has been promoted from digital review to HQ Digital Review!`,
+				text: `${dev ? `[DEV]` : ''} Hey your ship ${d.Name} (${d.id}) has been approved from digital review (aka someone looked at it and saids ok), now make sure you have a *hcb account* linked to what you submited as your *hcb email* and then open your ship and click the rocket, and promote it to grant review!`,
 				channel: d.userId
 			})
 		}).then((r) => r.json());

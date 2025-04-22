@@ -74,7 +74,7 @@
 
 						<Modal basic>
 							<Content>							
-						<PromoteToXyz status={item.status} />
+						<PromoteToXyz status={item.status} shipId={item.id} />
 							</Content>
 							<Trigger>
 								<button
