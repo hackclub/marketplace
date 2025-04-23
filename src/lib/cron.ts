@@ -10,7 +10,58 @@ import {
 	PRIVATE_MASTER_KEY
 } from '$env/static/private';
 import prisma from './prisma';
-
+export type HcbGrantResponse = HcbGrantResponse0 & HcbErrorResponse;
+interface HcbErrorResponse {
+	error: string;
+}
+export interface HcbGrantResponse0 {
+	id: string;
+	user: User;
+	organization: Organization;
+	amount_cents: number;
+	merchant_lock: any[];
+	category_lock: string[];
+	keyword_lock: string;
+	allowed_merchants: string[];
+	allowed_categories: string[];
+	status: string;
+	disbursements: Disbursement[];
+	card_id?: any;
+  }
+  
+  export interface Disbursement {
+	id: string;
+	memo: string;
+	status: string;
+	transaction_id: string;
+	amount_cents: number;
+	from: Organization;
+	to: Organization;
+	sender: User;
+  }
+  
+  export interface Organization {
+	created_at: string;
+	id: string;
+	name: string;
+	country: string;
+	slug: string;
+	icon?: any;
+	playground_mode: boolean;
+	playground_mode_meeting_requested: boolean;
+	transparent: boolean;
+	fee_percentage: number;
+	background_image?: any;
+  }
+  
+  export interface User {
+	id: string;
+	name: string;
+	email: string;
+	avatar: string;
+	admin: boolean;
+	auditor: boolean;
+  }
 export async function sendHCBGrants() {
 	// const data = await fetch(
 	// 	`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({HCB grant approve} = TRUE(), {_automation_grant_sent} = FALSE())`)}`,
@@ -28,7 +79,6 @@ export async function sendHCBGrants() {
 		}
 	})
 	const recordsToUpdate:string[] = [];
-	// console.log(data.records, `records :3`)
 	// loop thru allat records
 	for (const record of data) {
 		// so we send hcb record hypothetically
@@ -39,19 +89,26 @@ export async function sendHCBGrants() {
 			Authorization: PRIVATE_MASTER_KEY
 			},
 			body: new URLSearchParams({
-				// authenticity_token: PRIVATE_HCB_AUTH_BODY_TOKEN,
-				// 'card_grant[email]': 'neon@saahild.com',
-				// 'card_grant[amount_cents]': dev ? '0.01' : record.fields.grant_amount,
-				// 'card_grant[purpose]': 'ummmmmmmmmmmm MUSTARDDDD',
-				// commit: 'Send grant'
+				org: "market-ysws",
+				email: await prisma.user.findUnique({
+					where: {
+						slackId: record.userId!
+					},
+					select: {
+						hcb_email: true
+					}
+				}).then((d) => d?.hcb_email || ''),
+				amount: (dev ? 0.01 : record.grant_amount).toString(),
+				// 30 char limit so whats the __ point
+				purpose: "Your grant" ,
 			})
 		}).then(async (d) => {
 			console.log(d.status);
-			const text = await d.text();
-			//   console.log(text)
+			const text = await d.json().then(d=> d as HcbGrantResponse);
+			console.log(text)
 			if (
-				text.includes("BAD")
-			) {
+				text.error
+ 			) {
 				await fetch(`https://slack.com/api/chat.postMessage`, {
 					headers: {
 						Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
@@ -59,11 +116,22 @@ export async function sendHCBGrants() {
 					},
 					method: 'POST',
 					body: JSON.stringify({
-						text: `${dev ? `[DEV]` : ''}  umm the grant failed to send -- bad cookies or smthing...`,
+						text: `${dev ? `[DEV]` : ''}  umm the grant failed to send -- bad cookies or smthing... \n> ${text.error}`,
 						channel: `C08GZ6QF97Z`
 					})
 				}).then((r) => r.json());
 				// then throw so we dont say it was good
+				await fetch(`https://slack.com/api/chat.postMessage`, {
+					headers: {
+						Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+						'Content-Type': 'application/json; charset=utf-8'
+					},
+					method: 'POST',
+					body: JSON.stringify({
+						text: `${dev ? `[DEV]` : ''}  <@${record.userId}> your ship (${record.Name}) grant failed to send -- will be fixed soon ;-; \n> ${text.error}`,
+						channel: record.userId
+					})
+				}).then((r) => r.json());
 				return;
 			}
 		});
@@ -77,6 +145,17 @@ export async function sendHCBGrants() {
 				text: `${dev ? `[DEV]` : ''}  <@${record.userId}> has been sent there grant for there ship ${record.Name} (${record.id})`,
 				channel: `C08GZ6QF97Z`
 			})
+		}).then((r) => r.json()); 
+		await fetch(`https://slack.com/api/chat.postMessage`, {
+			headers: {
+				Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+				'Content-Type': 'application/json; charset=utf-8'
+			},
+			method: 'POST',
+			body: JSON.stringify({
+				text: `${dev ? `[DEV]` : ''}  <@${record.userId}> your ship (${record.Name}) grant has been sent to you!, once you have bought all the materials and assembled everything and have sent the package out to hq then *Mark it under HQ review* (the rocket button) where it will let our team know that you have sent it for manual review!`,
+				channel: record.userId
+			})
 		}).then((r) => r.json());
 	recordsToUpdate.push(record.id);
 	}
@@ -89,7 +168,7 @@ export async function sendHCBGrants() {
 		data: {
 			automation_approved_for_grant: true,
 			is_under_some_review_rn: false,
-			// status: "UNDER_HQ_GRANT_REVIEW",
+			// user must push it to hq review once they ship it.
 		}
 	});
 
