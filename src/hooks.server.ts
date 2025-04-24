@@ -52,6 +52,7 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
          event.cookies.set(`user-info`, JSON.stringify({
           slack_name: userData.slack_name,
           slack_id: userData.slack_id,
+          hcb_email: userData.hcb_email
         }), { path: "/", expires: new Date(Date.now() + 60 * 1000),  httpOnly: false })
       }
      
