@@ -27,11 +27,17 @@ export async function GET(req: Request) {
 					: {})
 			}
 		})
-		.then((d) => {
+		.then(async (d) => {
 			if (!d)
 				return new Response(JSON.stringify({ message: 'No ship found' }), {
 					status: 404
 				});
+			
+			const user = await prisma.user.findFirst({
+				where: {
+					slackId: d.userId
+				}
+			})
 			// console.log(dd.records[0])
 			return new Response(
 				JSON.stringify({
@@ -43,7 +49,8 @@ export async function GET(req: Request) {
 					coverLink: d.cover_image_url,
 					avatar: `https://cachet.dunkirk.sh/users/${d.userId}/r`,
 					author: d.slack_user_name,
-					author_slack_id: d.userId
+					author_slack_id: d.userId,
+					can_ship_to: user?.reigions_for_shipping,
 				}),
 				{
 					headers: {

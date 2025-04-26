@@ -118,7 +118,7 @@
 		class="text-lg text-black font-light"
 		style="margin-left: 1090px; margin-top: 5px; margin-bottom:20px; margin-right: 5px; font-family: Phantom Sans;"
 	>
-		(ships to {shipData.ships_to})
+		(ships to {shipData.can_ship_to})
 	</p>
 {:else}
 	<p>No ship found with the given ID.</p>
