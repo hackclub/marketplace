@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from "svelte";
+    
 export let data = {}
 export let isUnderSomeReview = data.status !== "SHIPPED" && data.status !== "DRAFT";
 function submitForm(e) {
@@ -70,6 +71,17 @@ id: data.id,
                     id="project-readme"
                     type="url"
                     value={data.readme_url}
+                    disabled={isUnderSomeReview}
+                    name="readmeUrl"
+                    placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
+                    class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+                /> <br />
+                <span class="text-xl font-bold">Demo URL</span>
+                <input
+                    style="margin-bottom: 5px;"
+                    id="project-readme"
+                    type="url"
+                    value={data.demo_url}
                     disabled={isUnderSomeReview}
                     name="readmeUrl"
                     placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"

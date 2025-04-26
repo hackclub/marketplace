@@ -47,6 +47,7 @@ export async function GET(req: Request) {
 					readme_url: d.readme_url,
 					github_url: d.github_url,
 					cost: d.requested_grant_amount,
+					demo_url: d.demo_url,
 					// js pretty string it please
 					total_time: new Date(parseInt(d.total_time_in_seconds || '0') * 1000)
 						.toISOString()

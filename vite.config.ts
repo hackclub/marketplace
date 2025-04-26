@@ -25,5 +25,11 @@ export default defineConfig({
 	},
 	define: {
 		__GIT_COMMIT_HASH__: JSON.stringify(getGitCommitHash())
-	}
+	},
+	optimizeDeps: {
+		include: ['date-picker-svelte']
+	  },
+	  ssr: {
+		noExternal: ['date-picker-svelte']
+	  }
 });

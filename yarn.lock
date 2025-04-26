@@ -955,6 +955,11 @@
     "@sentry/bundler-plugin-core" "3.2.4"
     unplugin "1.0.1"
 
+"@svelte-plugins/datepicker@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@svelte-plugins/datepicker/-/datepicker-1.0.11.tgz#0358fad2a834b7402b94ceb522cccbe48f9ae693"
+  integrity sha512-Tqc07QLyRkCpc3Glg6oRLTUApLtCrOh52d6vJ7L32QI17HrwvcDDjaH3LF3X1SBm3CWdMrnqfJp3xjUZmB4wzw==
+
 "@sveltejs/acorn-typescript@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@sveltejs/acorn-typescript/-/acorn-typescript-1.0.5.tgz#f518101d1b2e12ce80854f1cd850d3b9fb91d710"
@@ -1289,6 +1294,11 @@ cookie@^0.6.0:
   version "0.6.0"
   resolved "https://registry.npmjs.org/cookie/-/cookie-0.6.0.tgz"
   integrity sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==
+
+date-fns@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-4.1.0.tgz#64b3d83fff5aa80438f5b1a633c2e83b8a1c2d14"
+  integrity sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==
 
 debug@4, debug@^4.1.0, debug@^4.3.1, debug@^4.3.4, debug@^4.3.5, debug@^4.3.7, debug@^4.4.0:
   version "4.4.0"

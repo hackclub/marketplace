@@ -32,6 +32,8 @@
 		"@mdi/js": "^7.4.47",
 		"@prisma/client": "^6.6.0",
 		"@sentry/sveltekit": "^9",
+		"@svelte-plugins/datepicker": "^1.0.11",
+		"date-fns": "^4.1.0",
 		"mdi-svelte": "^1.1.2",
 		"prisma": "^6.6.0",
 		"sv-popup": "^0.5.3",

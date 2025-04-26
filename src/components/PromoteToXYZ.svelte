@@ -1,7 +1,28 @@
 <script>
 	import { onMount } from "svelte";
-    
-    
+  import { DatePicker } from '@svelte-plugins/datepicker';
+    import { format } from 'date-fns';
+  
+    let startDate = new Date();
+    let dateFormat = 'MM/dd/yy';
+    let isOpen = false;
+  
+    const toggleDatePicker = () => (isOpen = !isOpen);
+  
+    const formatDate = (dateString) => {
+      if (isNaN(new Date(dateString))) {
+        return '';
+      }
+  
+      return dateString && format(new Date(dateString), dateFormat) || '';
+    };
+    let formattedStartDate = formatDate(startDate);
+  
+    const onChange = () => {
+      startDate = new Date(formattedStartDate);
+    };
+    $: formattedStartDate = formatDate(startDate);
+
     // super good page right here 
     export let status = "man idk"
     export let shipId = null;
@@ -11,23 +32,25 @@
 			return document.cookie.split('; ').find((row) => row.startsWith(name + '='));
 		}
     let userData =  JSON.parse(decodeURIComponent(getCookie('user-info').split("=")[1]))
-    console.log(userData)
+    console.log(ship)
     let form = {
-      code_url: '',
-      playable_url: '',
+      code_url: ship.github_url,
+      playable_url: ship.demo_url,
         first_name: '',
         last_name: '',
         email: userData.hcb_email,
-        screenshot: ship.cover_url,
+        screenshot: ship.coverLink,
         description: ship.Description || ship.description,
         github_username: "",
         address_line_1: "",
         address_line_2: "",
+        country: "",
         city: '',
         state: '',
         zipcode: '',
-        bday: "",
-        ship_id: shipId
+        bday: formattedStartDate,
+        ship_id: shipId,
+        id: shipId
       };
       console.log(form)
     let  newPromotion = "null"
@@ -38,6 +61,7 @@
     SHIPPED`.trim().split("\n").map(e=>e.trim())
     newPromotion = statuses[statuses.indexOf(status) + 1] || "null"
     let underReview = true;
+    
     function formatName(name) {
         return name.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
     }
@@ -74,6 +98,20 @@ case "DRAFT":
             window.location.reload()
         })
     }
+async function handleSubmit() {
+return fetch("/api/ships/shipped", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(form)
+}).then(r=>r.text()).then(t=>{
+  alert(t)
+  console.log(t)
+  debugger;
+  location.reload()
+})
+}
     onMount(() => {
         fetch("/api/ships/isUnderReview?shipId="+shipId).then(r=>{
             if(r.status == 400) {
@@ -103,6 +141,18 @@ case "DRAFT":
         <input type="text" bind:value={form.last_name} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
       </div>
     <div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Description</label>
+        <input type="text" bind:value={form.description} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Birthday</label>
+      <div class="w-full">
+        <DatePicker bind:isOpen bind:startDate>
+          <input type="text" placeholder="Select date" bind:value={formattedStartDate} on:click={toggleDatePicker} />
+        </DatePicker>     
+      </div>
+      </div>
       <label class="block text-sm font-medium text-gray-700">Street Address</label>
       <input type="text" bind:value={form.address_line_1} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
     </div>
@@ -124,22 +174,34 @@ case "DRAFT":
   
     <div>
       <label class="block text-sm font-medium text-gray-700">ZIP Code</label>
-      <input type="text" bind:value={form.zip} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+      <input type="text" bind:value={form.zipcode} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Country</label>
+      <input type="text" bind:value={form.country} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
     </div>
     <div>
       <label class="block text-sm font-medium text-gray-700">Code url</label>
-      <input type="url" bind:value={ship.github_url} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " disabled />
+      <input type="url" bind:value={form.code_url} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " disabled />
     </div>
     <div>
       <label class="block text-sm font-medium text-gray-700">Demo/playable url</label>
-      <input type="url" bind:value={ship.github_url} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " disabled />
+      <input type="url" bind:value={form.playable_url} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " disabled />
     </div>
     <div>
       <label class="block text-sm font-medium text-gray-700">Email </label>
       <input type="text" bind:value={form.email} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " />
     </div>
- 
-    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition">Submit</button>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Github username</label>
+      <input type="text" bind:value={form.github_username} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-700">Cover image</label>
+      <input type="url" bind:value={form.screenshot} class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100 " disabled />
+      <img src={form.screenshot} alt="cover" class="w-32 h-32 mt-2 rounded-lg" />
+    </div>
+    <button type="submit" class="w-full bg-blue-600 text-white py-2 px-4 rounded-xl hover:bg-blue-700 transition" on:click={handleSubmit}>Submit</button>
   </form>
 {/if}
 </div>
