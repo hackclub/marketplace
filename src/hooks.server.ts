@@ -5,7 +5,7 @@ import { ADMIN_LOGIN } from "$env/static/private";
 import prisma from "$lib/prisma";
 import { dev } from "$app/environment";
 // yes im using this, no i dont care that this is bad code
-let isinMaintinince = true;
+let isinMaintinince = false;
 Sentry.init({
   dsn: 'https://77f6aed8c8164ba7e7c3aa47b7e839f6@o4508373315026944.ingest.us.sentry.io/4509129843671040',
 
