@@ -21,7 +21,7 @@ export default defineConfig({
 		allowedHosts: ['.ngrok-free.app', '.loca.lt']
 	},
 	preview: {
-		allowedHosts: ['market.a.selfhosted.hackclub.com']
+		allowedHosts: ['market.a.selfhosted.hackclub.com', '.hackclub.com']
 	},
 	define: {
 		__GIT_COMMIT_HASH__: JSON.stringify(getGitCommitHash())
