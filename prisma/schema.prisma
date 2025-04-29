@@ -17,6 +17,12 @@ model User {
   slack_id              String
   slack_name            String
   address               String?
+  address_line_1        String?
+  address_line_2        String?
+  address_city          String?
+  address_state         String?
+  address_postal_code   String?
+  address_country       String?
   HeidiEscrow           HeidiEscrow[]
   Purchase              Purchase[]
   Ship                  Ship[]
@@ -49,6 +55,7 @@ model Ship {
   slack_user_name                 String
   rejected_for_something          String?
   total_time_in_seconds           String?       @default("0")
+  bill_of_materials               String? // this is optional because of prisma migration system
   HeidiEscrow                     HeidiEscrow[]
   Purchase                        Purchase[]
   user                            User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])

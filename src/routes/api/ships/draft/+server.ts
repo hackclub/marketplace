@@ -98,7 +98,8 @@ export async function POST(req: Request) {
 			cover_image_url: body.image_url,
 			readme_url: body.readme_url,
 			userId: sessionData.slackId,
-			slack_user_name: sessionData.slack_name
+			slack_user_name: sessionData.slack_name,
+			bill_of_materials: body.bill_of_materials,
 		}
 	});
 	console.log(ship, `meow`);
