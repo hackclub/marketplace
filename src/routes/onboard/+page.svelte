@@ -32,7 +32,6 @@
 </script>
 
 <NavBar />
-
 <div style="margin-left: 150px;" class="text-left">
 	<h1 class="text-4xl font-bold" style="font-family: Phantom Sans;margin-left: 0px">
 		Hi, welcome to Hack Club Market!
@@ -44,7 +43,7 @@
 		filled out this form, you will be able to start working!
 	</p>
 	{#if displayWarningMessage}
-		<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative w-1/2">
+		<div class="bg-red-100 border border-red-400 text-red-700 px-4 m py-3 rounded relative w-1/2">
 			<strong class="font-bold">Hey!</strong>
 			<span class="block sm:inline">
 			You are tryna do stuff without being fully onboarded, 
@@ -52,7 +51,7 @@
 		</div>
 	{/if}
 	<form
-		style="background-color: #FFECDA; font-family: Phantom Sans; padding-top: 10px;"
+		style="background-color: #FFECDA; font-family: Phantom Sans; padding-top: 10px; margin-bottom: 50px;"
 		class="rounded-xl w-1/2"
 		onsubmit={(e) => {
 			e.preventDefault();
@@ -66,7 +65,16 @@
 				},
 				body: JSON.stringify({
 					hcb_email: data['hcb-email'],
-					address: data['address'],
+					address_line_1: data['address_line_1'],
+					address_line_2: data['address_line_2'],
+					address_city: data['address_city'],
+					address_state: data['address_state'],
+					address_postal_code: data['address_postal_code'],
+					address_country: data['address_country'],
+
+
+					
+
 					region_for_shipping_and_receiving: [data['country']]
 				})
 			})
@@ -76,6 +84,7 @@
 				});
 		}}
 	>
+	
 		<div>
 			<label for="hcb-email" class="text-xl font-bold ml-10">HCB email</label>
 			<br />
@@ -85,31 +94,100 @@
 				type="email"
 				placeholder="hcb@hackclub.com"
 				required
-				class="max-w-3xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/>
 		</div>
 		<div>
 			<div class="ml-10">
-				<label for="address" class="text-xl font-bold">Address</label>
-				<p>
-					(please make sure its formated correctly and if u dont have a province/city please put
-					N/A)
-				</p>
+				<label for="address" class="text-xl font-bold">Address Line 1</label>
 			</div>
 
 			<input
-				id="address"
-				name="address"
+				id="address_line_1"
+				name="address_line_1"
 				type="text"
-				placeholder="15 Falls Rd, Shelburne, VT 05482 USA"
-				class="max-w-3xl w-xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				placeholder="15 Falls Rd"
+				class="max-w-3xl w-xl p-2 mb-2 mt-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+			/>
+		</div>
+	
+		<div>
+			<div class="ml-10">
+				<label for="address" class="text-xl font-bold">Address Line 2</label>
+			</div>
+
+			<input
+				id="address_line_2"
+				name="address_line_2"
+				type="text"
+				placeholder="Apt 202"
+				class="max-w-3xl w-xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+			/>
+		</div>
+
+		
+		<div>
+			<div class="ml-10">
+				<label for="address" class="text-xl font-bold">City</label>
+			</div>
+
+			<input
+				id="address_city"
+				name="address_city"
+				type="text"
+				placeholder="Shelburne"
+				class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/>
 		</div>
 		<div>
-			<label for="country" class="text-xl font-bold ml-10">Country</label>
+			
+		<div>
+			<div class="ml-10">
+				<label for="address" class="text-xl font-bold">State</label>
+			</div>
+
+			<input
+				id="address_state"
+				name="address_state"
+				type="text"
+				placeholder="VT"
+				class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+			/>
+		</div>
+		<div>
+			<div>
+				<div class="ml-10">
+					<label for="address" class="text-xl font-bold">Postal/Zip Code</label>
+				</div>
+	
+				<input
+					id="address_postal_code"
+					name="address_postal_code"
+					type="text"
+					placeholder="05482"
+					class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				/>
+			</div>
+
+
+			<div>
+				<div class="ml-10">
+					<label for="address" class="text-xl font-bold">Your Country</label>
+				</div>
+	
+				<input
+					id="address_country"
+					name="address_country"
+					type="text"
+					placeholder="USA"
+					class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				/>
+			</div>
+			<div>
+			<label for="country" class="text-xl font-bold ml-10">Places you ship to</label>
 			<br />
 			<select
-				class="max-w-3xl p-2 mt-2 ml-15 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="max-w-3xl p-2 mb-2 mt-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				id="country"
 				name="country"
 			>

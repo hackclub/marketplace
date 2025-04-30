@@ -36,11 +36,12 @@
 	<h2 class="font-bold font-2xl text-red-700">You have an active session! please open the timer for that ship before it gets deleted!</h2>
 	</div>
 	{/if}
+<div class="flex justify-center items-center mt-5">
 <span
-	style="font-family: Phantom Sans; margin-left: 8px; "
-	class="text-4xl font-semibold text-red-500">your ships:</span
+	style="font-family: Phantom Sans;"
+	class="text-4xl font-semibold text-red-500">your ships</span
 >
-
+</div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 	<CardList items={data} isAllMine={true} timerShipId={isInASessionRn} />
 </div>
