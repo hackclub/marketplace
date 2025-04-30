@@ -2,6 +2,7 @@
 	import { onMount } from "svelte";
     
 export let data = {}
+console.log(data)
 export let isUnderSomeReview = data.status !== "SHIPPED" && data.status !== "DRAFT";
 function submitForm(e) {
 e.preventDefault();
@@ -19,17 +20,25 @@ id: data.id,
 }),
 }).then(r=>r.text()).then(json => {
     console.log(json)
+    alert(json)
 })
 }
 // for isUnderSomeReview please check if its being activly reviwed in its status..
 
 </script>
+
 <form
 		style="background-color: #FFECDA; font-family: Phantom Sans;margin: 0px;"
 		class="rounded-xl"
         on:submit={submitForm}
         >
+   
         <div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-full">
+            {#if isUnderSomeReview}
+            <div class="bg-red-300 p-5 m-2 rounded-lg">
+                <h2 class="font-bold font-2xl text-red-700">Your ship is under review rn, if you need to change something in it dm @Neon or @Charmunk</h2>
+                </div>
+                {/if}
             <div class="grid">
                 <span class="text-xl font-bold">Project name</span>
                 <input
@@ -83,7 +92,7 @@ id: data.id,
                     type="url"
                     value={data.demo_url}
                     disabled={isUnderSomeReview}
-                    name="readmeUrl"
+                    name="demo_url"
                     placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
                     class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
                 /> <br />

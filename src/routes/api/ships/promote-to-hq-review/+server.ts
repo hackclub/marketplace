@@ -67,5 +67,5 @@ export async function POST(req: Request) {
     })
         .then((r) => r.json())
         .then(console.log);
-    return new Response('200 OK');
+    return new Response('Ship promoted to HQ review!');
 }

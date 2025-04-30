@@ -21,5 +21,5 @@ export async function GET(req: Request) {
 		draftAllRejectedShips(),
 		cleanUpOldTimers()
 	]);
-	return new Response('200 OK');
+	return new Response('200 OK - cron ran :3');
 }

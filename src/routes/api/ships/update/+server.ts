@@ -54,5 +54,5 @@ export async function POST(req: Request) {
 			channel: `C08GZ6QF97Z`
 		})
 	}).then((r) => r.json());
-	return new Response('200 OK');
+	return new Response('Ship updated!');
 }

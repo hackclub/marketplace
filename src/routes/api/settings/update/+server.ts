@@ -31,7 +31,7 @@ export async function PATCH(req: Request) {
 	const body = await req.request.json();
 	console.log(body);
 	
-	return await prisma.user.update({
+	 await prisma.user.update({
 		where: {
 			slackId: sessionData.slackId
 		},
@@ -54,4 +54,5 @@ export async function PATCH(req: Request) {
 			address_country: body.address_country
 		}
 	});
+	return new Response("Settings updated!")
 }
