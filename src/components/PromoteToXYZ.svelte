@@ -135,7 +135,7 @@
 
 <div class="rounded-xl">
 	{#if newPromotion !== 'SHIPPED'}
-		<p style="font-weight: 600;">
+		<p class="font-semibold">
 			Would you like to promote your ship from {formatName(status)} -> {formatName(newPromotion)}?
 		</p>
 		<button

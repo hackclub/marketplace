@@ -103,7 +103,7 @@
 
 			<p
 				class="text-lg text-black font-light"
-				style="margin-top: 5px; margin-bottom:20px; margin-right: 5px;"
+				style="margin-top: 5px; margin-bottom: 20px; margin-right: 5px;"
 			>
 				(ships to {shipData.can_ship_to})
 			</p>

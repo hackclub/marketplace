@@ -81,9 +81,7 @@
 
 <NavBar />
 <div class="max-w-2xl mx-auto px-4 py-8">
-	<h1 class="text-3xl sm:text-4xl font-bold text-red-500 mb-2" style="font-family: Phantom Sans;">
-		Settings
-	</h1>
+	<h1 class="text-3xl sm:text-4xl font-bold text-red-500 mb-2">Settings</h1>
 	<p class="mb-6 text-gray-700">Update your shipping and contact information below.</p>
 
 	{#if loading}
@@ -97,11 +95,7 @@
 			Settings saved successfully!
 		</div>
 	{:else if settings}
-		<form
-			class="bg-secondary rounded-xl p-6"
-			style="font-family: Phantom Sans;"
-			on:submit={handleSubmit}
-		>
+		<form class="bg-secondary rounded-xl p-6" on:submit={handleSubmit}>
 			<div class="mb-4">
 				<label for="hcb-email" class="text-lg font-bold block mb-1">HCB email</label>
 				<input
