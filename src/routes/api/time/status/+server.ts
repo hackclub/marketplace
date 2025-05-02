@@ -32,7 +32,7 @@ export async function GET(req: Request) {
 	const statusData = await prisma.time.findFirst({
 		where: {
 			userId: sessionData.slackId,
-			'AND': {
+			AND: {
 				video_link: null
 			}
 		}
