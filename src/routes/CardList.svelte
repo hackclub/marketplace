@@ -24,18 +24,18 @@
 	};
 </script>
 
-<div class="flex flex-wrap gap-4" style="font-family: Phantom Sans;">
+<div class="flex flex-wrap" style="font-family: Phantom Sans;">
 	{#if items.length == 0}
-		<div class="flex justify-center items-center w-full h-64">
+		<div class="flex justify-center items-center w-full h-20">
 			<h1 class="text-2xl font-bold text-gray-700">
-				No items found, maybe some will be here soon?
+				No items found, maybe you can be the first?
 			</h1>
 		</div>
 	{/if}
 	{#each items as item}
 		<div class="w-80 rounded-lg p-4 relative">
 			{#if isAllMine}
-				<div>
+				<div class="bg-orange-100 rounded-xl p-4">
 					<img
 						class="h-40 bg-orange-500 rounded-lg"
 						src={item.coverLink ||
@@ -113,6 +113,7 @@
 			{:else}
 				{#if item.status == 'SHIPPED'}
 					<a href="/buy?id={item.id}">
+						<div class="bg-orange-100 rounded-xl p-4">
 						<img
 							class="h-40 bg-orange-500 rounded-lg"
 							src={item.coverLink ||
@@ -129,10 +130,12 @@
 							<p class="text-gray-700">@{item.author}</p>
 							<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						</div>
+						</div>
 					</a>
 				{/if}
 				{#if item.status !== 'SHIPPED'}
-					<div>
+				<a href="/preview?id={item.id}">	
+				<div class="bg-orange-100 rounded-xl p-4">
 						<img
 							class="h-40 bg-orange-500 rounded-lg"
 							src={item.coverLink ||
@@ -142,7 +145,7 @@
 						<img
 							src={item.avatar}
 							alt="Avatar"
-							class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"
+							class="w-12 h-12 rounded-full absolute top-38 right-62 border-2 border-white"
 						/>
 						<div class="mt-6">
 							<h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
@@ -150,6 +153,7 @@
 							<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						</div>
 					</div>
+					</a>
 				{/if}
 			{/if}
 		</div>

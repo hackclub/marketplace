@@ -121,9 +121,12 @@ return fetch("/api/ships/shipped", {
     })
 </script>
 
-<div>
+<div 
+style="font-family: Phantom Sans;"
+class="rounded-xl"
+>
 {#if newPromotion !== "SHIPPED"}
-<p>
+<p style="font-weight: 600;">
   Would you like to promote your ship from {formatName(status)} ->  {formatName(newPromotion)}?
 </p>
 <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400 " disabled={underReview} on:click={submitToNextReviewProcess}>Yes</button>

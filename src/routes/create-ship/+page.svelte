@@ -48,7 +48,7 @@
 		}
 	}}
 	style="font-family: Phantom Sans; padding-top: 10px;"
-	class="flex justify-center items-center min-h-screen"
+	class="flex justify-center items-center"
 >
 	<div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-fit">
 		<div class="grid">
@@ -69,7 +69,7 @@
 				type="text"
 				minlength="10"
 				placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
-				class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">Git Repo</span>
 			<input
@@ -113,9 +113,9 @@
 			<button
 				type="submit"
 				style="font-family: Phantom Sans; margin-bottom: 50px;"
-				class="text-white bg-red-400 rounded-lg text-2xl font-bold px-87 py-2 hover:bg-red-600"
+				class="text-white bg-red-400 rounded-lg text-2xl w-3xl font-bold py-2 hover:bg-red-600"
 			>
-				ship a project
+				ship the project 
 			</button>
 		</div>
 	</div>

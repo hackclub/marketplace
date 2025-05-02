@@ -28,12 +28,12 @@ id: data.id,
 </script>
 
 <form
-		style="background-color: #FFECDA; font-family: Phantom Sans;margin: 0px;"
+		style="background-color: #FFECDA; font-family: Phantom Sans;"
 		class="rounded-xl"
         on:submit={submitForm}
         >
    
-        <div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-full">
+        <div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-full my-10">
             {#if isUnderSomeReview}
             <div class="bg-red-300 p-5 m-2 rounded-lg">
                 <h2 class="font-bold font-2xl text-red-700">Your ship is under review rn, if you need to change something in it dm @Neon or @Charmunk</h2>
