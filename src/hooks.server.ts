@@ -38,6 +38,7 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
         token: cookie
       }
     })
+
     if (userData) {
       if (!(userData.address && userData.hcb_email && userData.reigions_for_shipping)) {
         // console.log(`DAWG LEMME IN `)
@@ -54,6 +55,8 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
           slack_id: userData.slack_id,
           hcb_email: userData.hcb_email
         }), { path: "/", expires: new Date(Date.now() + 60 * 1000),  httpOnly: false })
+        Sentry.setUser({token: cookie, email: userData.hcb_email});
+
       }
      
     }

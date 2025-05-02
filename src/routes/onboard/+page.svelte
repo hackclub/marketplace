@@ -68,16 +68,13 @@
 					address_state: data['address_state'],
 					address_postal_code: data['address_postal_code'],
 					address_country: data['address_country'],
-
-
-					
-
 					region_for_shipping_and_receiving: [data['country']]
 				})
 			})
-				.then((r) => r.json())
+				.then((r) => r.text())
 				.then(() => {
 					location.pathname = '/ships';
+					location.reload()
 				});
 		}}
 	>
@@ -194,6 +191,7 @@
 				<option value="AU">Australia</option>
 				<option value="EU">Europe</option>
 				<option value="IN">India</option>
+				<option value="ASIA">Asia</option>
 				<option value="Everywhere">Anywhere! (note this may include having to pay customs)</option>
 			</select>
 		</div>
