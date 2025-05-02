@@ -103,12 +103,11 @@ if(r.ok) {
 				/>
 			</div>
 			<div>
-				<label for="wormhole_link" class="block font-medium text-gray-700">Wormhole URL</label>
+				<label for="wormhole_link" class="block font-medium text-gray-700">Wormhole URL (optional but recommended)</label>
 				<input
 					id="wormhole_link"
 					name="wormhole_link"
 					type="url"
-					required
 					minlength="60"
 					class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 					placeholder="https://hackclub.slack.com/archives/C08MC7PQ40G/p1744073240800789"
