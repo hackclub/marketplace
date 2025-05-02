@@ -28,10 +28,10 @@ export async function GET(req) {
 			return json({ error: rjson.error }, { status: 500 });
 		}
 		const jwt = parseJwt(rjson.id_token);
-		if (jwt["https://slack.com/team_domain"] !== "hackclub") {
-		    return json({ error: "Sign in with the Hack Club Slack workspace!" }, { status: 401 });
+		if (jwt['https://slack.com/team_domain'] !== 'hackclub') {
+			return json({ error: 'Sign in with the Hack Club Slack workspace!' }, { status: 401 });
 		}
-		
+
 		// check if user has a session
 		const userData = await prisma.user.findFirst({
 			where: {

@@ -34,7 +34,7 @@ export async function POST(req: Request) {
 			},
 			data: {
 				status: 'UNDER_HQ_DIGITAL_REVIEW',
-				is_under_some_review_rn: true,
+				is_under_some_review_rn: true
 			}
 		});
 	} catch (e) {

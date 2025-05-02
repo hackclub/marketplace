@@ -2,14 +2,16 @@ import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/
 import prisma from '$lib/prisma';
 function formatAddress(address) {
 	const parts = [
-	  address.address_line_1,
-	  address.address_line_2,
-	  [address.address_city, address.address_state, address.address_postal_code].filter(Boolean).join(', '),
-	  address.address_country
+		address.address_line_1,
+		address.address_line_2,
+		[address.address_city, address.address_state, address.address_postal_code]
+			.filter(Boolean)
+			.join(', '),
+		address.address_country
 	].filter(Boolean); // removes undefined/null/empty strings
-  
+
 	return parts.join('\n'); // or ', ' or whatever separator you want
-  }
+}
 export async function PATCH(req: Request) {
 	// check for session here
 	const session = req.cookies.get('session');
@@ -30,8 +32,8 @@ export async function PATCH(req: Request) {
 	}
 	const body = await req.request.json();
 	console.log(body);
-	
-	 await prisma.user.update({
+
+	await prisma.user.update({
 		where: {
 			slackId: sessionData.slackId
 		},
@@ -54,5 +56,5 @@ export async function PATCH(req: Request) {
 			address_country: body.address_country
 		}
 	});
-	return new Response("Settings updated!")
+	return new Response('Settings updated!');
 }

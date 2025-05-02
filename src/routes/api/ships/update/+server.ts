@@ -1,6 +1,4 @@
-import {
-	PRIVATE_SLACK_BOT_TOKEN
-} from '$env/static/private';
+import { PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import prisma from '$lib/prisma';
 export async function POST(req: Request) {
 	const session = req.cookies.get('session');
@@ -19,25 +17,25 @@ export async function POST(req: Request) {
 			status: 401
 		});
 	}
-    let ship = null;
+	let ship = null;
 	const body = await req.request.json();
 	try {
 		ship = await prisma.ship.update({
 			where: {
-                id: body.id,
+				id: body.id
 			},
 			data: {
-                Name: body.name,
-                Description: body.description,
-                requested_grant_amount: body.cost ? parseInt(body.cost) : undefined,
-                github_url: body.github_url,
-                demo_url: body.demo_url,
-                cover_image_url: body.image_url,
-                readme_url: body.readme_url,
+				Name: body.name,
+				Description: body.description,
+				requested_grant_amount: body.cost ? parseInt(body.cost) : undefined,
+				github_url: body.github_url,
+				demo_url: body.demo_url,
+				cover_image_url: body.image_url,
+				readme_url: body.readme_url
 			}
 		});
 	} catch (e) {
-        console.error(e)
+		console.error(e);
 		return new Response(JSON.stringify({ message: 'Ship not found' }), {
 			status: 404
 		});
