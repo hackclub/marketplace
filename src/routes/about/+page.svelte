@@ -72,11 +72,11 @@
 	<div style="margin-bottom: 20px;">
 		<span class="text-red-500 font-bold text-4xl">What is this?</span>
 		<br style="margin-bottom: 12px;" />
-		<span class="text-stone-800 font-medium text-xl"
-			>Hack Club Market is a marketplace for you to sell PCBs and hardware you design to other
+		<span class="text-stone-800 font-medium text-xl">
+			Hack Club Market is a marketplace for you to sell PCBs and hardware you design to other
 			teens! <br />
-			you can submit a PCB you design, and you will recieve a grant based on the cost to produce and
-			the quality. <br /> you will use that to produce multiple copies of your project, then it will
+			You can submit a PCB you've designed, and you will receive a grant based on the cost to produce and
+			its quality. <br /> You'll use that grant to produce multiple copies of your project, then it will
 			go live on the site for people to order!
 		</span> <br style="margin-bottom: 12px;" />
 	</div>
@@ -84,11 +84,11 @@
 		<span class="text-red-500 font-bold text-4xl">How do I list a project?</span>
 		<br style="margin-bottom: 12px;" />
 		<span class="text-stone-800 font-medium text-xl">
-			Create your project while tracking time using Hackatime v2, then go to the ships page and list
+			Create your project while tracking time using Hackatime v2, then go to the Ships page and list
 			your project. <br />
-			You will need a Git repository, demo images, a demo video, and a description of the project and
+			You’ll need a Git repository, demo images, a demo video, and a description of the project and
 			how it was made. <br />
-			Once you list a project, it will be reviewed by our team, and you will be given a grant to spend
+			Once you list a project, it will be reviewed by our team, and you'll be given a grant to spend
 			on production. <br />
 		</span>
 	</div>
@@ -96,11 +96,12 @@
 		<span class="text-red-500 font-bold text-4xl">How do I get currency?</span>
 		<br style="margin-bottom: 12px;" />
 		<span class="text-stone-800 font-medium text-xl">
-			You get currency from working on your hardware projects once you ship them to the marketplace! <br
+			You earn currency by working on your hardware projects and shipping them to the marketplace! <br
 			/>
-			Once your project is approved, you will receive 5 coins per hour spent working on the project.
+			Once your project is approved, you'll receive 5 coins for every hour you spent working on it.
 			<br />
-			When someone buys your project and you ship it out, you will receive the coins from that sale.
+			When someone buys your project and you ship it out, you'll also receive the coins from that sale.
 		</span>
 	</div>
 </div>
+
