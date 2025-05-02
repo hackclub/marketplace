@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-@theme {
-	--color-hcred: #ec3750;
-}
-
 @font-face {
 	font-family: 'Phantom Sans';
 	src:
@@ -33,6 +29,13 @@
 	font-display: swap;
 }
 
+@theme {
+	--color-hcred: #ec3750;
+	--font-sans:
+		'Phantom Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
 .helper {
 	display: inline-block;
 	height: 100%;
@@ -47,7 +50,6 @@ img {
 }
 
 .boxtext {
-	font-family: 'Phantom Sans', sans-serif;
 	color: #33d6a6;
 	font-size: clamp(24px, 5vw, 40px);
 	margin: 0;
@@ -59,13 +61,14 @@ img {
 	.helper {
 		margin-bottom: 0.5rem;
 	}
-	
+
 	.boxtext {
 		padding: 0.25rem;
 	}
 }
 
-button, a {
+button,
+a {
 	min-height: 44px;
 	min-width: 44px;
 }

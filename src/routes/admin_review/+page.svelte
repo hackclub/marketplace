@@ -34,13 +34,11 @@
 
 <NavBar />
 
-<span
-	style="font-family: Phantom Sans; margin-left: 80px; "
-	class="text-4xl font-semibold text-red-500">Ships to review:</span
+<span style="margin-left: 80px; " class="text-4xl font-semibold text-red-500">Ships to review:</span
 >
 
 <div class="flex flex-col items-center mx-auto space-y-4">
 	{#each data as item}
-<ShipReview properData={item} />
-    {/each}
+		<ShipReview properData={item} />
+	{/each}
 </div>

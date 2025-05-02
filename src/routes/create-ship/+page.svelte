@@ -38,7 +38,7 @@
 				github_url: dd.gitRepo,
 				readme_url: dd.readmeUrl,
 				cost: parseInt(dd.cost),
-				bill_of_materials: dd.bill_of_materials,
+				bill_of_materials: dd.bill_of_materials
 			})
 		}).then((d) => d.text());
 		if (response.includes('OK')) {
@@ -48,10 +48,10 @@
 			alert(response);
 		}
 	}}
-	style="font-family: Phantom Sans; padding-top: 10px;"
+	style="padding-top: 10px;"
 	class="flex justify-center items-center"
 >
-	<div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-fit">
+	<div class="bg-[#FFECDA] p-5 rounded-xl w-fit">
 		<div class="grid">
 			<span class="text-xl font-bold">Project name</span>
 			<input
@@ -109,7 +109,12 @@
 				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/>
 			<br />
-			<span class="text-xl font-bold">Bill of materials, <a href="https://www.google.com/search?q=what+is+a+bill+of+materials&oq=what+is+a+bill+of+materials">whats that?</a></span>
+			<span class="text-xl font-bold"
+				>Bill of materials, <a
+					href="https://www.google.com/search?q=what+is+a+bill+of+materials&oq=what+is+a+bill+of+materials"
+					>whats that?</a
+				></span
+			>
 			<input
 				style="margin-bottom: 30px;"
 				id="bof"
@@ -124,17 +129,16 @@
 		<div class="flex justify-center items-center mt-5">
 			<button
 				type="submit"
-				style="font-family: Phantom Sans; margin-bottom: 50px;"
+				style="margin-bottom: 50px;"
 				class="text-white bg-red-400 rounded-lg text-2xl w-3xl font-bold py-2 hover:bg-red-600"
 			>
-				ship the project 
+				ship the project
 			</button>
 		</div>
 	</div>
 </form>
 {#if dev}
 	<button
-		style="font-family: Phantom Sans;"
 		class="text-white bg-red-400 rounded-lg text-2xl font-bold px-2 py-2 hover:bg-red-600"
 		onclick={() => {
 			const allInputs = document.querySelectorAll('input');

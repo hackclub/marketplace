@@ -57,18 +57,19 @@
 		/>
 
 		<div class="w-full lg:max-w-xl">
-			<h1 class="text-3xl sm:text-4xl font-semibold text-red-500 font-sans mt-4 lg:mt-0">{shipData.title}</h1>
+			<h1 class="text-3xl sm:text-4xl font-semibold text-red-500 font-sans mt-4 lg:mt-0">
+				{shipData.title}
+			</h1>
 
 			<div class="flex items-center gap-4 mt-2">
 				<img src={shipData.avatar} alt="Avatar" class="rounded-full w-12 h-12" />
 				<div>
 					<p class="text-lg font-semibold text-red-500 font-sans">by @{shipData.author}</p>
 					<a
-			style="font-family: Phantom Sans; margin-"
-			href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
-			class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
-			>message me on slack</a
-		>
+						href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
+						class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+						>message me on slack</a
+					>
 				</div>
 			</div>
 

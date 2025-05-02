@@ -21,7 +21,9 @@
 		} catch (error) {
 			console.error(error);
 		}
-		isInASessionRn = await fetch('/api/time/status').then(r=>r.json()).then(r=>r.shipId)
+		isInASessionRn = await fetch('/api/time/status')
+			.then((r) => r.json())
+			.then((r) => r.shipId);
 	});
 
 	// shorten desc and add ...
@@ -32,15 +34,14 @@
 
 <NavBar />
 {#if isInASessionRn}
-<div class="bg-red-300 p-5 m-2 rounded-lg">
-	<h2 class="font-bold font-2xl text-red-700">You have an active session! please open the timer for that ship before it gets deleted!</h2>
+	<div class="bg-red-300 p-5 m-2 rounded-lg">
+		<h2 class="font-bold font-2xl text-red-700">
+			You have an active session! please open the timer for that ship before it gets deleted!
+		</h2>
 	</div>
-	{/if}
+{/if}
 <div class="flex justify-center items-center mt-5">
-<span
-	style="font-family: Phantom Sans;"
-	class="text-4xl font-semibold text-red-500">your ships</span
->
+	<span class="text-4xl font-semibold text-red-500">your ships</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 	<CardList items={data} isAllMine={true} timerShipId={isInASessionRn} />
@@ -49,7 +50,7 @@
 <div class="flex justify-center items-center mt-5">
 	<a
 		href="/create-ship"
-		style="font-family: Phantom Sans; margin-bottom: 50px;"
+		style="margin-bottom: 50px;"
 		class="text-white bg-red-400 rounded-lg text-2xl font-bold px-140 py-2 mr-2 hover:bg-red-600"
 	>
 		ship a project

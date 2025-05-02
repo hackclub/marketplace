@@ -1,17 +1,14 @@
 <script lang="ts">
 	import NavBar from '../NavBar.svelte';
 
-	// --- State ---
-	// Define a type for the ship data if known, otherwise use `any[]` or `unknown[]`
 	interface ShipData {
-		// Define structure, e.g., id: string; name: string; etc.
-		[key: string]: any; // Placeholder
+		[key: string]: any;
 	}
-	let shipData = $state<ShipData[]>([]); // Renamed from `data` for clarity
+	let shipData = $state<ShipData[]>([]);
 	let loading = $state(true);
 	let loggedIn = $state(false);
 	let displayWarningMessage = $state(false);
-	let isSubmitting = $state(false); // Track form submission state
+	let isSubmitting = $state(false);
 
 	// --- Constants ---
 	const API_SETTINGS_UPDATE = '/api/settings/update';
@@ -40,7 +37,6 @@
 				return; // Stop execution if not logged in
 			}
 
-			// Check for warning message param
 			try {
 				const urlParams = new URLSearchParams(window.location.search);
 				displayWarningMessage = urlParams.get('a') === '1';
@@ -49,7 +45,6 @@
 				displayWarningMessage = false; // Default to false if URL parsing fails
 			}
 
-			// Fetch initial data (optional, as it's not used in the template)
 			try {
 				const res = await fetch(API_SHIPS_HOMEPAGE);
 				if (res.ok) {
@@ -57,23 +52,17 @@
 					console.log('Homepage ship data loaded:', shipData);
 				} else {
 					console.error('Failed to fetch homepage ship data:', res.status, res.statusText);
-					// Optionally handle this error, e.g., show a message to the user
 				}
 			} catch (error) {
 				console.error('Error fetching homepage ship data:', error);
-				// Optionally handle this error
 			} finally {
 				loading = false; // Data fetching attempt finished
 			}
 		};
 
 		checkAuthAndFetchData();
-
-		// No cleanup needed for this effect
-		// return () => { /* cleanup logic if needed */ }
 	});
 
-	// --- Form Handling ---
 	interface FormDataShape {
 		'hcb-email': string;
 		address_line_1: string;
@@ -98,11 +87,10 @@
 
 	async function handleSubmit(event: SubmitEvent & { currentTarget: HTMLFormElement }) {
 		event.preventDefault();
-		if (isSubmitting) return; // Prevent double submission
+		if (isSubmitting) return;
 		isSubmitting = true;
 
 		const formData = new FormData(event.currentTarget);
-		// Use type assertion carefully, ensure form names match FormDataShape keys
 		const formValues = Object.fromEntries(formData.entries()) as unknown as FormDataShape;
 
 		console.log('Form Data Submitted:', formValues);
@@ -110,12 +98,12 @@
 		const payload: SettingsUpdatePayload = {
 			hcb_email: formValues['hcb-email'],
 			address_line_1: formValues.address_line_1,
-			address_line_2: formValues.address_line_2 || '', // Handle potentially empty optional field
+			address_line_2: formValues.address_line_2 || '',
 			address_city: formValues.address_city,
 			address_state: formValues.address_state,
 			address_postal_code: formValues.address_postal_code,
 			address_country: formValues.address_country,
-			region_for_shipping_and_receiving: [formValues.country] // Wrap 'country' value in an array
+			region_for_shipping_and_receiving: [formValues.country]
 		};
 
 		try {
@@ -129,7 +117,6 @@
 
 			if (response.ok) {
 				console.log('Settings updated successfully.');
-				// Consider parsing response if API sends useful data back: await response.json();
 				location.pathname = REDIRECT_ON_SUCCESS;
 			} else {
 				console.error('Failed to update settings:', response.status, response.statusText);
@@ -141,27 +128,22 @@
 			console.error('Error submitting form:', error);
 			alert(
 				`An error occurred while submitting the form: ${error instanceof Error ? error.message : String(error)}`
-			); // Simple user feedback
+			);
 		} finally {
 			isSubmitting = false;
 		}
 	}
 
-	// --- Styling Helpers ---
-	// Define common input classes to avoid repetition
 	const baseInputClasses =
 		'p-2 mt-2 mb-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]';
 	const fullWidthInputClasses = `${baseInputClasses} w-full`;
 	const limitedWidthInputClasses = `${baseInputClasses} max-w-3xl`; // Assuming this was intentional
-
-	// Custom font class (ensure 'Phantom Sans' is configured or available)
-	const phantomFontClass = "font-['Phantom_Sans']";
 </script>
 
 <NavBar />
 
 <div class="ml-[150px] text-left pb-10">
-	<h1 class="text-4xl font-bold {phantomFontClass}">Hi, welcome to Hack Club Market!</h1>
+	<h1 class="text-4xl font-bold">Hi, welcome to Hack Club Market!</h1>
 	<p class="py-7 text-wrap w-1/2">
 		Welcome to the market! We will need to collect some information before you can proceed.
 	</p>
@@ -171,10 +153,7 @@
 	{:else if !loggedIn}
 		<p>Redirecting...</p>
 	{:else}
-		<form
-			class="bg-[#FFECDA] {phantomFontClass} p-8 mb-[50px] rounded-xl w-1/2 px-10"
-			onsubmit={handleSubmit}
-		>
+		<form class="bg-[#FFECDA] p-8 mb-[50px] rounded-xl w-1/2 px-10" onsubmit={handleSubmit}>
 			{#if displayWarningMessage}
 				<div
 					class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 w-full"
@@ -290,7 +269,7 @@
 			<div class="flex justify-center items-center mt-8 mb-10">
 				<button
 					type="submit"
-					class="text-white bg-red-400 rounded-lg text-2xl font-bold px-10 py-2 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed {phantomFontClass}"
+					class="text-white bg-red-400 rounded-lg text-2xl font-bold px-10 py-2 hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed"
 					disabled={isSubmitting}
 				>
 					{#if isSubmitting}
