@@ -6,7 +6,7 @@
 	import NavBar from '../NavBar.svelte';
 	import { onMount } from 'svelte';
 	onMount(async () => {
-		displayWarningMessage = new URL(window.location.href).searchParams.get('a') == '1'
+		displayWarningMessage = new URL(window.location.href).searchParams.get('a') == '1';
 		try {
 			const res = await fetch('/api/ships/homepage');
 			if (res.ok) {
@@ -42,9 +42,7 @@
 	{#if displayWarningMessage}
 		<div class="bg-red-100 border border-red-400 text-red-700 px-4 m py-3 rounded relative w-1/2">
 			<strong class="font-bold">Hey!</strong>
-			<span class="block sm:inline">
-			You are tryna do stuff without being fully onboarded, 
-			</span>
+			<span class="block sm:inline"> You are tryna do stuff without being fully onboarded, </span>
 		</div>
 	{/if}
 	<form
@@ -74,11 +72,10 @@
 				.then((r) => r.text())
 				.then(() => {
 					location.pathname = '/ships';
-					location.reload()
+					location.reload();
 				});
 		}}
 	>
-	
 		<div>
 			<label for="hcb-email" class="text-xl font-bold ml-10">HCB email</label>
 			<br />
@@ -104,7 +101,7 @@
 				class="max-w-3xl w-xl p-2 mb-2 mt-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/>
 		</div>
-	
+
 		<div>
 			<div class="ml-10">
 				<label for="address" class="text-xl font-bold">Address Line 2</label>
@@ -119,7 +116,6 @@
 			/>
 		</div>
 
-		
 		<div>
 			<div class="ml-10">
 				<label for="address" class="text-xl font-bold">City</label>
@@ -134,74 +130,76 @@
 			/>
 		</div>
 		<div>
-			
-		<div>
-			<div class="ml-10">
-				<label for="address" class="text-xl font-bold">State</label>
-			</div>
-
-			<input
-				id="address_state"
-				name="address_state"
-				type="text"
-				placeholder="VT"
-				class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
-			/>
-		</div>
-		<div>
 			<div>
 				<div class="ml-10">
-					<label for="address" class="text-xl font-bold">Postal/Zip Code</label>
+					<label for="address" class="text-xl font-bold">State</label>
 				</div>
-	
-				<input
-					id="address_postal_code"
-					name="address_postal_code"
-					type="text"
-					placeholder="05482"
-					class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
-				/>
-			</div>
 
-
-			<div>
-				<div class="ml-10">
-					<label for="address" class="text-xl font-bold">Your Country</label>
-				</div>
-	
 				<input
-					id="address_country"
-					name="address_country"
+					id="address_state"
+					name="address_state"
 					type="text"
-					placeholder="USA"
+					placeholder="VT"
 					class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
 			</div>
 			<div>
-			<label for="country" class="text-xl font-bold ml-10">Places you ship to</label>
-			<br />
-			<select
-				class="max-w-3xl p-2 mb-2 mt-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
-				id="country"
-				name="country"
-			>
-				<option value="US" selected>USA</option>
-				<option value="CA">Canada</option>
-				<option value="UK">United Kingdom</option>
-				<option value="AU">Australia</option>
-				<option value="EU">Europe</option>
-				<option value="IN">India</option>
-				<option value="ASIA">Asia</option>
-				<option value="Everywhere">Anywhere! (note this may include having to pay customs)</option>
-			</select>
-		</div>
-		<div class="flex justify-center items-center mt-5">
-			<button
-				style="font-family: Phantom Sans; margin-bottom: 40px;"
-				class="text-white bg-red-400 rounded-lg text-2xl font-bold px-10 pt-2 pb-2 hover:bg-red-600"
-			>
-				Next step!
-			</button>
+				<div>
+					<div class="ml-10">
+						<label for="address" class="text-xl font-bold">Postal/Zip Code</label>
+					</div>
+
+					<input
+						id="address_postal_code"
+						name="address_postal_code"
+						type="text"
+						placeholder="05482"
+						class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					/>
+				</div>
+
+				<div>
+					<div class="ml-10">
+						<label for="address" class="text-xl font-bold">Your Country</label>
+					</div>
+
+					<input
+						id="address_country"
+						name="address_country"
+						type="text"
+						placeholder="USA"
+						class="max-w-3xl p-2 mt-2 mb-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					/>
+				</div>
+				<div>
+					<label for="country" class="text-xl font-bold ml-10">Places you ship to</label>
+					<br />
+					<select
+						class="max-w-3xl p-2 mb-2 mt-2 ml-10 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+						id="country"
+						name="country"
+					>
+						<option value="US" selected>USA</option>
+						<option value="CA">Canada</option>
+						<option value="UK">United Kingdom</option>
+						<option value="AU">Australia</option>
+						<option value="EU">Europe</option>
+						<option value="IN">India</option>
+						<option value="ASIA">Asia</option>
+						<option value="Everywhere"
+							>Anywhere! (note this may include having to pay customs)</option
+						>
+					</select>
+				</div>
+				<div class="flex justify-center items-center mt-5">
+					<button
+						style="font-family: Phantom Sans; margin-bottom: 40px;"
+						class="text-white bg-red-400 rounded-lg text-2xl font-bold px-10 pt-2 pb-2 hover:bg-red-600"
+					>
+						Next step!
+					</button>
+				</div>
+			</div>
 		</div>
 	</form>
 </div>

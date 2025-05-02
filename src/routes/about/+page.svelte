@@ -73,11 +73,11 @@
 		<span class="text-red-500 font-bold text-4xl">What is this?</span>
 		<br style="margin-bottom: 12px;" />
 		<span class="text-stone-800 font-medium text-xl">
-			Hack Club Market is a marketplace for you to sell PCBs and hardware you design to other
-			teens! <br />
-			You can submit a PCB you've designed, and you will receive a grant based on the cost to produce and
-			its quality. <br /> You'll use that grant to produce multiple copies of your project, then it will
-			go live on the site for people to order!
+			Hack Club Market is a marketplace for you to sell PCBs and hardware you design to other teens! <br
+			/>
+			You can submit a PCB you've designed, and you will receive a grant based on the cost to produce
+			and its quality. <br /> You'll use that grant to produce multiple copies of your project, then
+			it will go live on the site for people to order!
 		</span> <br style="margin-bottom: 12px;" />
 	</div>
 	<div style="margin-bottom: 20px;">
@@ -86,8 +86,8 @@
 		<span class="text-stone-800 font-medium text-xl">
 			Create your project while tracking time using Hackatime v2, then go to the Ships page and list
 			your project. <br />
-			You’ll need a Git repository, demo images, a demo video, and a description of the project and
-			how it was made. <br />
+			You’ll need a Git repository, demo images, a demo video, and a description of the project and how
+			it was made. <br />
 			Once you list a project, it will be reviewed by our team, and you'll be given a grant to spend
 			on production. <br />
 		</span>
@@ -104,4 +104,3 @@
 		</span>
 	</div>
 </div>
-

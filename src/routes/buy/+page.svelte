@@ -59,18 +59,20 @@
 
 		<!-- Info Section -->
 		<div class="w-full lg:max-w-xl">
-			<h1 class="text-3xl sm:text-4xl font-semibold text-red-500 font-sans mt-4 lg:mt-0">{shipData.title}</h1>
+			<h1 class="text-3xl sm:text-4xl font-semibold text-red-500 font-sans mt-4 lg:mt-0">
+				{shipData.title}
+			</h1>
 
 			<div class="flex items-center gap-4 mt-2">
 				<img src={shipData.avatar} alt="Avatar" class="rounded-full w-12 h-12" />
 				<div>
 					<p class="text-lg font-semibold text-red-500 font-sans">by @{shipData.author}</p>
 					<a
-					style="font-family: Phantom Sans;"
-					href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
-					class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
-					>message me on slack</a
-				>
+						style="font-family: Phantom Sans;"
+						href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
+						class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+						>message me on slack</a
+					>
 				</div>
 			</div>
 
@@ -79,36 +81,36 @@
 			<!-- Buy Button -->
 			<div class="mt-6">
 				{#if loggedIn}
-				<button
-					style="font-family: Phantom Sans;"
-					on:click={() => {
-						const confirmation = confirm('Are you sure you want to buy this?');
-						if (confirmation) {
-							// create POST to /api/purchases/create
-						}
-					}}
-					class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
-					>buy now!!!</button
-				>
-			{:else}
-				<button
-					style="font-family: Phantom Sans;"
-					on:click={() => {
-						window.location.href = '/api/oauth/slack/login';
-					}}
-					class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
-					>buy now!!!</button
-				>
-			{/if}
+					<button
+						style="font-family: Phantom Sans;"
+						on:click={() => {
+							const confirmation = confirm('Are you sure you want to buy this?');
+							if (confirmation) {
+								// create POST to /api/purchases/create
+							}
+						}}
+						class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
+						>buy now!!!</button
+					>
+				{:else}
+					<button
+						style="font-family: Phantom Sans;"
+						on:click={() => {
+							window.location.href = '/api/oauth/slack/login';
+						}}
+						class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
+						>buy now!!!</button
+					>
+				{/if}
 			</div>
 
 			<p
-		class="text-lg text-black font-light"
-		style="margin-top: 5px; margin-bottom:20px; margin-right: 5px; font-family:
+				class="text-lg text-black font-light"
+				style="margin-top: 5px; margin-bottom:20px; margin-right: 5px; font-family:
 		 Phantom Sans;"
-	>
-		(ships to {shipData.can_ship_to})
-	</p>
+			>
+				(ships to {shipData.can_ship_to})
+			</p>
 		</div>
 	</div>
 {:else}
