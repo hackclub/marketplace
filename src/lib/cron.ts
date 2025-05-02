@@ -27,9 +27,9 @@ export interface HcbGrantResponse0 {
 	status: string;
 	disbursements: Disbursement[];
 	card_id?: any;
-  }
-  
-  export interface Disbursement {
+}
+
+export interface Disbursement {
 	id: string;
 	memo: string;
 	status: string;
@@ -38,9 +38,9 @@ export interface HcbGrantResponse0 {
 	from: Organization;
 	to: Organization;
 	sender: User;
-  }
-  
-  export interface Organization {
+}
+
+export interface Organization {
 	created_at: string;
 	id: string;
 	name: string;
@@ -52,16 +52,16 @@ export interface HcbGrantResponse0 {
 	transparent: boolean;
 	fee_percentage: number;
 	background_image?: any;
-  }
-  
-  export interface User {
+}
+
+export interface User {
 	id: string;
 	name: string;
 	email: string;
 	avatar: string;
 	admin: boolean;
 	auditor: boolean;
-  }
+}
 export async function sendHCBGrants() {
 	// const data = await fetch(
 	// 	`https://api.airtable.com/v0/${PRIVATE_AIRTABLE_BASE_ID}/ships?filterByFormula=${encodeURIComponent(`AND({HCB grant approve} = TRUE(), {_automation_grant_sent} = FALSE())`)}`,
@@ -75,10 +75,10 @@ export async function sendHCBGrants() {
 		where: {
 			approved_for_grant: true,
 			automation_approved_for_grant: false,
-			is_under_some_review_rn: true,
+			is_under_some_review_rn: true
 		}
-	})
-	const recordsToUpdate:string[] = [];
+	});
+	const recordsToUpdate: string[] = [];
 	// loop thru allat records
 	for (const record of data) {
 		// so we send hcb record hypothetically
@@ -86,29 +86,29 @@ export async function sendHCBGrants() {
 		fetch('https://api.saahild.com/api/hcb_revers/grant', {
 			method: 'POST',
 			headers: {
-			Authorization: PRIVATE_MASTER_KEY
+				Authorization: PRIVATE_MASTER_KEY
 			},
 			body: new URLSearchParams({
-				org: "market-ysws",
-				email: await prisma.user.findUnique({
-					where: {
-						slackId: record.userId!
-					},
-					select: {
-						hcb_email: true
-					}
-				}).then((d) => d?.hcb_email || ''),
+				org: 'market-ysws',
+				email: await prisma.user
+					.findUnique({
+						where: {
+							slackId: record.userId!
+						},
+						select: {
+							hcb_email: true
+						}
+					})
+					.then((d) => d?.hcb_email || ''),
 				amount: (dev ? 0.01 : record.grant_amount).toString(),
 				// 30 char limit so whats the __ point
-				purpose: "Your grant" ,
+				purpose: 'Your grant'
 			})
 		}).then(async (d) => {
 			console.log(d.status);
-			const text = await d.json().then(d=> d as HcbGrantResponse);
-			console.log(text)
-			if (
-				text.error
- 			) {
+			const text = await d.json().then((d) => d as HcbGrantResponse);
+			console.log(text);
+			if (text.error) {
 				await fetch(`https://slack.com/api/chat.postMessage`, {
 					headers: {
 						Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
@@ -145,7 +145,7 @@ export async function sendHCBGrants() {
 				text: `${dev ? `[DEV]` : ''}  <@${record.userId}> has been sent there grant for there ship ${record.Name} (${record.id})`,
 				channel: `C08GZ6QF97Z`
 			})
-		}).then((r) => r.json()); 
+		}).then((r) => r.json());
 		await fetch(`https://slack.com/api/chat.postMessage`, {
 			headers: {
 				Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
@@ -157,17 +157,17 @@ export async function sendHCBGrants() {
 				channel: record.userId
 			})
 		}).then((r) => r.json());
-	recordsToUpdate.push(record.id);
+		recordsToUpdate.push(record.id);
 	}
 	await prisma.ship.updateMany({
 		where: {
 			id: {
-			in: recordsToUpdate
-			},
+				in: recordsToUpdate
+			}
 		},
 		data: {
 			automation_approved_for_grant: true,
-			is_under_some_review_rn: false,
+			is_under_some_review_rn: false
 			// user must push it to hq review once they ship it.
 		}
 	});
@@ -243,9 +243,9 @@ export async function promoteUsersFromDigitalReview() {
 		where: {
 			approved_for_digital: true,
 			automation_approved_for_digital: false,
-			is_under_some_review_rn: true,
+			is_under_some_review_rn: true
 		}
-	})
+	});
 	const recordsToUpdate = [];
 	// send msg to oauth2 with hcb if no email on file
 	for (const d of data) {
