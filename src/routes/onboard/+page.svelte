@@ -36,11 +36,8 @@
 	<h1 class="text-4xl font-bold" style="font-family: Phantom Sans;margin-left: 0px">
 		Hi, welcome to Hack Club Market!
 	</h1>
-	<p class="py-10 text-wrap w-1/2">
-		Welcome to Hack Club Market, we are excited to have you participate in this new event! we will
-		need to collect your address, the country you live for shipments (please note if ordering from a
-		international seller, their will be customs), and the email you use for hcb. Once you have
-		filled out this form, you will be able to start working!
+	<p class="py-7 text-wrap w-1/2">
+		Welcome to the market! We will need to collect some information before you can proceed.
 	</p>
 	{#if displayWarningMessage}
 		<div class="bg-red-100 border border-red-400 text-red-700 px-4 m py-3 rounded relative w-1/2">
