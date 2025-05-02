@@ -110,6 +110,7 @@ enum Reigions {
   EU
   CA
   UK
+  ASIA
 }
 
 enum StatusString {

@@ -194,6 +194,7 @@
 				<option value="AU">Australia</option>
 				<option value="EU">Europe</option>
 				<option value="IN">India</option>
+				<option value="ASIA">Asia</option>
 				<option value="Everywhere">Anywhere! (note this may include having to pay customs)</option>
 			</select>
 		</div>
