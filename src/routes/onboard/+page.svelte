@@ -68,16 +68,13 @@
 					address_state: data['address_state'],
 					address_postal_code: data['address_postal_code'],
 					address_country: data['address_country'],
-
-
-					
-
 					region_for_shipping_and_receiving: [data['country']]
 				})
 			})
 				.then((r) => r.text())
 				.then(() => {
 					location.pathname = '/ships';
+					location.reload()
 				});
 		}}
 	>
