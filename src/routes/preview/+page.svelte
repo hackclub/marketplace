@@ -17,7 +17,6 @@
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
-		// Get the id from the url
 		const params = new URLSearchParams(window.location.search);
 		id = params.get('id');
 		console.log('URL ID:', id);
@@ -27,10 +26,7 @@
 			if (res.ok) {
 				data = await res.json();
 				console.log('Fetched Data:', data);
-
-				// find correct ship with id
 				shipData = data;
-				console.log('Filtered Ship:', shipData);
 			} else {
 				console.error('Failed to fetch data');
 			}
@@ -51,49 +47,34 @@
 <NavBar />
 
 {#if loading}
-	<p>Loading...</p>
+	<p class="text-center mt-10">Loading...</p>
 {:else if shipData}
-	<div>
+	<div class="flex flex-col lg:flex-row items-center lg:items-start gap-6 p-4 max-w-7xl mx-auto">
 		<img
 			src={shipData.coverLink}
 			alt={shipData.title}
-			style="margin-left: 80px; width: 750px; height:580px; margin-bottom: 20px;"
-			class="rounded-xl"
+			class="rounded-xl w-full max-w-xl lg:w-[750px] lg:h-[580px] object-cover"
 		/>
-		<p
-			class="text-4xl font-semibold text-red-500"
-			style="margin-left: 870px; margin-right: 5px; margin-bottom: 10px; margin-top: -580px; font-family: Phantom Sans;"
-		>
-			{shipData.title}
-		</p>
-		<img
-			src={shipData.avatar}
-			style="width: 55px; margin-left: 870px;"
-			class="rounded-full"
-			alt="Avatar"
-		/>
-		<p
-			class="text-xl font-semibold text-red-500"
-			style="margin-left: 940px; margin-top: -55px; font-family: Phantom Sans;"
-		>
-			by @{shipData.author}
-		</p>
-		<a
-			style="font-family: Phantom Sans; margin-left: 938px;"
+
+		<div class="w-full lg:max-w-xl">
+			<h1 class="text-3xl sm:text-4xl font-semibold text-red-500 font-sans mt-4 lg:mt-0">{shipData.title}</h1>
+
+			<div class="flex items-center gap-4 mt-2">
+				<img src={shipData.avatar} alt="Avatar" class="rounded-full w-12 h-12" />
+				<div>
+					<p class="text-lg font-semibold text-red-500 font-sans">by @{shipData.author}</p>
+					<a
+			style="font-family: Phantom Sans; margin-"
 			href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
 			class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
 			>message me on slack</a
 		>
-		<p
-			class="text-xl text-black"
-			style="margin-left: 870px; margin-top: 20px; margin-bottom:20px; margin-right: 5px; font-family: Phantom Sans;"
-		>
-			{shipData.description}
-		</p>
+				</div>
+			</div>
 
-	
+			<p class="text-base text-black font-sans mt-4">{shipData.description}</p>
+		</div>
 	</div>
-
 {:else}
-	<p>No ship found with the given ID.</p>
+	<p class="text-center mt-10">No ship found with the given ID.</p>
 {/if}

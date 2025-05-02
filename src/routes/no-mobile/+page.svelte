@@ -1,8 +1,8 @@
 <body class="text-red-500 text-center mt-20">
 	<div>
-		<h1 class="text-red-500 font-bold text-4xl">No mobile support!1!</h1>
+		<h1 class="text-red-500 font-bold text-4xl">No mobile support!</h1>
 		<div class="text-red-500 font-bold">
-			Please access this page on a desktop or laptop computer. If you pinky promise you are not on a
+			Sorry, as of now the preview and buy pages do not support mobile. Please access this page on a desktop or laptop computer. If you pinky promise you are not on a
 			mobile device, you can still access this page by running the this code in your console:
 		</div>
 		<br />
