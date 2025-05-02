@@ -75,7 +75,7 @@
 					region_for_shipping_and_receiving: [data['country']]
 				})
 			})
-				.then((r) => r.json())
+				.then((r) => r.text())
 				.then(() => {
 					location.pathname = '/ships';
 				});
