@@ -41,7 +41,7 @@
 	<img 
 		src="center.png" 
 		alt="Hack Club Market main visual" 
-		class="w-full max-w-4xl h-auto rounded-xl shadow-lg object-contain"
+		class="w-full max-w-4xl h-auto rounded-xl object-contain"
 	/>
 </div>
 
