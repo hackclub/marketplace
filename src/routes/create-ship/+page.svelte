@@ -117,7 +117,7 @@
 			>
 			<input
 				style="margin-bottom: 30px;"
-				id="bof"
+				id="bom"
 				name="bill_of_materials"
 				type="text"
 				placeholder="So i uh need blah blah blah, yap yap yap"
