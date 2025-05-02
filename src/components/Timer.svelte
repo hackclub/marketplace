@@ -4,10 +4,14 @@
 	// The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
 	import { onMount } from 'svelte';
 
-	export let timeString = '00:00:00';
-	export let startedAt = Date.now();
-	export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
-	export let shipId: string | null = null;
+	interface Props {
+		timeString: string;
+		startedAt: number;
+		timeData: { session?: boolean; video_link?: string; createdAt?: string } | null;
+		shipId: string | null;
+	}
+
+	let { timeString, startedAt, timeData, shipId }: Props = $props();
 
 	setInterval(() => {
 		timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
@@ -42,7 +46,7 @@
 	export async function sendOutTheData(e: Event) {
 		e.preventDefault();
 		const form = e.target;
-		const formData = new FormData(form);
+		const formData = new FormData(form! as HTMLFormElement);
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
 		await fetch('/api/time/end', {
@@ -51,14 +55,13 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
-		}).then(r=>{
-if(r.ok) {
-	alert('Session ended!');
-	timeData = null;
-} else {
-	r.text().then(alert)
-}
-
+		}).then((r) => {
+			if (r.ok) {
+				alert('Session ended!');
+				timeData = null;
+			} else {
+				r.text().then(alert);
+			}
 		});
 	}
 
@@ -71,8 +74,8 @@ if(r.ok) {
 			startedAt = new Date(timer.createdAt).getTime();
 		}
 		setInterval(() => {
-		 fetch('/api/time/beat')
-		}, 60 * 1000)
+			fetch('/api/time/beat');
+		}, 60 * 1000);
 	});
 </script>
 
@@ -103,7 +106,9 @@ if(r.ok) {
 				/>
 			</div>
 			<div>
-				<label for="wormhole_link" class="block font-medium text-gray-700">Wormhole URL (optional but recommended)</label>
+				<label for="wormhole_link" class="block font-medium text-gray-700"
+					>Wormhole URL (optional but recommended)</label
+				>
 				<input
 					id="wormhole_link"
 					name="wormhole_link"
