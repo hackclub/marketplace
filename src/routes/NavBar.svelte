@@ -1,27 +1,33 @@
-<script>
+<script lang="ts">
 	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from '$env/static/public';
-	let loading = true;
-	let loggedIn = false;
-	let avatarUrl = null;
-	let userName = null;
+	let loading: boolean = true;
+	let loggedIn: boolean = false;
+	let avatarUrl: string | null = null;
+	let userName: string | null = null;
+	let showDropdown: boolean = false;
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		loading = true;
-		function getCookie(name) {
+		function getCookie(name: string): string | undefined {
 			return document.cookie.split('; ').find((row) => row.startsWith(name + '='));
 		}
 
-		loggedIn = getCookie('session');
+		loggedIn = !!getCookie('session');
 		const ustring = getCookie('user-info')
-	if(ustring) {
-		const userData = JSON.parse(decodeURIComponent(ustring.split("=")[1]))
-		if(userData) {
-			avatarUrl = `https://cachet.dunkirk.sh/users/${userData.slack_id}/r`;
-			userName = userData.slack_name;
+		if(ustring) {
+			const userData = JSON.parse(decodeURIComponent(ustring.split("=")[1]))
+			if(userData) {
+				avatarUrl = `https://cachet.dunkirk.sh/users/${userData.slack_id}/r`;
+				userName = userData.slack_name;
+			}
 		}
+	});
+
+	function logout() {
+		document.cookie = 'session=; Max-Age=0; path=/';
+		window.location.href = '/';
 	}
-		});
 </script>
 
 <header>
@@ -53,7 +59,21 @@
 					>go to your ships</a>
 				{/if}
 				{#if userName}
-					<img src={avatarUrl} class="rounded-full w-10 sm:w-15 mt-2 sm:mt-0" alt={`${userName}'s avatar`} />
+					<div class="relative ml-2">
+						<img
+							src={avatarUrl}
+							class="rounded-full w-10 h-10 sm:w-12 sm:h-12 cursor-pointer border-2 border-[#F4DECF]"
+							alt={`${userName}'s avatar`}
+							on:click={() => showDropdown = !showDropdown}
+						/>
+						{#if showDropdown}
+							<div class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-50 border border-[#EADAC7]" style="font-family: Phantom Sans;">
+								<a href="/settings" class="block px-4 py-2 text-gray-700 hover:bg-[#FFECDA] rounded-t-lg">Settings</a>
+								<button on:click={logout} class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-[#FFECDA] rounded-b-lg">Logout</button>
+							</div>
+							<div class="fixed inset-0 z-40" on:click={() => showDropdown = false}></div>
+						{/if}
+					</div>
 				{/if}
 			</div>
 		</div>
