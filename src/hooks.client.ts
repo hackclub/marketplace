@@ -15,9 +15,14 @@ Sentry.init({
   // sessions when an error occurs.
   replaysOnErrorSampleRate: 1.0,
   environment: process.env.NODE_ENV === 'production' ? 'production' : 'development',
-
+  // maskAllText: false,
+  // blockAllMedia: false,
   // If you don't want to use Session Replay, just remove the line below:
-  integrations: [replayIntegration()],
+  integrations: [replayIntegration({
+    maskAllText: false,
+  blockAllMedia: false,
+  networkDetailAllowUrls: [window.location.origin],
+  })],
 });
 
 // If you have a custom error handler, pass it to `handleErrorWithSentry`

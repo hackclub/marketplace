@@ -24,12 +24,17 @@ export async function GET(req: Request) {
 	const data = sessionData;
 	return new Response(
 		JSON.stringify({
-			// id: data.id,
 			slackId: data.slack_id,
 			hcb_email: data.hcb_email,
 			slack_name: data.slack_name,
 			address: data.address,
-			reigons: data.reigions_for_shipping
+			reigons: data.reigions_for_shipping,
+			address_line_1: data.address_line_1,
+			address_line_2: data.address_line_2,
+			address_city: data.address_city,
+			address_state: data.address_state,
+			address_postal_code: data.address_postal_code,
+			address_country: data.address_country
 		}),
 		{
 			headers: {

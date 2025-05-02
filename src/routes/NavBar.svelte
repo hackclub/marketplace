@@ -1,14 +1,15 @@
-<script>
+<script lang="ts">
 	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from '$env/static/public';
-	let loading = true;
-	let loggedIn = false;
-	let avatarUrl = null;
-	let userName = null;
+	let loading: boolean = true;
+	let loggedIn: boolean = false;
+	let avatarUrl: string | null = null;
+	let userName: string | null = null;
+	let showDropdown: boolean = false;
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
 		loading = true;
-		function getCookie(name) {
+		function getCookie(name: string): string | undefined {
 			return document.cookie.split('; ').find((row) => row.startsWith(name + '='));
 		}
 
@@ -22,6 +23,11 @@
 			}
 		}
 	});
+
+	function logout() {
+		document.cookie = 'session=; Max-Age=0; path=/';
+		window.location.href = '/';
+	}
 </script>
 
 <header>

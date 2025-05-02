@@ -1,0 +1,29 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://market.hackclub.com
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to Coolify
+        run: bash deploy-to-coolify.sh "$COOLIFY_UUID" "$COOLIFY_API_TOKEN"
+        env:
+          COOLIFY_UUID: ${{ secrets.COOLIFY_UUID }}
+          COOLIFY_API_TOKEN: ${{ secrets.COOLIFY_API_KEY }}
+          SLACK_CHANNEL: C08GZ6QF97Z
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
