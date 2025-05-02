@@ -32,12 +32,12 @@ export async function GET(req: Request) {
 				return new Response(JSON.stringify({ message: 'No ship found' }), {
 					status: 404
 				});
-			
+
 			const user = await prisma.user.findFirst({
 				where: {
 					slackId: d.userId
 				}
-			})
+			});
 			// console.log(dd.records[0])
 			return new Response(
 				JSON.stringify({
@@ -50,7 +50,7 @@ export async function GET(req: Request) {
 					avatar: `https://cachet.dunkirk.sh/users/${d.userId}/r`,
 					author: d.slack_user_name,
 					author_slack_id: d.userId,
-					can_ship_to: user?.reigions_for_shipping,
+					can_ship_to: user?.reigions_for_shipping
 				}),
 				{
 					headers: {
