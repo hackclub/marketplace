@@ -3,6 +3,8 @@ bun.lock
 bun.lockb
 yarn.lock
 package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
 
 # Output
 .output
