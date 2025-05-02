@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 @theme {
-	--color-hcred: #ec3750;
+	--color-hcred: oklch(0.62 0.2148 19.13); /* #ec3750 */
 }
 
 @font-face {
@@ -59,13 +59,14 @@ img {
 	.helper {
 		margin-bottom: 0.5rem;
 	}
-	
+
 	.boxtext {
 		padding: 0.25rem;
 	}
 }
 
-button, a {
+button,
+a {
 	min-height: 44px;
 	min-width: 44px;
 }

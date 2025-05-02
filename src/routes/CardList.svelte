@@ -9,8 +9,11 @@
 		return status === 'SHIPPED' ? 'green' : status === 'in progress' ? 'yellow' : 'red';
 	}
 	function formatName(name) {
-        return name.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
-    }
+		return name
+			.replace(/_/g, ' ')
+			.toLowerCase()
+			.replace(/\b\w/g, (char) => char.toUpperCase());
+	}
 	// import Popup from '$lib/Popup.svelte';
 	/**
 	 * @type {any[]}
@@ -54,38 +57,37 @@
 									<Timer shipId={item.id} />
 								</Content>
 								<Trigger>
-									<button disabled={timerShipId && timerShipId !== item.id}
+									<button
+										disabled={timerShipId && timerShipId !== item.id}
 										class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600 disabled:bg-gray-400"
 										><Icon path={mdiTimer} /></button
 									>
 								</Trigger>
 							</Modal>
-						<Modal >
-							<Content>							
+							<Modal>
+								<Content>
 									<EditPopup data={item} />
-							</Content>
-							<Trigger>
-								<button
-									class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
-									><Icon path={mdiPencil} /></button
-								>
-							</Trigger>
-						</Modal>
+								</Content>
+								<Trigger>
+									<button
+										class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+										><Icon path={mdiPencil} /></button
+									>
+								</Trigger>
+							</Modal>
 
-						<Modal basic>
-							<Content>							
-						<PromoteToXyz status={item.status} shipId={item.id} ship={item} />
-							</Content>
-							<Trigger>
-								<button
-									class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
-									><Icon path={mdiRocket} /></button
-								>
-							</Trigger>
-						</Modal>
-						
-							{/if}
-
+							<Modal basic>
+								<Content>
+									<PromoteToXyz status={item.status} shipId={item.id} ship={item} />
+								</Content>
+								<Trigger>
+									<button
+										class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
+										><Icon path={mdiRocket} /></button
+									>
+								</Trigger>
+							</Modal>
+						{/if}
 
 						<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						<div id="attributes">
@@ -114,45 +116,49 @@
 				{#if item.status == 'SHIPPED'}
 					<a href="/buy?id={item.id}">
 						<div class="bg-orange-100 rounded-xl p-4">
-						<img
-							class="h-40 bg-orange-500 rounded-lg"
-							src={item.coverLink ||
-								'https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png'}
-							alt="Cover"
-						/>
-						<img
-							src={item.avatar}
-							alt="Avatar"
-							class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"
-						/>
-						<div class="mt-6">
-							<h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
-							<p class="text-gray-700">@{item.author}</p>
-							<p class="text-orange-700">{shortenDesc(item.description)}</p>
-						</div>
+							<img
+								class="h-40 bg-orange-500 rounded-lg"
+								src={item.coverLink ||
+									'https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png'}
+								alt="Cover"
+							/>
+							<img
+								src={item.avatar}
+								alt="Avatar"
+								class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"
+							/>
+							<div class="mt-6">
+								<h2 class="text-black font-bold text-lg" style="margin-top: -15px;">
+									{item.title}
+								</h2>
+								<p class="text-gray-700">@{item.author}</p>
+								<p class="text-orange-700">{shortenDesc(item.description)}</p>
+							</div>
 						</div>
 					</a>
 				{/if}
 				{#if item.status !== 'SHIPPED'}
-				<a href="/preview?id={item.id}">	
-				<div class="bg-orange-100 rounded-xl p-4">
-						<img
-							class="h-40 bg-orange-500 rounded-lg"
-							src={item.coverLink ||
-								'https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png'}
-							alt="Cover"
-						/>
-						<img
-							src={item.avatar}
-							alt="Avatar"
-							class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"
-						/>
-						<div class="mt-6">
-							<h2 class="text-black font-bold text-lg" style="margin-top: -15px;">{item.title}</h2>
-							<p class="text-gray-700">@{item.author}</p>
-							<p class="text-orange-700">{shortenDesc(item.description)}</p>
+					<a href="/preview?id={item.id}">
+						<div class="bg-orange-100 rounded-xl p-4">
+							<img
+								class="h-40 bg-orange-500 rounded-lg"
+								src={item.coverLink ||
+									'https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png'}
+								alt="Cover"
+							/>
+							<img
+								src={item.avatar}
+								alt="Avatar"
+								class="w-12 h-12 rounded-full absolute top-30 right-62 border-2 border-white"
+							/>
+							<div class="mt-6">
+								<h2 class="text-black font-bold text-lg" style="margin-top: -15px;">
+									{item.title}
+								</h2>
+								<p class="text-gray-700">@{item.author}</p>
+								<p class="text-orange-700">{shortenDesc(item.description)}</p>
+							</div>
 						</div>
-					</div>
 					</a>
 				{/if}
 			{/if}

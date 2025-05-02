@@ -30,18 +30,20 @@ export async function POST(req: Request) {
 				id: body.id,
 				status: 'UNDER_HQ_DIGITAL_REVIEW',
 				approved_for_digital: true,
-				is_under_some_review_rn: false,
-				
+				is_under_some_review_rn: false
 			},
 			data: {
 				status: 'UNDER_HQ_GRANT_REVIEW',
-				is_under_some_review_rn: true,
+				is_under_some_review_rn: true
 			}
 		});
 	} catch (e) {
-		return new Response(JSON.stringify({ message: 'Ship not found or not ready to be promoted yet.' }), {
-			status: 404
-		});
+		return new Response(
+			JSON.stringify({ message: 'Ship not found or not ready to be promoted yet.' }),
+			{
+				status: 404
+			}
+		);
 	}
 	//  send noti to slack channel
 	await fetch(`https://slack.com/api/chat.postMessage`, {
@@ -70,4 +72,3 @@ export async function POST(req: Request) {
 		.then(console.log);
 	return new Response('Ship promoted to grant review!');
 }
-

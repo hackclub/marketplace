@@ -11,12 +11,12 @@ export async function GET(req: Request) {
 	}
 	// pull all time which is 'PENDING'
 	const time = await prisma.ship.findMany({
-        where: {
-            status: {
-                not: {
-                    in: ["DRAFT", "SHIPPED"]
-                }
-            }
+		where: {
+			status: {
+				not: {
+					in: ['DRAFT', 'SHIPPED']
+				}
+			}
 		}
 	});
 	// js send it all...

@@ -37,17 +37,20 @@
 
 <NavBar />
 
-<div class="rounded-xl flex justify-center items-center px-2 sm:px-10 md:px-20 lg:px-32 xl:px-40 my-4">
-	<img 
-		src="center.png" 
-		alt="Hack Club Market main visual" 
+<div
+	class="rounded-xl flex justify-center items-center px-2 sm:px-10 md:px-20 lg:px-32 xl:px-40 my-4"
+>
+	<img
+		src="center.png"
+		alt="Hack Club Market main visual"
 		class="w-full max-w-4xl h-auto rounded-xl object-contain"
 	/>
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span style="font-family: Phantom Sans;" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
-		>featured projects:</span
+	<span
+		style="font-family: Phantom Sans;"
+		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">featured projects:</span
 	>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
@@ -55,7 +58,9 @@
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span style="font-family: Phantom Sans;" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
+	<span
+		style="font-family: Phantom Sans;"
+		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
 		>projects that are out rn:</span
 	>
 </div>
@@ -64,8 +69,9 @@
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span style="font-family: Phantom Sans;" class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
-		>projects in progress:</span
+	<span
+		style="font-family: Phantom Sans;"
+		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">projects in progress:</span
 	>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
