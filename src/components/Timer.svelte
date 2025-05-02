@@ -51,14 +51,13 @@
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(data)
-		}).then(r=>{
-if(r.ok) {
-	alert('Session ended!');
-	timeData = null;
-} else {
-	r.text().then(alert)
-}
-
+		}).then((r) => {
+			if (r.ok) {
+				alert('Session ended!');
+				timeData = null;
+			} else {
+				r.text().then(alert);
+			}
 		});
 	}
 
@@ -71,8 +70,8 @@ if(r.ok) {
 			startedAt = new Date(timer.createdAt).getTime();
 		}
 		setInterval(() => {
-		 fetch('/api/time/beat')
-		}, 60 * 1000)
+			fetch('/api/time/beat');
+		}, 60 * 1000);
 	});
 </script>
 
@@ -103,7 +102,9 @@ if(r.ok) {
 				/>
 			</div>
 			<div>
-				<label for="wormhole_link" class="block font-medium text-gray-700">Wormhole URL (optional but recommended)</label>
+				<label for="wormhole_link" class="block font-medium text-gray-700"
+					>Wormhole URL (optional but recommended)</label
+				>
 				<input
 					id="wormhole_link"
 					name="wormhole_link"
