@@ -32,6 +32,7 @@ export const handle = sequence(sentryHandle(),async function ({ event, resolve }
     }
   }
   const cookie = event.cookies.get('session')
+  Sentry.setUser({token: cookie});
   if (cookie && !event.cookies.get('onboarded') && event.url.pathname !== "/onboard" && event.url.pathname !== "/api/settings/update") {
     const userData = await prisma.user.findFirst({
       where: {
