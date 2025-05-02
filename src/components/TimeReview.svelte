@@ -58,16 +58,15 @@
 					@{properData.author} -- session lasted for {(
 						(data.total_time_in_seconds ?? 0) / 60
 					).toFixed(2)} minutes --
-	{#if data.wormhole_link}
-					<a
-						href={data.wormhole_link}
-						class="text-blue-500 hover:underline"
-						target="_blank"
-						rel="noopener noreferrer"
-						>Wormhole link</a
-					>
-				{/if}
-</p>
+					{#if data.wormhole_link}
+						<a
+							href={data.wormhole_link}
+							class="text-blue-500 hover:underline"
+							target="_blank"
+							rel="noopener noreferrer">Wormhole link</a
+						>
+					{/if}
+				</p>
 				<br />
 				<video muted class="w-full h-64 rounded-lg" autoplay loop controls src={data.video_link}>
 				</video>
