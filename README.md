@@ -1,5 +1,5 @@
-# marketplace
+![banner](./static/center.png)
 
-Upcoming Hack Club program.
+# Hacker Market!
 
-Join #hack-club-market on Slack for updates.
+Hackermarket is a ysws project which allows you to buy and sell pcb's! to learn more about it go to the slack channel [#hack-market](https://hackclub.slack.com/archives/C089VQAULJ0)
