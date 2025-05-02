@@ -1,7 +1,4 @@
 <script lang="ts">
-	// This is a Svelte component for a timer that tracks the time spent on a task.
-	// It allows starting, stopping, and sending data related to the timer session.
-	// The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
 	import { onMount } from 'svelte';
 
 	interface Props {
