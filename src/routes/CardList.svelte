@@ -27,13 +27,13 @@
 <div class="flex flex-wrap" style="font-family: Phantom Sans;">
 	{#if items.length == 0}
 		<div class="flex justify-center items-center w-full h-20">
-			<h1 class="text-2xl font-bold text-gray-700">
-				No items found, maybe you can be the first?
+			<h1 class="text-base sm:text-lg md:text-2xl font-semibold text-gray-700 text-center">
+				no items found, could you be the first?
 			</h1>
 		</div>
 	{/if}
 	{#each items as item}
-		<div class="w-80 rounded-lg p-4 relative">
+		<div class="w-full sm:w-80 rounded-lg p-4 relative mb-4">
 			{#if isAllMine}
 				<div class="bg-orange-100 rounded-xl p-4">
 					<img
