@@ -1,4 +1,8 @@
 node_modules
+bun.lock
+bun.lockb
+yarn.lock
+package-lock.json
 
 # Output
 .output
