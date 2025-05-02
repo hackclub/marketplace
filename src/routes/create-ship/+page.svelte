@@ -60,7 +60,7 @@
 				name="projectName"
 				type="text"
 				placeholder="My amazing PCB"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">Description</span>
 			<input
@@ -70,7 +70,7 @@
 				type="text"
 				minlength="10"
 				placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">Git Repo</span>
 			<input
@@ -79,7 +79,7 @@
 				type="url"
 				name="gitRepo"
 				placeholder="https://github.com/hackclub/site/"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">README URL</span>
 			<input
@@ -88,7 +88,7 @@
 				type="url"
 				name="readmeUrl"
 				placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<!-- <span class="text-xl font-bold">Locations you will ship to</span>
 	<input 
@@ -96,7 +96,7 @@
 	  id="project-ship-locations" 
 	  type="text" 
 	  placeholder="" 
-	  class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" 
+	  class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border" 
 	/> <br> -->
 			<span class="text-xl font-bold">Estimated Cost of Production (USD)</span>
 			<input
@@ -106,7 +106,7 @@
 				type="number"
 				placeholder="30"
 				required
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/>
 			<br />
 			<span class="text-xl font-bold"
@@ -122,7 +122,7 @@
 				type="text"
 				placeholder="So i uh need blah blah blah, yap yap yap"
 				required
-				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/>
 		</div>
 

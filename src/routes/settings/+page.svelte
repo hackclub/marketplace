@@ -111,7 +111,7 @@
 					placeholder="hcb@hackclub.com"
 					value={settings.hcb_email || ''}
 					required
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -122,7 +122,7 @@
 					type="text"
 					placeholder="15 Falls Rd"
 					value={settings.address_line_1 || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -133,7 +133,7 @@
 					type="text"
 					placeholder="Apt 202"
 					value={settings.address_line_2 || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -144,7 +144,7 @@
 					type="text"
 					placeholder="Shelburne"
 					value={settings.address_city || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -155,7 +155,7 @@
 					type="text"
 					placeholder="VT"
 					value={settings.address_state || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -167,7 +167,7 @@
 					type="text"
 					placeholder="05482"
 					value={settings.address_postal_code || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -178,7 +178,7 @@
 					type="text"
 					placeholder="USA"
 					value={settings.address_country || ''}
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -186,7 +186,7 @@
 				<select
 					id="country"
 					name="country"
-					class="w-full p-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 					value={settings.reigons || 'US'}
 				>
 					<option value="US">USA</option>

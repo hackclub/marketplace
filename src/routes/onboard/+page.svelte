@@ -135,7 +135,7 @@
 	}
 
 	const baseInputClasses =
-		'p-2 mt-2 mb-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]';
+		'p-2 mt-2 mb-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border';
 	const fullWidthInputClasses = `${baseInputClasses} w-full`;
 	const limitedWidthInputClasses = `${baseInputClasses} max-w-3xl`; // Assuming this was intentional
 </script>
