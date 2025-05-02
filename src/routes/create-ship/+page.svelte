@@ -37,7 +37,8 @@
 				description: dd.description,
 				github_url: dd.gitRepo,
 				readme_url: dd.readmeUrl,
-				cost: parseInt(dd.cost)
+				cost: parseInt(dd.cost),
+				bill_of_materials: dd.bill_of_materials,
 			})
 		}).then((d) => d.text());
 		if (response.includes('OK')) {
@@ -104,6 +105,17 @@
 				name="cost"
 				type="number"
 				placeholder="30"
+				required
+				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+			/>
+			<br />
+			<span class="text-xl font-bold">Bill of materials, <a href="https://www.google.com/search?q=what+is+a+bill+of+materials&oq=what+is+a+bill+of+materials">whats that?</a></span>
+			<input
+				style="margin-bottom: 30px;"
+				id="bof"
+				name="bill_of_materials"
+				type="text"
+				placeholder="So i uh need blah blah blah, yap yap yap"
 				required
 				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 			/>
