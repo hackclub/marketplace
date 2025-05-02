@@ -28,8 +28,8 @@
 	// for isUnderSomeReview please check if its being activly reviwed in its status..
 </script>
 
-<form style="background-color: #FFECDA;" class="rounded-xl" on:submit={submitForm}>
-	<div class="bg-[#FFECDA] p-5 rounded-xl w-full my-10">
+<form class="bg-secondary rounded-xl" on:submit={submitForm}>
+	<div class="bg-secondary p-5 rounded-xl w-full my-10">
 		{#if isUnderSomeReview}
 			<div class="bg-red-300 p-5 m-2 rounded-lg">
 				<h2 class="font-bold font-2xl text-red-700">
@@ -47,7 +47,7 @@
 				disabled={isUnderSomeReview}
 				type="text"
 				placeholder="My amazing PCB"
-				class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">Description</span>
 			<input
@@ -59,7 +59,7 @@
 				type="text"
 				minlength="10"
 				placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
-				class="p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">Git Repo</span>
 			<input
@@ -70,7 +70,7 @@
 				type="url"
 				name="gitRepo"
 				placeholder="https://github.com/hackclub/site/"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">README URL</span>
 			<input
@@ -81,7 +81,7 @@
 				disabled={isUnderSomeReview}
 				name="readmeUrl"
 				placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">Demo URL</span>
 			<input
@@ -92,7 +92,7 @@
 				disabled={isUnderSomeReview}
 				name="demo_url"
 				placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<span class="text-xl font-bold">Cover link</span>
 			<input
@@ -103,7 +103,7 @@
 				value={data.coverLink}
 				disabled={isUnderSomeReview}
 				placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/> <br />
 			<!-- <span class="text-xl font-bold">Locations you will ship to</span>
         <input 
@@ -111,7 +111,7 @@
           id="project-ship-locations" 
           type="text" 
           placeholder="" 
-          class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" 
+          class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" 
         /> <br> -->
 			<span class="text-xl font-bold">Estimated Cost of Production (USD)</span>
 			<input
@@ -123,7 +123,7 @@
 				value={data.cost}
 				placeholder="30"
 				required
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7] disabled:bg-[#EADAC7]"
 			/>
 		</div>
 

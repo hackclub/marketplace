@@ -135,7 +135,7 @@
 	}
 
 	const baseInputClasses =
-		'p-2 mt-2 mb-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]';
+		'p-2 mt-2 mb-2 border rounded-lg bg-input border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]';
 	const fullWidthInputClasses = `${baseInputClasses} w-full`;
 	const limitedWidthInputClasses = `${baseInputClasses} max-w-3xl`; // Assuming this was intentional
 </script>
@@ -153,7 +153,7 @@
 	{:else if !loggedIn}
 		<p>Redirecting...</p>
 	{:else}
-		<form class="bg-[#FFECDA] p-8 mb-[50px] rounded-xl w-1/2 px-10" onsubmit={handleSubmit}>
+		<form class="bg-secondary p-8 mb-[50px] rounded-xl w-1/2 px-10" onsubmit={handleSubmit}>
 			{#if displayWarningMessage}
 				<div
 					class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 w-full"
