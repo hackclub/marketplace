@@ -16,27 +16,26 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/kit": "^2.20.5",
+		"@sveltejs/kit": "^2.20.8",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
-		"@tailwindcss/vite": "^4.1.3",
+		"@tailwindcss/vite": "^4.1.5",
 		"prettier": "^3.5.3",
 		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "^5.25.10",
-		"svelte-check": "^4.1.5",
-		"tailwindcss": "^4.1.3",
+		"svelte": "^5.28.2",
+		"svelte-check": "^4.1.7",
+		"tailwindcss": "^4.1.5",
 		"typescript": "^5.8.3",
-		"vite": "^6.2.5"
+		"vite": "^6.3.4"
 	},
 	"dependencies": {
-		"@hackclub/icons": "^0.0.15",
 		"@mdi/js": "^7.4.47",
-		"@prisma/client": "^6.6.0",
-		"@sentry/sveltekit": "^9",
+		"@prisma/client": "^6.7.0",
+		"@sentry/sveltekit": "^9.15.0",
 		"@svelte-plugins/datepicker": "^1.0.11",
 		"date-fns": "^4.1.0",
 		"mdi-svelte": "^1.1.2",
-		"prisma": "^6.6.0",
+		"prisma": "^6.7.0",
 		"sv-popup": "^0.5.3",
-		"zod": "^3.24.2"
+		"zod": "^3.24.3"
 	}
 }
