@@ -25,41 +25,36 @@
 </script>
 
 <header>
-	<nav class="border-gray-200 px-4 lg:px-6 py-5">
-		<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-			<a href="/" class="flex items-center">
-				<span style="font-family: Phantom Sans;" class="text-5xl font-semibold text-red-500"
-					>hack club market</span
-				>
+	<nav class="border-gray-200 px-2 sm:px-4 py-3">
+		<div class="flex flex-col sm:flex-row sm:flex-wrap sm:justify-between sm:items-center mx-auto max-w-screen-xl gap-2 sm:gap-0">
+			<a href="/" class="flex items-center justify-center">
+				<span style="font-family: Phantom Sans;" class="text-3xl sm:text-5xl font-semibold text-red-500 block text-center sm:text-left">
+					hack club market
+				</span>
 			</a>
 
-			<div class="flex items-center lg:order-2">
+			<div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-0 sm:order-2 w-full sm:w-auto">
 				<a
 					style="font-family: Phantom Sans;"
 					href="/about"
-					class="text-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
-					>about</a
-				>
+					class="text-red-500 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 font-semibold text-center"
+				>about</a>
 				{#if !loggedIn}
 					<a
 						style="font-family: Phantom Sans;"
 						href={`https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + '/api/oauth/slack/callback')}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
-						class="text-white bg-red-500 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-						>sign in with slack</a
-					>
+						class="text-white bg-red-500 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 hover:bg-red-600 text-center"
+					>sign in with slack</a>
 				{:else}
 					<a
 						style="font-family: Phantom Sans;"
 						href="/ships"
-						class="text-white bg-red-400 font-medium rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 hover:bg-red-600"
-						>go to your ships</a
-					>
+						class="text-white bg-red-400 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 hover:bg-red-600 text-center"
+					>go to your ships</a>
 				{/if}
-				<div class="inline-flex text-center flex">
-		{#if userName}
-		<img src={avatarUrl} class="rounded-full w-15" alt={`${userName}'s avatar`} />
-		{/if}
-				</div>
+				{#if userName}
+					<img src={avatarUrl} class="rounded-full w-10 sm:w-15 mt-2 sm:mt-0" alt={`${userName}'s avatar`} />
+				{/if}
 			</div>
 		</div>
 	</nav>

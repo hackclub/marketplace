@@ -37,18 +37,35 @@
 	display: inline-block;
 	height: 100%;
 	vertical-align: middle;
-	margin-bottom: 80px;
+	margin-bottom: 1rem;
 }
 
 img {
 	vertical-align: middle;
+	max-width: 100%;
+	height: auto;
 }
 
 .boxtext {
 	font-family: 'Phantom Sans', sans-serif;
 	color: #33d6a6;
-	font-size: 40px;
+	font-size: clamp(24px, 5vw, 40px);
 	margin: 0;
-	padding: 10px;
+	padding: 0.5rem;
 	font-weight: 600;
+}
+
+@media (max-width: 640px) {
+	.helper {
+		margin-bottom: 0.5rem;
+	}
+	
+	.boxtext {
+		padding: 0.25rem;
+	}
+}
+
+button, a {
+	min-height: 44px;
+	min-width: 44px;
 }
