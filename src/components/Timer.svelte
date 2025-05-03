@@ -1,13 +1,14 @@
 <script lang="ts">
-	// This is a Svelte component for a timer that tracks the time spent on a task.
-	// It allows starting, stopping, and sending data related to the timer session.
-	// The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
 	import { onMount } from 'svelte';
 
-	export let timeString = '00:00:00';
-	export let startedAt = Date.now();
-	export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
-	export let shipId: string | null = null;
+	interface Props {
+		timeString: string;
+		startedAt: number;
+		timeData: { session?: boolean; video_link?: string; createdAt?: string } | null;
+		shipId: string | null;
+	}
+
+	let { timeString, startedAt, timeData, shipId }: Props = $props();
 
 	setInterval(() => {
 		timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
@@ -42,10 +43,9 @@
 	export async function sendOutTheData(e: Event) {
 		e.preventDefault();
 		const form = e.target;
-		const formData = new FormData(form);
+		const formData = new FormData(form! as HTMLFormElement);
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
-		if(!data.wormhole_link) data.wormhole_link = undefined;
 		await fetch('/api/time/end', {
 			method: 'POST',
 			headers: {

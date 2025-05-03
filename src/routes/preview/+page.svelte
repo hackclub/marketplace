@@ -66,7 +66,6 @@
 				<div>
 					<p class="text-lg font-semibold text-red-500 font-sans">by @{shipData.author}</p>
 					<a
-						style="font-family: Phantom Sans; margin-"
 						href={`https://slack.com/app_redirect?channel=${shipData.author_slack_id}`}
 						class="text-white bg-red-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600"
 						>message me on slack</a

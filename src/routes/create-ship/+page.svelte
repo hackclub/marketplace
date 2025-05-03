@@ -48,10 +48,10 @@
 			alert(response);
 		}
 	}}
-	style="font-family: Phantom Sans; padding-top: 10px;"
+	style="padding-top: 10px;"
 	class="flex justify-center items-center"
 >
-	<div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-fit">
+	<div class="bg-secondary p-5 rounded-xl w-fit">
 		<div class="grid">
 			<span class="text-xl font-bold">Project name</span>
 			<input
@@ -60,7 +60,7 @@
 				name="projectName"
 				type="text"
 				placeholder="My amazing PCB"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">Description</span>
 			<input
@@ -70,7 +70,7 @@
 				type="text"
 				minlength="10"
 				placeholder="Oh yea this will be my amazing pcb for xyz blah blah blah;3"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">Git Repo</span>
 			<input
@@ -79,7 +79,7 @@
 				type="url"
 				name="gitRepo"
 				placeholder="https://github.com/hackclub/site/"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<span class="text-xl font-bold">README URL</span>
 			<input
@@ -88,7 +88,7 @@
 				type="url"
 				name="readmeUrl"
 				placeholder="https://raw.githubusercontent.com/hackclub/site/refs/heads/main/README.md"
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/> <br />
 			<!-- <span class="text-xl font-bold">Locations you will ship to</span>
 	<input 
@@ -96,7 +96,7 @@
 	  id="project-ship-locations" 
 	  type="text" 
 	  placeholder="" 
-	  class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]" 
+	  class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border" 
 	/> <br> -->
 			<span class="text-xl font-bold">Estimated Cost of Production (USD)</span>
 			<input
@@ -106,7 +106,7 @@
 				type="number"
 				placeholder="30"
 				required
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/>
 			<br />
 			<span class="text-xl font-bold"
@@ -117,19 +117,19 @@
 			>
 			<input
 				style="margin-bottom: 30px;"
-				id="bof"
+				id="bom"
 				name="bill_of_materials"
 				type="text"
 				placeholder="So i uh need blah blah blah, yap yap yap"
 				required
-				class="w-3xl p-2 mt-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+				class="w-3xl p-2 mt-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 			/>
 		</div>
 
 		<div class="flex justify-center items-center mt-5">
 			<button
 				type="submit"
-				style="font-family: Phantom Sans; margin-bottom: 50px;"
+				style="margin-bottom: 50px;"
 				class="text-white bg-red-400 rounded-lg text-2xl w-3xl font-bold py-2 hover:bg-red-600"
 			>
 				ship the project
@@ -139,7 +139,6 @@
 </form>
 {#if dev}
 	<button
-		style="font-family: Phantom Sans;"
 		class="text-white bg-red-400 rounded-lg text-2xl font-bold px-2 py-2 hover:bg-red-600"
 		onclick={() => {
 			const allInputs = document.querySelectorAll('input');

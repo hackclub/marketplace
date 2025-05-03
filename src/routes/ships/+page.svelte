@@ -41,9 +41,7 @@
 	</div>
 {/if}
 <div class="flex justify-center items-center mt-5">
-	<span style="font-family: Phantom Sans;" class="text-4xl font-semibold text-red-500"
-		>your ships</span
-	>
+	<span class="text-4xl font-semibold text-red-500">your ships</span>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 	<CardList items={data} isAllMine={true} timerShipId={isInASessionRn} />
@@ -52,7 +50,7 @@
 <div class="flex justify-center items-center mt-5">
 	<a
 		href="/create-ship"
-		style="font-family: Phantom Sans; margin-bottom: 50px;"
+		style="margin-bottom: 50px;"
 		class="text-white bg-red-400 rounded-lg text-2xl font-bold px-140 py-2 mr-2 hover:bg-red-600"
 	>
 		ship a project

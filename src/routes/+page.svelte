@@ -49,7 +49,6 @@
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
 	<span
-		style="font-family: Phantom Sans;"
 		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">featured projects:</span
 	>
 </div>
@@ -59,7 +58,6 @@
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
 	<span
-		style="font-family: Phantom Sans;"
 		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
 		>projects that are out rn:</span
 	>
@@ -70,7 +68,6 @@
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
 	<span
-		style="font-family: Phantom Sans;"
 		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">projects in progress:</span
 	>
 </div>
@@ -81,7 +78,6 @@
 <div class="flex justify-center items-center mt-8 mb-8">
 	<a
 		href="/allships"
-		style="font-family: Phantom Sans;"
 		class="text-white bg-red-400 rounded-lg text-lg sm:text-2xl font-bold px-8 sm:px-20 py-2 hover:bg-red-600 mx-auto max-w-xs sm:max-w-md w-full sm:w-auto text-center"
 	>
 		see all projects
