@@ -7,9 +7,7 @@
 			access this page by running the this code in your console:
 		</div>
 		<br />
-		<code
-			class="font-mono bg-gray-200 text-gray-800 p-4 rounded-lg overflow-x-auto text-xl"
-		>
+		<code class="font-mono bg-gray-200 text-gray-800 p-4 rounded-lg overflow-x-auto text-xl">
 			localStorage.im_not_on_mobile_i_promise = true;
 		</code>
 	</div>
