@@ -45,6 +45,7 @@
 		const formData = new FormData(form);
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
+		if(!data.wormhole_link) data.wormhole_link = undefined;
 		await fetch('/api/time/end', {
 			method: 'POST',
 			headers: {
