@@ -23,7 +23,7 @@ export default defineConfig({
 	],
 	build: {
 		rollupOptions: {
-			external: ["@/assets/loading.gif"]
+			external: ['@/assets/loading.gif']
 		}
 	},
 	server: {
