@@ -81,9 +81,7 @@
 
 <NavBar />
 <div class="max-w-2xl mx-auto px-4 py-8">
-	<h1 class="text-3xl sm:text-4xl font-bold text-red-500 mb-2" style="font-family: Phantom Sans;">
-		Settings
-	</h1>
+	<h1 class="text-3xl sm:text-4xl font-bold text-red-500 mb-2">Settings</h1>
 	<p class="mb-6 text-gray-700">Update your shipping and contact information below.</p>
 
 	{#if loading}
@@ -97,11 +95,7 @@
 			Settings saved successfully!
 		</div>
 	{:else if settings}
-		<form
-			class="bg-[#FFECDA] rounded-xl p-6"
-			style="font-family: Phantom Sans;"
-			on:submit={handleSubmit}
-		>
+		<form class="bg-secondary rounded-xl p-6" on:submit={handleSubmit}>
 			<div class="mb-4">
 				<label for="hcb-email" class="text-lg font-bold block mb-1">HCB email</label>
 				<input
@@ -111,7 +105,7 @@
 					placeholder="hcb@hackclub.com"
 					value={settings.hcb_email || ''}
 					required
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -122,7 +116,7 @@
 					type="text"
 					placeholder="15 Falls Rd"
 					value={settings.address_line_1 || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -133,7 +127,7 @@
 					type="text"
 					placeholder="Apt 202"
 					value={settings.address_line_2 || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -144,7 +138,7 @@
 					type="text"
 					placeholder="Shelburne"
 					value={settings.address_city || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -155,7 +149,7 @@
 					type="text"
 					placeholder="VT"
 					value={settings.address_state || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -167,7 +161,7 @@
 					type="text"
 					placeholder="05482"
 					value={settings.address_postal_code || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -178,7 +172,7 @@
 					type="text"
 					placeholder="USA"
 					value={settings.address_country || ''}
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 				/>
 			</div>
 			<div class="mb-4">
@@ -186,7 +180,7 @@
 				<select
 					id="country"
 					name="country"
-					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					class="w-full p-2 border rounded-lg bg-input border-input-border focus:outline-none focus:ring-2 focus:ring-input-border"
 					value={settings.reigons || 'US'}
 				>
 					<option value="US">USA</option>

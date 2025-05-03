@@ -133,7 +133,7 @@
 	});
 </script>
 
-<div style="font-family: Phantom Sans;" class="rounded-xl">
+<div class="rounded-xl">
 	{#if newPromotion !== 'SHIPPED'}
 		<p style="font-weight: 600;">
 			Would you like to promote your ship from {formatName(status)} -> {formatName(newPromotion)}?

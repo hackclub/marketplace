@@ -29,7 +29,7 @@
 </script>
 
 <form
-	style="background-color: #FFECDA; font-family: Phantom Sans;"
+	style="background-color: #FFECDA;"
 	class="rounded-xl"
 	on:submit={submitForm}
 >
@@ -134,8 +134,7 @@
 		<div class="flex justify-center items-center mt-5">
 			<button
 				type="submit"
-				style="font-family: Phantom Sans; margin-bottom: 50px;"
-				class="text-white bg-red-400 rounded-lg text-2xl font-bold px-20 py-2 hover:bg-red-600 disabled:bg-[#EADAC7]"
+				class="text-white bg-red-400 rounded-lg text-2xl font-bold px-20 py-2 hover:bg-red-600 disabled:bg-[#EADAC7] mb-[50px]"
 			>
 				Update
 			</button>

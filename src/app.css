@@ -2,6 +2,12 @@
 
 @theme {
 	--color-hcred: oklch(0.62 0.2148 19.13); /* #ec3750 */
+	--color-secondary: oklch(0.95 0.0316 65.91); /* #ffecda */
+	--color-input: oklch(0.91 0.0316 56.58); /* #f4decf */
+	--color-input-border: oklch(0.9 0.031 72.15); /* #eadac7 */
+	--font-sans:
+		'Phantom Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 @font-face {

@@ -27,7 +27,7 @@
 	};
 </script>
 
-<div class="flex flex-wrap" style="font-family: Phantom Sans;">
+<div class="flex flex-wrap">
 	{#if items.length == 0}
 		<div class="flex justify-center items-center w-full h-20">
 			<h1 class="text-base sm:text-lg md:text-2xl font-semibold text-gray-700 text-center">

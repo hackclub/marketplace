@@ -8,8 +8,7 @@
 		</div>
 		<br />
 		<code
-			class="bg-gray-200 text-gray-800 p-4 rounded-lg overflow-x-auto"
-			style="font-family: Phantom Sans; font-size: 16px;"
+			class="font-mono bg-gray-200 text-gray-800 p-4 rounded-lg overflow-x-auto text-xl"
 		>
 			localStorage.im_not_on_mobile_i_promise = true;
 		</code>

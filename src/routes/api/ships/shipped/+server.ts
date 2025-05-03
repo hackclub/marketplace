@@ -90,7 +90,7 @@ export async function POST(req: Request) {
 		},
 		method: 'POST',
 		body: JSON.stringify({
-			text: `User <@${sessionData.slackId}> has promoted a ship (${body.id}) to shipped! (there done! its over! they can sell!) `,
+			text: `User <@${sessionData.slackId}> has promoted a ship (${body.id}) to shipped! (they're done! its over! they can sell!) `,
 			channel: `C08GZ6QF97Z`
 		})
 	}).then((r) => r.json());
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
 		},
 		method: 'POST',
 		body: JSON.stringify({
-			text: `Your ship (${ship.Name}) is finally shipped! Congrats! the next step is waiting for someone to buy your pcb and earnfrom that ;p `,
+			text: `Your ship (${ship.Name}) is finally shipped! Congrats! the next step is waiting for someone to buy your pcb and earn from that ;p `,
 			channel: sessionData.slackId
 		})
 	})
