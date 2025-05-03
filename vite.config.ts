@@ -21,6 +21,11 @@ export default defineConfig({
 		sveltekit(),
 		tailwindcss()
 	],
+	build: {
+		rollupOptions: {
+			external: ["@/assets/loading.gif"]
+		}
+	},
 	server: {
 		allowedHosts: ['.ngrok-free.app', '.loca.lt']
 	},
