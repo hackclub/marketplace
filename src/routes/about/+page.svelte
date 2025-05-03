@@ -33,13 +33,16 @@
 	<nav class="border-gray-200 px-4 lg:px-6 py-5">
 		<div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
 			<a href="/" class="flex items-center">
-				<span class="text-5xl font-semibold text-red-500">hack club market</span>
+				<span class="text-5xl font-semibold text-red-500"
+					>hack club market</span
+				>
 			</a>
 
 			<div class="flex items-center lg:order-2">
 				<a
 					href="/about"
-					class="text-red-500 rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold">about</a
+					class="text-red-500 rounded-lg text-2xl px-4 lg:px-5 py-2 mr-2 font-semibold"
+					>about</a
 				>
 				{#if !loggedIn}
 					<a

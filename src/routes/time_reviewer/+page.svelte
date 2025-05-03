@@ -34,7 +34,9 @@
 
 <NavBar />
 
-<span class="text-4xl font-semibold text-red-500 ml-[80px]">Ships to review:</span>
+<span
+	class="text-4xl font-semibold text-red-500 ml-[80px]">Ships to review:</span
+>
 
 <div class="flex flex-col items-center mx-auto space-y-4">
 	{#each data as item}

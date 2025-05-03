@@ -28,7 +28,11 @@
 	// for isUnderSomeReview please check if its being activly reviwed in its status..
 </script>
 
-<form style="background-color: #FFECDA;" class="rounded-xl" on:submit={submitForm}>
+<form
+	style="background-color: #FFECDA;"
+	class="rounded-xl"
+	on:submit={submitForm}
+>
 	<div class="bg-[#FFECDA] font-phantom p-5 rounded-xl w-full my-10">
 		{#if isUnderSomeReview}
 			<div class="bg-red-300 p-5 m-2 rounded-lg">
