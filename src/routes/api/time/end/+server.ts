@@ -22,7 +22,7 @@ const ztime = z.object({
 		.string()
 		.url()
 		.startsWith('https')
-		.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i))
+		.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i).nullish()).nullish()
 
 		
 });
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
 	const parsedBody = ztime.safeParse(body);
 	if (!parsedBody.success) {
 		console.log(parsedBody.error, 'a');
-		return new Response(parsedBody.error.errors.map((e) => e.message).join('\n'), {
+		return new Response(`Body errors:\n`+parsedBody.error.errors.map((e) => e.message).join('\n'), {
 			status: 400
 		});
 	}
@@ -96,12 +96,14 @@ export async function POST(req: Request) {
 			status: 404
 		});
 	// validate wormhole msg
+if(body.wormhole_link) {
 	const msgId = parseSlackMessageUrl(body.wormhole_link);
 	if (msgId.channel !== 'C08MC7PQ40G' && !dev) {
 		return new Response('Invalid wormhole link (WRONG CHANNEL)', {
 			status: 400
 		});
 	}
+
 	try {
 		// check if msg exists
 		await fetch('https://slack.com/api/conversations.history', {
@@ -159,7 +161,7 @@ export async function POST(req: Request) {
 			status: 400
 		});
 	}
-
+}
 	await prisma.time.update({
 		where: {
 			id: timeData.id
