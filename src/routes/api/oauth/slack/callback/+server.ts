@@ -12,7 +12,7 @@ function formatAddress(address) {
 
 	return parts.join('\n'); // or ', ' or whatever separator you want
 }
-export async function PATCH(req: Request) {
+export async function GET(req: Request) {
 	// check for session here
 	const session = req.cookies.get('session');
 	if (!session) {
