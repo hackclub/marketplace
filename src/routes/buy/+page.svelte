@@ -101,9 +101,7 @@
 				{/if}
 			</div>
 
-			<p
-				class="text-lg text-black font-light mt-1 mb-5 mr-1"
-			>
+			<p class="text-lg text-black font-light mt-1 mb-5 mr-1">
 				(ships to {shipData.can_ship_to})
 			</p>
 		</div>

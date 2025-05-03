@@ -48,8 +48,7 @@
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span
-		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">featured projects:</span
+	<span class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">featured projects:</span
 	>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
@@ -57,8 +56,7 @@
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span
-		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
+	<span class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
 		>projects that are out rn:</span
 	>
 </div>
@@ -67,8 +65,8 @@
 </div>
 
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
-	<span
-		class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500">projects in progress:</span
+	<span class="text-2xl sm:text-3xl md:text-4xl font-semibold text-red-500"
+		>projects in progress:</span
 	>
 </div>
 <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4">
