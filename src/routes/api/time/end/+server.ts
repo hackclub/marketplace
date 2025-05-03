@@ -18,13 +18,15 @@ function parseSlackMessageUrl(url) {
 const ztime = z.object({
 	video_link: z.string().url().startsWith('https'),
 	memo: z.string().min(2).max(500),
-	wormhole_link: z
+	wormhole_link: z.optional(z
 		.string()
 		.url()
 		.startsWith('https')
-		.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i)
-		.optional()
+		.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i))
+
+		
 });
+
 export async function POST(req: Request) {
 	// validate session moment
 	const session = req.cookies.get('session');
