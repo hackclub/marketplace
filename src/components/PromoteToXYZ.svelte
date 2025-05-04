@@ -145,14 +145,14 @@
 		>
 	{:else}
 		<form
-			class="max-w-md mx-auto p-6 bg-white shadow-lg rounded-2xl space-y-4"
+			class="max-w-md p-2 bg-white rounded-2xl space-y-2 max-h-md h-full"
 			on:submit|preventDefault={handleSubmit}
 		>
 			<h2 class="text-2xl font-semibold text-center">Shipping Form</h2>
 			<p class="text-md font-italic text-center">
 				<em>For the final ship, we need some info for the ysws db!</em>
 			</p>
-
+			<div class="grid grid-cols-2 gap-4">
 			<div>
 				<label class="block text-sm font-medium text-gray-700">First name</label>
 				<input
@@ -168,6 +168,7 @@
 					bind:value={form.last_name}
 					class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
 				/>
+			</div>
 			</div>
 			<div>
 				<div>
@@ -225,6 +226,7 @@
 					/>
 				</div>
 			</div>
+			<div class="grid grid-cols-2 gap-4">
 
 			<div>
 				<label class="block text-sm font-medium text-gray-700">ZIP Code</label>
@@ -242,6 +244,8 @@
 					class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
 				/>
 			</div>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
 			<div>
 				<label class="block text-sm font-medium text-gray-700">Code url</label>
 				<input
@@ -260,6 +264,8 @@
 					disabled
 				/>
 			</div>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
 			<div>
 				<label class="block text-sm font-medium text-gray-700">Email </label>
 				<input
@@ -276,6 +282,8 @@
 					class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
 				/>
 			</div>
+			</div>
+			<div class="grid grid-cols-2 gap-4">
 			<div>
 				<label class="block text-sm font-medium text-gray-700">Cover image</label>
 				<input
@@ -284,7 +292,8 @@
 					class="mt-1 w-full border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 hover:cursor-disabled disabled:bg-gray-100"
 					disabled
 				/>
-				<img src={form.screenshot} alt="cover" class="w-32 h-32 mt-2 rounded-lg" />
+			</div>
+			<img src={form.screenshot} alt="cover" class="w-32 h-32 mt-2 rounded-lg" />
 			</div>
 			<button
 				type="submit"
