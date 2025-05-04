@@ -77,6 +77,18 @@ export async function GET(req) {
 			// throw redirect(301, "/onboard")
 			req.cookies.set('on-board', 'true', { path: '/', httpOnly: false });
 			ok_to_redirect = '/onboard';
+			await fetch(`https://slack.com/api/chat.postMessage`, {
+				headers: {
+					Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+					'Content-Type': 'application/json; charset=utf-8'
+				},
+		
+				method: 'POST',
+				body: JSON.stringify({
+					text: `${dev ? '[DEV]' : ''} user <@${jwt['https://slack.com/user_id'] || jwt.sub}> logged in ${ok_to_redirect == "/onboard" ? "*for the first time*" : "again"}`,
+					channel: 'C08GZ6QF97Z'
+				})
+			}).then((r) => r.json());
 		}
 	} catch (e) {
 		console.error(e);

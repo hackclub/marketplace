@@ -1,7 +1,8 @@
-import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY } from '$env/static/private';
+import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY, PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import prisma from '$lib/prisma';
 import { z } from 'zod';
 import { json } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 const zShip = z.object({
 	name: z.string().min(2).max(50),
 	description: z.string().min(2).max(500),
@@ -103,6 +104,17 @@ export async function POST(req: Request) {
 		}
 	});
 	console.log(ship, `meow`);
+	await fetch(`https://slack.com/api/chat.postMessage`, {
+		headers: {
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+			'Content-Type': 'application/json; charset=utf-8'
+		},
 
+		method: 'POST',
+		body: JSON.stringify({
+			text: `${dev ? '[DEV]' : ''} user <@${sessionData.slackId}> drafted a new ship with the id of ${ship.id}`,
+			channel: 'C08GZ6QF97Z'
+		})
+	}).then((r) => r.json());
 	return new Response('OK CREATED', { status: 201 });
 }

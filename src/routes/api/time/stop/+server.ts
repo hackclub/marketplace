@@ -1,4 +1,5 @@
-import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID } from '$env/static/private';
+import { dev } from '$app/environment';
+import { PRIVATE_AIRTABLE_API_KEY, PRIVATE_AIRTABLE_BASE_ID, PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
 export async function DELETE(req: Request) {
@@ -80,6 +81,18 @@ export async function DELETE(req: Request) {
 		}
 	});
 	reSyncUsersShipTime(body.shipId);
+	await fetch(`https://slack.com/api/chat.postMessage`, {
+		headers: {
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+
+		method: 'POST',
+		body: JSON.stringify({
+			text: `${dev ? '[DEV]' : ''} user <@${sessionData.slackId}> deleted there time on  whatever they were doing`,
+			channel: 'C08GZ6QF97Z'
+		})
+	}).then((r) => r.json());
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'

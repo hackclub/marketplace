@@ -177,6 +177,18 @@ if(body.wormhole_link) {
 	});
 
 	reSyncUsersShipTime(timeData.shipId);
+	await fetch(`https://slack.com/api/chat.postMessage`, {
+		headers: {
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+
+		method: 'POST',
+		body: JSON.stringify({
+			text: `${dev ? '[DEV]' : ''} user <@${sessionData.slackId}> ended timer on ship ${timeData.shipId}`,
+			channel: 'C08GZ6QF97Z'
+		})
+	}).then((r) => r.json());
 	return new Response('OK BYE BYE', {
 		headers: {
 			'Content-Type': 'application/json'

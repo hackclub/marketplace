@@ -1,4 +1,5 @@
-import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY } from '$env/static/private';
+import { dev } from '$app/environment';
+import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY, PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import prisma from '$lib/prisma';
 
 export async function POST(req: Request) {
@@ -34,6 +35,18 @@ export async function POST(req: Request) {
 			userId: sessionData.slackId
 		}
 	});
+	await fetch(`https://slack.com/api/chat.postMessage`, {
+		headers: {
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+
+		method: 'POST',
+		body: JSON.stringify({
+			text: `${dev ? '[DEV]' : ''} user <@${sessionData.slackId}> started timer on ship ${body.shipId}`,
+			channel: 'C08GZ6QF97Z'
+		})
+	}).then((r) => r.json());
 	return new Response('OK CREATED', {
 		status: 201,
 		headers: {

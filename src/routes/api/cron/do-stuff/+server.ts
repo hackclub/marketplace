@@ -14,18 +14,18 @@ export async function GET(req: Request) {
 		return new Response('401 Unauthorized', { status: 401 });
 	}
 	console.debug(`CRON RAAAA (*/15)`);
-	await fetch(`https://slack.com/api/chat.postMessage`, {
-		headers: {
-			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
-			'Content-Type': 'application/json; charset=utf-8'
-		},
+	// await fetch(`https://slack.com/api/chat.postMessage`, {
+	// 	headers: {
+	// 		Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+	// 		'Content-Type': 'application/json; charset=utf-8'
+	// 	},
 
-		method: 'POST',
-		body: JSON.stringify({
-			text: `${dev ? '[DEV]' : ''} CRON RAAAA (*/15) (every 15 mins)`,
-			channel: 'C08GZ6QF97Z'
-		})
-	}).then((r) => r.json());
+	// 	method: 'POST',
+	// 	body: JSON.stringify({
+	// 		text: `${dev ? '[DEV]' : ''} CRON RAAAA (*/15) (every 15 mins)`,
+	// 		channel: 'C08GZ6QF97Z'
+	// 	})
+	// }).then((r) => r.json());
 	// await draftAllRejectedShips()
 	await Promise.all([
 		sendHCBGrants(),
