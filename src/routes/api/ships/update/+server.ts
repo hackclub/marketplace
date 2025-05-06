@@ -22,7 +22,8 @@ export async function POST(req: Request) {
 	try {
 		ship = await prisma.ship.update({
 			where: {
-				id: body.id
+				id: body.id,
+				is_under_some_review_rn: false
 			},
 			data: {
 				Name: body.name,
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
 		});
 	} catch (e) {
 		console.error(e);
-		return new Response(JSON.stringify({ message: 'Ship not found' }), {
+		return new Response(JSON.stringify({ message: 'Ship not found or not ready to be updated' }), {
 			status: 404
 		});
 	}
