@@ -130,7 +130,7 @@
 				type="submit"
 				class="bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
 			>
-				End!
+				End! (adds to ur time)
 			</button>
 		</form>
 		<p class="mt-4 text-gray-700">Current time: {timeString}</p>
@@ -138,7 +138,7 @@
 			class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
 			on:click={stopSession}
 		>
-			Stop!
+			Stop! (deletes this session)
 		</button>
 	{:else}
 		<button
