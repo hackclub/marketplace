@@ -57,7 +57,7 @@
 				<p class="text-gray-700">
 					@{properData.author} -- session lasted for {(
 						(data.total_time_in_seconds ?? 0) / 60
-					).toFixed(2)} minutes -- memo: ${properData.memo}
+					).toFixed(2)} minutes -- memo: {data.memo}
 					{#if data.wormhole_link}
 						<a
 							href={data.wormhole_link}
