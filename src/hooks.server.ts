@@ -35,7 +35,7 @@ export const handle = sequence(sentryHandle(), async function ({ event, resolve 
 		cookie &&
 		!event.cookies.get('onboarded') &&
 		event.url.pathname !== '/onboard' &&
-		event.url.pathname !== '/api/settings/update'
+		!event.url.pathname.startsWith('/api')
 	) {
 		const userData = await prisma.user.findFirst({
 			where: {

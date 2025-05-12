@@ -38,6 +38,7 @@ export async function GET(req: Request) {
 					slackId: d.userId
 				}
 			});
+			console.log(d)
 			return new Response(
 				JSON.stringify({
 					title: d.Name,
@@ -49,7 +50,11 @@ export async function GET(req: Request) {
 					avatar: `https://cachet.dunkirk.sh/users/${d.userId}/r`,
 					author: d.slack_user_name,
 					author_slack_id: d.userId,
-					can_ship_to: user?.reigions_for_shipping
+					can_ship_to: user?.reigions_for_shipping,
+					bill_of_materials: d.bill_of_materials,
+					github: d.github_url,
+					demo_url: d.demo_url,
+					readme: d.readme_url
 				}),
 				{
 					headers: {

@@ -76,7 +76,9 @@
 					.then((r) => r.text())
 					.then(() => {
 						location.pathname = '/ships';
-						location.reload();
+						setTimeout(() => {
+						window.location.href = "https://market.hackclub.com/ships"
+						}, 250)
 					});
 			}}
 		>
