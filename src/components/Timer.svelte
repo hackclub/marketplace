@@ -24,15 +24,28 @@
 
 	timerInterval = setInterval(updateTimer, 1000);
 
-	function togglePause() {
-		if (isPaused) {
-			const pauseDuration = Date.now() - (pausedAt || 0);
-			totalPausedTime += pauseDuration;
-			pausedAt = null;
-		} else {
-			pausedAt = Date.now();
+	async function togglePause() {
+		try {
+			await fetch('/api/time/pause', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ isPaused: !isPaused })
+			});
+
+			if (isPaused) {
+				const pauseDuration = Date.now() - (pausedAt || 0);
+				totalPausedTime += pauseDuration;
+				pausedAt = null;
+			} else {
+				pausedAt = Date.now();
+			}
+			isPaused = !isPaused;
+		} catch (error) {
+			console.error('Failed to toggle pause state:', error);
+			alert('Failed to toggle pause state. Please try again.');
 		}
-		isPaused = !isPaused;
 	}
 
 	export async function startSession() {
