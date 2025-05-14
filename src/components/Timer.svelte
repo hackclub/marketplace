@@ -2,16 +2,38 @@
 	// This is a Svelte component for a timer that tracks the time spent on a task.
 	// It allows starting, stopping, and sending data related to the timer session.
 	// The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let timeString = '00:00:00';
 	export let startedAt = Date.now();
 	export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
 	export let shipId: string | null = null;
 
-	setInterval(() => {
-		timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
-	}, 1000);
+	let isPaused = false;
+	let pausedAt: number | null = null;
+	let totalPausedTime = 0;
+	let timerInterval: NodeJS.Timeout;
+
+	function updateTimer() {
+		if (!isPaused) {
+			const currentTime = Date.now();
+			const elapsedTime = currentTime - startedAt - totalPausedTime;
+			timeString = new Date(elapsedTime).toISOString().substr(11, 8);
+		}
+	}
+
+	timerInterval = setInterval(updateTimer, 1000);
+
+	function togglePause() {
+		if (isPaused) {
+			const pauseDuration = Date.now() - (pausedAt || 0);
+			totalPausedTime += pauseDuration;
+			pausedAt = null;
+		} else {
+			pausedAt = Date.now();
+		}
+		isPaused = !isPaused;
+	}
 
 	export async function startSession() {
 		const timerData = await fetch('/api/time/start', {
@@ -71,8 +93,14 @@
 			startedAt = new Date(timer.createdAt).getTime();
 		}
 		setInterval(() => {
-			fetch('/api/time/beat');
+			if (!isPaused) {
+				fetch('/api/time/beat');
+			}
 		}, 60 * 1000);
+	});
+
+	onDestroy(() => {
+		clearInterval(timerInterval);
 	});
 </script>
 
@@ -134,12 +162,20 @@
 			</button>
 		</form>
 		<p class="mt-4 text-gray-700">Current time: {timeString}</p>
-		<button
-			class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
-			on:click={stopSession}
-		>
-			Stop! (deletes this session)
-		</button>
+		<div class="flex space-x-2">
+			<button
+				class="mt-2 bg-yellow-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-yellow-600"
+				on:click={togglePause}
+			>
+				{isPaused ? 'Resume' : 'Pause'}
+			</button>
+			<button
+				class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
+				on:click={stopSession}
+			>
+				Stop! (deletes this session)
+			</button>
+		</div>
 	{:else}
 		<button
 			class="bg-green-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-green-600"
