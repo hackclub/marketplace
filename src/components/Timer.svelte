@@ -13,6 +13,7 @@
 	let pausedAt: number | null = null;
 	let totalPausedTime = 0;
 	let timerInterval: NodeJS.Timeout;
+	let pauseHistory: { start: number; end: number | null }[] = [];
 
 	function updateTimer() {
 		if (!isPaused) {
@@ -31,15 +32,22 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ isPaused: !isPaused })
+				body: JSON.stringify({ 
+					isPaused: !isPaused,
+					pauseHistory: pauseHistory
+				})
 			});
 
 			if (isPaused) {
 				const pauseDuration = Date.now() - (pausedAt || 0);
 				totalPausedTime += pauseDuration;
+				if (pauseHistory.length > 0) {
+					pauseHistory[pauseHistory.length - 1].end = Date.now();
+				}
 				pausedAt = null;
 			} else {
 				pausedAt = Date.now();
+				pauseHistory.push({ start: Date.now(), end: null });
 			}
 			isPaused = !isPaused;
 		} catch (error) {
@@ -57,6 +65,8 @@
 			body: JSON.stringify({ shipId })
 		}).then((r) => r.text());
 		startedAt = Date.now();
+		totalPausedTime = 0;
+		pauseHistory = [];
 		console.log(timerData);
 		timeData = await fetch('/api/time/status').then((r) => r.json());
 	}
@@ -71,6 +81,8 @@
 		});
 		timeData = null;
 		startedAt = Date.now();
+		totalPausedTime = 0;
+		pauseHistory = [];
 		alert('Session stopped!');
 	}
 
@@ -81,12 +93,24 @@
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
 		if(!data.wormhole_link) data.wormhole_link = undefined;
+		
+		if (isPaused) {
+			const pauseDuration = Date.now() - (pausedAt || 0);
+			totalPausedTime += pauseDuration;
+			if (pauseHistory.length > 0) {
+				pauseHistory[pauseHistory.length - 1].end = Date.now();
+			}
+		}
+
 		await fetch('/api/time/end', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify({
+				...data,
+				pauseHistory
+			})
 		}).then((r) => {
 			if (r.ok) {
 				alert('Session ended!');
@@ -104,6 +128,20 @@
 		timeData = timer;
 		if (timer.session) {
 			startedAt = new Date(timer.createdAt).getTime();
+			if (timer.pauseHistory) {
+				pauseHistory = timer.pauseHistory;
+				totalPausedTime = pauseHistory.reduce((total, pause) => {
+					if (pause.end) {
+						return total + (pause.end - pause.start);
+					}
+					return total;
+				}, 0);
+				if (timer.pausedAt) {
+					isPaused = true;
+					pausedAt = new Date(timer.pausedAt).getTime();
+					totalPausedTime += Date.now() - pausedAt;
+				}
+			}
 		}
 		setInterval(() => {
 			if (!isPaused) {

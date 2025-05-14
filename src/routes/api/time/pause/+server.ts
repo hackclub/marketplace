@@ -20,7 +20,7 @@ export async function POST({ request, cookies }: RequestEvent) {
 	}
 
 	const body = await request.json();
-	const { isPaused } = body;
+	const { isPaused, pauseHistory } = body;
 
 	const timeData = await prisma.time.findFirst({
 		where: {
@@ -43,7 +43,8 @@ export async function POST({ request, cookies }: RequestEvent) {
 		},
 		data: {
 			updatedAt: new Date().toISOString(),
-			pausedAt: isPaused ? new Date().toISOString() : null
+			pausedAt: isPaused ? new Date().toISOString() : null,
+			pauseHistory: pauseHistory || []
 		}
 	});
 
