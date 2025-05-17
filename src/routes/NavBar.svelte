@@ -24,7 +24,7 @@
 			}
 		}
 		console.log(getCookie('onboarded'));
-		isOnboarded = getCookie('onboarded') === 'true';
+		isOnboarded = getCookie('onboarded') !== 'false';
 	});
 
 	function logout() {

@@ -46,12 +46,18 @@ export const handle = sequence(sentryHandle(), async function ({ event, resolve 
 		if (userData) {
 			if (!(userData.address && userData.hcb_email && userData.reigions_for_shipping)) {
 				// console.log(`DAWG LEMME IN `)
+				event.cookies.set(
+					`onboarded`,
+					'false',
+					{ path: '/', expires: new Date(Date.now() + 60 * 1000), httpOnly: false }
+				);
 				return new Response('You are NOT skipping onboarding', {
 					status: 302,
 					headers: {
 						location: '/onboard?a=1'
 					}
 				});
+				
 			}
 			if (!event.cookies.get('user-info')) {
 				event.cookies.set(
