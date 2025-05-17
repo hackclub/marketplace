@@ -2,16 +2,59 @@
 	// This is a Svelte component for a timer that tracks the time spent on a task.
 	// It allows starting, stopping, and sending data related to the timer session.
 	// The component uses Svelte's reactivity and lifecycle methods to manage state and fetch data from an API.
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let timeString = '00:00:00';
 	export let startedAt = Date.now();
 	export let timeData: { session?: boolean; video_link?: string; createdAt?: string } | null = null;
 	export let shipId: string | null = null;
 
-	setInterval(() => {
-		timeString = new Date(Date.now() - startedAt).toISOString().substr(11, 8);
-	}, 1000);
+	let isPaused = false;
+	let pausedAt: number | null = null;
+	let totalPausedTime = 0;
+	let timerInterval: NodeJS.Timeout;
+	let pauseHistory: { start: number; end: number | null }[] = [];
+
+	function updateTimer() {
+		if (!isPaused) {
+			const currentTime = Date.now();
+			const elapsedTime = currentTime - startedAt - totalPausedTime;
+			timeString = new Date(elapsedTime).toISOString().substr(11, 8);
+		}
+	}
+
+	timerInterval = setInterval(updateTimer, 1000);
+
+	async function togglePause() {
+		try {
+			await fetch('/api/time/pause', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ 
+					isPaused: !isPaused,
+					pauseHistory: pauseHistory
+				})
+			});
+
+			if (isPaused) {
+				const pauseDuration = Date.now() - (pausedAt || 0);
+				totalPausedTime += pauseDuration;
+				if (pauseHistory.length > 0) {
+					pauseHistory[pauseHistory.length - 1].end = Date.now();
+				}
+				pausedAt = null;
+			} else {
+				pausedAt = Date.now();
+				pauseHistory.push({ start: Date.now(), end: null });
+			}
+			isPaused = !isPaused;
+		} catch (error) {
+			console.error('Failed to toggle pause state:', error);
+			alert('Failed to toggle pause state. Please try again.');
+		}
+	}
 
 	export async function startSession() {
 		const timerData = await fetch('/api/time/start', {
@@ -22,6 +65,8 @@
 			body: JSON.stringify({ shipId })
 		}).then((r) => r.text());
 		startedAt = Date.now();
+		totalPausedTime = 0;
+		pauseHistory = [];
 		console.log(timerData);
 		timeData = await fetch('/api/time/status').then((r) => r.json());
 	}
@@ -36,6 +81,8 @@
 		});
 		timeData = null;
 		startedAt = Date.now();
+		totalPausedTime = 0;
+		pauseHistory = [];
 		alert('Session stopped!');
 	}
 
@@ -46,12 +93,24 @@
 		const data = Object.fromEntries(formData.entries());
 		console.log(data);
 		if(!data.wormhole_link) data.wormhole_link = undefined;
+		
+		if (isPaused) {
+			const pauseDuration = Date.now() - (pausedAt || 0);
+			totalPausedTime += pauseDuration;
+			if (pauseHistory.length > 0) {
+				pauseHistory[pauseHistory.length - 1].end = Date.now();
+			}
+		}
+
 		await fetch('/api/time/end', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(data)
+			body: JSON.stringify({
+				...data,
+				pauseHistory
+			})
 		}).then((r) => {
 			if (r.ok) {
 				alert('Session ended!');
@@ -69,10 +128,30 @@
 		timeData = timer;
 		if (timer.session) {
 			startedAt = new Date(timer.createdAt).getTime();
+			if (timer.pauseHistory) {
+				pauseHistory = timer.pauseHistory;
+				totalPausedTime = pauseHistory.reduce((total, pause) => {
+					if (pause.end) {
+						return total + (pause.end - pause.start);
+					}
+					return total;
+				}, 0);
+				if (timer.pausedAt) {
+					isPaused = true;
+					pausedAt = new Date(timer.pausedAt).getTime();
+					totalPausedTime += Date.now() - pausedAt;
+				}
+			}
 		}
 		setInterval(() => {
-			fetch('/api/time/beat');
+			if (!isPaused) {
+				fetch('/api/time/beat');
+			}
 		}, 60 * 1000);
+	});
+
+	onDestroy(() => {
+		clearInterval(timerInterval);
 	});
 </script>
 
@@ -134,12 +213,20 @@
 			</button>
 		</form>
 		<p class="mt-4 text-gray-700">Current time: {timeString}</p>
-		<button
-			class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
-			on:click={stopSession}
-		>
-			Stop! (deletes this session)
-		</button>
+		<div class="flex space-x-2">
+			<button
+				class="mt-2 bg-yellow-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-yellow-600"
+				on:click={togglePause}
+			>
+				{isPaused ? 'Resume' : 'Pause'}
+			</button>
+			<button
+				class="mt-2 bg-red-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-red-600"
+				on:click={stopSession}
+			>
+				Stop! (deletes this session)
+			</button>
+		</div>
 	{:else}
 		<button
 			class="bg-green-500 text-white rounded-lg px-4 py-2 font-bold hover:bg-green-600"

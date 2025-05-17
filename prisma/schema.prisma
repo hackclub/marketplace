@@ -94,6 +94,8 @@ model Time {
   userId                String
   memo                  String?
   wormhole_link         String?
+  pausedAt              DateTime?
+  pauseHistory          Json?      @default("[]")
 }
 
 enum TimeStatus {

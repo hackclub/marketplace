@@ -1,4 +1,5 @@
 import { dev } from '$app/environment';
+import { type RequestEvent } from '@sveltejs/kit';
 import {
 	PRIVATE_AIRTABLE_API_KEY,
 	PRIVATE_AIRTABLE_BASE_ID,
@@ -7,7 +8,13 @@ import {
 import { reSyncUsersShipTime } from '$lib/apistuff';
 import prisma from '$lib/prisma';
 import { z } from 'zod';
-function parseSlackMessageUrl(url) {
+
+interface PausePeriod {
+	start: number;
+	end: number | null;
+}
+
+function parseSlackMessageUrl(url: string) {
 	const match = url.match(/archives\/(.*?)\/p(\d{16})/);
 	if (!match) throw new Error('Invalid Slack message URL format');
 	const channel = match[1];
@@ -15,23 +22,26 @@ function parseSlackMessageUrl(url) {
 	const ts = `${rawTs.slice(0, 10)}.${rawTs.slice(10)}`;
 	return { channel, ts };
 }
+
 const ztime = z.object({
 	video_link: z.string().url().startsWith('https'),
 	memo: z.string().min(2).max(500),
-	wormhole_link:  z
-	.string()
-	.url()
-	.startsWith("https")
-	.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i)
-	.optional()
-	.nullable()
-
-		
+	wormhole_link: z
+		.string()
+		.url()
+		.startsWith("https")
+		.regex(/https:\/\/hackclub\.slack\.com\/archives\/[A-Za-z0-9]+\/p[0-9]+/i)
+		.optional()
+		.nullable(),
+	pauseHistory: z.array(z.object({
+		start: z.number(),
+		end: z.number().nullable()
+	})).optional()
 });
 
-export async function POST(req: Request) {
+export async function POST({ request, cookies }: RequestEvent) {
 	// validate session moment
-	const session = req.cookies.get('session');
+	const session = cookies.get('session');
 	if (!session) {
 		return new Response(JSON.stringify({ message: 'No session' }), {
 			status: 401
@@ -47,7 +57,7 @@ export async function POST(req: Request) {
 			status: 401
 		});
 	}
-	const body = await req.request.json();
+	const body = await request.json();
 	console.log(body);
 	if (!body) return new Response('no body');
 	const parsedBody = ztime.safeParse(body);
@@ -172,7 +182,18 @@ if(body.wormhole_link) {
 			video_link: body.video_link,
 			wormhole_link: body.wormhole_link,
 			memo: body.memo,
-			total_time_in_seconds: Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000)
+			pauseHistory: body.pauseHistory || [],
+			total_time_in_seconds: (() => {
+				const totalTime = Math.round(Date.now() / 1000 - timeData.createdAt.getTime() / 1000);
+				const pauseHistory = (body.pauseHistory || []) as PausePeriod[];
+				const totalPausedTime = pauseHistory.reduce((total: number, pause: PausePeriod) => {
+					if (pause.end) {
+						return total + (pause.end - pause.start) / 1000;
+					}
+					return total + (Date.now() - pause.start) / 1000;
+				}, 0);
+				return Math.round(totalTime - totalPausedTime);
+			})()
 		}
 	});
 

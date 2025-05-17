@@ -5,6 +5,7 @@
 	let avatarUrl: string | null = null;
 	let userName: string | null = null;
 	let showDropdown: boolean = false;
+	let isOnboarded: boolean = false;
 	import { onMount } from 'svelte';
 
 	onMount(async () => {
@@ -22,6 +23,8 @@
 				userName = userData.slack_name;
 			}
 		}
+		console.log(getCookie('onboarded'));
+		isOnboarded = getCookie('onboarded') === 'true';
 	});
 
 	function logout() {
@@ -63,7 +66,9 @@
 				{:else}
 					<a
 						style="font-family: Phantom Sans;"
-						href="/ships"
+						href={
+							isOnboarded ? "/ships" : "/onboard"
+						}
 						class="text-white bg-red-400 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 hover:bg-red-600 text-center"
 						>go to your ships</a
 					>
@@ -76,7 +81,7 @@
 							alt={`${userName}'s avatar`}
 							on:click={() => (showDropdown = !showDropdown)}
 						/>
-						{#if showDropdown}
+						{#if showDropdown && isOnboarded}
 							<div
 								class="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg z-50 border border-[#EADAC7]"
 								style="font-family: Phantom Sans;"
