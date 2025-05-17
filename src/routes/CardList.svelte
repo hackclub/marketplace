@@ -93,7 +93,7 @@
 							<Content class="text-wrap">
 								<h1>Here is a markdown version for highway!</h1>
 								{#await fetch(`/api/time/export?id=${item.id}`).then(r => r.text()) then text}
-<pre   class="text-sm sm:text-base inline-flex text-left items-center space-x-4 bg-gray-800 text-white rounded-lg p-4 pl-6 text-wrap m-5">
+<pre   class="text-sm sm:text-base inline-flex text-left items-center space-x-4 bg-gray-800 text-white rounded-lg p-4 pl-6 text-wrap m-5 overflow-scroll">
 	{text}
 </pre>
 								{/await}
