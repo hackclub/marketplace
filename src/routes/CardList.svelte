@@ -1,7 +1,7 @@
 <script>
 	import Icon from 'mdi-svelte';
 	import Timer from '../components/Timer.svelte';
-	import { mdiPencil, mdiRocket, mdiTimer } from '@mdi/js';
+	import { mdiPencil, mdiRocket, mdiTimer,mdiExport  } from '@mdi/js';
 	import { Modal, Content, Trigger } from 'sv-popup';
 	import EditPopup from '../components/EditPopup.svelte';
 	import PromoteToXyz from '../components/PromoteToXYZ.svelte';
@@ -87,8 +87,23 @@
 									>
 								</Trigger>
 							</Modal>
-						{/if}
 
+						{/if}
+						<Modal basic>
+							<Content class="text-wrap">
+								<h1>Here is a markdown version for highway!</h1>
+								{#await fetch(`/api/time/export?id=${item.id}`).then(r => r.text()) then text}
+<pre   class="text-sm sm:text-base inline-flex text-left items-center space-x-4 bg-gray-800 text-white rounded-lg p-4 pl-6 text-wrap m-5">
+	{text}
+</pre>
+								{/await}
+							</Content>
+							<Trigger>
+								<button
+									class="text-white bg-blue-400 font-medium rounded-lg text-xs px-2 py-2 mr-2 hover:bg-red-600 disabled:bg-gray-400"
+									><Icon path={mdiExport} /></button>
+							</Trigger>
+						</Modal>
 						<p class="text-orange-700">{shortenDesc(item.description)}</p>
 						<div id="attributes">
 							<!-- is there a better way to do this? yes, did it work? no. -->
