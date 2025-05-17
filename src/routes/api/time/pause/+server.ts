@@ -1,5 +1,7 @@
 import { type RequestEvent } from '@sveltejs/kit';
 import prisma from '$lib/prisma';
+import { PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
+import { dev } from '$app/environment';
 
 export async function POST({ request, cookies }: RequestEvent) {
 	const session = cookies.get('session');
@@ -36,6 +38,17 @@ export async function POST({ request, cookies }: RequestEvent) {
 			status: 404
 		});
 	}
+	await fetch(`https://slack.com/api/chat.postMessage`, {
+		headers: {
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`,
+			'Content-Type': 'application/json; charset=utf-8'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			text: `${dev?"[DEV]":""} <@${sessionData.slackId}> ${isPaused ? "paused" : "unpaused"} the timer on ship ${timeData.shipId} w/ ${pauseHistory? pauseHistory?.length : 0} pauses`,
+			channel: 'C08GZ6QF97Z'
+		})
+	}).then(r=>r.json()).then(console.log)
 
 	await prisma.time.update({
 		where: {
