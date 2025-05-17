@@ -101,6 +101,7 @@
 					name="address_line_1"
 					type="text"
 					placeholder="15 Falls Rd"
+					min="5"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
 			</div>
@@ -122,6 +123,7 @@
 					id="address_city"
 					name="address_city"
 					type="text"
+					min="2"
 					placeholder="Shelburne"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
@@ -133,6 +135,7 @@
 					id="address_state"
 					name="address_state"
 					type="text"
+					min="1"
 					placeholder="VT"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
@@ -144,6 +147,7 @@
 					id="address_postal_code"
 					name="address_postal_code"
 					type="text"
+					min="3"
 					placeholder="05482"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
@@ -155,6 +159,7 @@
 					id="address_country"
 					name="address_country"
 					type="text"
+					min="1"
 					placeholder="USA"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
 				/>
@@ -166,6 +171,7 @@
 					id="country"
 					name="country"
 					class="w-full p-2 border rounded-lg bg-[#F4DECF] border-[#EADAC7] focus:outline-none focus:ring-2 focus:ring-[#EADAC7]"
+					required
 				>
 					<option value="US" selected>USA</option>
 					<option value="CA">Canada</option>
@@ -174,7 +180,7 @@
 					<option value="EU">Europe</option>
 					<option value="IN">India</option>
 					<option value="ASIA">Asia</option>
-					<option value="Everywhere">Anywhere! (note this may include having to pay customs)</option>
+					<option value="EVERYWHERE">Anywhere! (note this may include having to pay customs)</option>
 				</select>
 			</div>
 
