@@ -15,7 +15,9 @@
 	let shipData: ShipData | null = null;
 	import NavBar from '../NavBar.svelte';
 	import { onMount } from 'svelte';
-
+	import Icon from 'mdi-svelte';
+import { mdiGithub } from '@mdi/js';
+    import { marked } from 'marked';
 	onMount(async () => {
 		const params = new URLSearchParams(window.location.search);
 		id = params.get('id');
@@ -111,6 +113,27 @@
 			>
 				(ships to {shipData.can_ship_to})
 			</p>
+					<div class="mt-1">
+			<h3 class="font-bold text-base font-sans">Bill of materials</h3>
+						<p class="text-base text-black font-sans">
+			{shipData.bill_of_materials}
+			</p></div>
+				<div class="flex justify-between">
+					<a
+						class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
+						href={shipData.github}><Icon path={mdiGithub}/> </a
+					>
+					<a
+						class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded disabled:bg-gray-400"
+					href={shipData.demo_url} >Demo link</a
+					>
+				</div>
+				<br />
+			<div class="p-5 rounded bg-orange-100">
+					{#await fetch(shipData.readme).then(r => r.text()) then text}
+    {@html marked(text)}
+{/await}
+			</div>
 		</div>
 	</div>
 {:else}
