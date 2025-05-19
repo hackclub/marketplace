@@ -46,4 +46,6 @@ export async function POST(req: Request) {
 			status: 'pending'
 		}
 	});
+	// notify ship owner AND log to my amazing channel
+	// after that subtract user balance and put it in escrow
 }

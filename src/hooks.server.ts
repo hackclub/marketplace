@@ -65,7 +65,8 @@ export const handle = sequence(sentryHandle(), async function ({ event, resolve 
 					JSON.stringify({
 						slack_name: userData.slack_name,
 						slack_id: userData.slack_id,
-						hcb_email: userData.hcb_email
+						hcb_email: userData.hcb_email,
+						balance: userData.currency
 					}),
 					{ path: '/', expires: new Date(Date.now() + 60 * 1000), httpOnly: false }
 				);

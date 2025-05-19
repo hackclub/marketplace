@@ -4,6 +4,7 @@
 	let loggedIn: boolean = false;
 	let avatarUrl: string | null = null;
 	let userName: string | null = null;
+	let balance: number | string | null = null;
 	let showDropdown: boolean = false;
 	let isOnboarded: boolean = false;
 	import { onMount } from 'svelte';
@@ -21,6 +22,7 @@
 			if (userData) {
 				avatarUrl = `https://cachet.dunkirk.sh/users/${userData.slack_id}/r`;
 				userName = userData.slack_name;
+				balance = userData.balance || 0;
 			}
 		}
 		console.log(getCookie('onboarded'));
@@ -74,7 +76,8 @@
 					>
 				{/if}
 				{#if userName}
-					<div class="relative ml-2">
+					<div class="relative ml-2 inline-flex">
+						<div><img src="/coin.svg" width="16" /> {balance}</div>
 						<img
 							src={avatarUrl}
 							class="rounded-full w-10 h-10 sm:w-12 sm:h-12 cursor-pointer border-2 border-[#F4DECF]"
