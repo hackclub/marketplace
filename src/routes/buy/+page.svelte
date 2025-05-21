@@ -87,9 +87,25 @@ import { mdiGithub } from '@mdi/js';
 						style="font-family: Phantom Sans;"
 						on:click={() => {
 							const confirmation = confirm('Are you sure you want to buy this?');
-							if (confirmation) {
+							if (confirmation && id) {
 								// create POST to /api/purchases/create
-							}
+								fetch('/api/purchases/create', {
+									method: 'POST',
+									headers: {
+										'Content-Type': 'application/json'
+									},
+									body: JSON.stringify({
+										shipId: id,
+									})
+								}).then(res => {
+									if (res.ok) {
+								res.text().then(alert)
+										// window.location.href = '/ships';
+									} else {
+										console.error('Failed to create purchase');
+									}
+								});
+								}
 						}}
 						class="text-white bg-red-400 rounded-lg text-2xl font-bold px-55 py-2 mr-2 hover:bg-red-600 btn button"
 						>buy now!!!</button

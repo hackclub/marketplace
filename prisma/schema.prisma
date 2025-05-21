@@ -71,6 +71,7 @@ model Purchase {
   HeidiEscrow HeidiEscrow[]
   seller      User          @relation(fields: [sellerId], references: [slackId])
   ship        Ship          @relation(fields: [shipId], references: [id])
+  status      PaymentStatus? @default(PENDING)
 }
 
 model HeidiEscrow {
@@ -78,6 +79,8 @@ model HeidiEscrow {
   purchaseId  String
   userSlackId String?
   shipId      String?
+  balance     Int?
+  buyerId    String?
   purchase    Purchase @relation(fields: [purchaseId], references: [id])
   Ship        Ship?    @relation(fields: [shipId], references: [id])
   User        User?    @relation(fields: [userSlackId], references: [slackId])
@@ -103,7 +106,14 @@ enum TimeStatus {
   APPROVED
   REJECTED
 }
-
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  SENT
+  ARRIVED
+  CANCELLED
+  REJECTED
+}
 enum Reigions {
   EVERYWHERE
   US

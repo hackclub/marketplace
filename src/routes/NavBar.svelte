@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID } from '$env/static/public';
+	import { PUBLIC_REDIRECT_URL, PUBLIC_SLACK_CLIENT_ID, PUBLIC_USE_TOKEN_LOGIN } from '$env/static/public';
 	let loading: boolean = true;
 	let loggedIn: boolean = false;
 	let avatarUrl: string | null = null;
@@ -59,12 +59,25 @@
 					>about</a
 				>
 				{#if !loggedIn}
+				{#if !PUBLIC_USE_TOKEN_LOGIN}
 					<a
 						style="font-family: Phantom Sans;"
 						href={`https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + '/api/oauth/slack/callback')}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
 						class="text-white bg-red-500 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 hover:bg-red-600 text-center"
 						>sign in with slack</a
 					>
+					{:else}
+					<button
+						style="font-family: Phantom Sans;"
+						class="text-white bg-red-500 font-medium rounded-lg text-lg sm:text-2xl px-4 py-2 hover:bg-red-600 text-center" on:click={() => {
+							const token = prompt("Please enter your token")
+							if(token) {
+								document.cookie = `session=${token}; Max-Age=60; path=/`;
+								window.location.href = '/ships';
+							}
+						}}
+						>sign in with token</button>
+						{/if}
 				{:else}
 					<a
 						style="font-family: Phantom Sans;"
