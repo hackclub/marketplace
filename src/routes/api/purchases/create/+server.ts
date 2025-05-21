@@ -1,10 +1,10 @@
 import { dev } from '$app/environment';
-import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY, PRIVATE_PURCHASES_LOCKED } from '$env/static/private';
+import { PRIVATE_AIRTABLE_BASE_ID, PRIVATE_AIRTABLE_API_KEY, PRIVATE_PURCHASES_LOCKED, PRIVATE_SLACK_BOT_TOKEN } from '$env/static/private';
 import prisma from '$lib/prisma';
 export async function POST(req: Request) {
 	// AMAZING PEAK CODE BELOW :fire:
 	//TODO: turn this into a var lmao
-	if(true) return new Response('purchases are locked', { status: 403 });
+	if(!dev) return new Response('purchases are locked', { status: 403 });
 	const session = req.cookies.get('session');
 	if (!session) {
 		return new Response(JSON.stringify({ message: 'No session' }), {
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`
 		},
 		body: JSON.stringify({
 			channel: `C08GZ6QF97Z`,
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${PRIVATE_AIRTABLE_API_KEY}`
+			Authorization: `Bearer ${PRIVATE_SLACK_BOT_TOKEN}`
 		},
 		body: JSON.stringify({
 			channel: shipOwner.slackId,
@@ -92,7 +92,7 @@ export async function POST(req: Request) {
 			balance: Math.floor(parseInt(ship.total_time_in_seconds!) / 60 / 60)
 		}
 	});
-	return new Response(JSON.stringify({ message: 'success' }), {
+	return new Response(JSON.stringify({ message: 'success', escrow }), {
 		status: 200
 	});
 }
