@@ -59,7 +59,7 @@
 					>about</a
 				>
 				{#if !loggedIn}
-				{#if !PUBLIC_USE_TOKEN_LOGIN}
+				{#if PUBLIC_USE_TOKEN_LOGIN !== "yesiconsent"}
 					<a
 						style="font-family: Phantom Sans;"
 						href={`https://hackclub.slack.com/oauth/v2/authorize?scope=&user_scope=identity.basic&redirect_uri=${encodeURIComponent(PUBLIC_REDIRECT_URL + '/api/oauth/slack/callback')}&client_id=${PUBLIC_SLACK_CLIENT_ID}`}
