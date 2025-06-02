@@ -1,43 +1,44 @@
 {
-	"name": "hc-market",
-	"private": true,
-	"version": "0.0.1",
-	"type": "module",
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview --host 0.0.0.0 --port 4173",
-		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"format": "prettier --write .",
-		"lint": "prettier --check .",
-		"db:deploy": "npx prisma migrate deploy && npx prisma generate"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/kit": "^2.20.5",
-		"@sveltejs/vite-plugin-svelte": "^5.0.3",
-		"@tailwindcss/vite": "^4.1.3",
-		"prettier": "^3.5.3",
-		"prettier-plugin-svelte": "^3.3.3",
-		"svelte": "^5.25.10",
-		"svelte-check": "^4.1.5",
-		"tailwindcss": "^4.1.3",
-		"typescript": "^5.8.3",
-		"vite": "^6.2.5"
-	},
-	"dependencies": {
-		"@hackclub/icons": "^0.0.15",
-		"@mdi/js": "^7.4.47",
-		"@prisma/client": "^6.6.0",
-		"@sentry/sveltekit": "^9",
-		"@svelte-plugins/datepicker": "^1.0.11",
-		"date-fns": "^4.1.0",
-		"marked": "^15.0.11",
-		"mdi-svelte": "^1.1.2",
-		"prisma": "^6.6.0",
-		"sv-popup": "^0.5.3",
-		"zod": "^3.24.2"
-	}
+  "name": "hc-market",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 4173",
+    "prepare": "svelte-kit sync || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "db:deploy": "npx prisma migrate deploy && npx prisma generate"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^6.0.0",
+    "@sveltejs/kit": "^2.20.5",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tailwindcss/vite": "^4.1.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-svelte": "^3.3.3",
+    "svelte": "^5.25.10",
+    "svelte-check": "^4.1.5",
+    "tailwindcss": "^4.1.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.5"
+  },
+  "dependencies": {
+    "@hackclub/icons": "^0.0.15",
+    "@mdi/js": "^7.4.47",
+    "@prisma/client": "^6.6.0",
+    "@sentry/sveltekit": "^9",
+    "@svelte-plugins/datepicker": "^1.0.11",
+    "chart.js": "^4.4.9",
+    "date-fns": "^4.1.0",
+    "marked": "^15.0.11",
+    "mdi-svelte": "^1.1.2",
+    "prisma": "^6.6.0",
+    "sv-popup": "^0.5.3",
+    "zod": "^3.24.2"
+  }
 }
