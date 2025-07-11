@@ -17,12 +17,12 @@ model User {
   slack_id              String
   slack_name            String
   address               String?
+  address_city          String?
+  address_country       String?
   address_line_1        String?
   address_line_2        String?
-  address_city          String?
-  address_state         String?
   address_postal_code   String?
-  address_country       String?
+  address_state         String?
   HeidiEscrow           HeidiEscrow[]
   Purchase              Purchase[]
   Ship                  Ship[]
@@ -41,10 +41,6 @@ model Ship {
   approved_for_grant              Boolean       @default(false)
   approved_for_hq                 Boolean       @default(false)
   approved_for_digital            Boolean       @default(false)
-  is_under_some_review_rn         Boolean       @default(false)
-  automation_approved_for_grant   Boolean       @default(false)
-  automation_approved_for_hq      Boolean       @default(false)
-  automation_approved_for_digital Boolean       @default(false)
   github_url                      String
   demo_url                        String?
   cover_image_url                 String        @default("https://hc-cdn.hel1.your-objectstorage.com/s/v3/113006acabca1ebbaadb96594f5905aa250dccca_9b1f3503271d6474.png")
@@ -53,9 +49,13 @@ model Ship {
   featured                        Boolean       @default(false)
   reviewer_feedback               String?
   slack_user_name                 String
-  rejected_for_something          String?
   total_time_in_seconds           String?       @default("0")
-  bill_of_materials               String? // this is optional because of prisma migration system
+  is_under_some_review_rn         Boolean       @default(false)
+  automation_approved_for_digital Boolean       @default(false)
+  automation_approved_for_grant   Boolean       @default(false)
+  automation_approved_for_hq      Boolean       @default(false)
+  rejected_for_something          String?
+  bill_of_materials               String?
   HeidiEscrow                     HeidiEscrow[]
   Purchase                        Purchase[]
   user                            User          @relation(fields: [userId, slack_user_name], references: [slackId, slack_name])
@@ -110,6 +110,7 @@ enum Reigions {
   EU
   CA
   UK
+  ASIA
 }
 
 enum StatusString {
