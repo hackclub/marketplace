@@ -16,6 +16,8 @@
 		// Check for the specific cookie
 		loggedIn = getCookie('session');
 		// query for elements
+		alert("Hey! the create page is currently closed, come back later!");
+		window.location.href = '/ships';
 	});
 </script>
 

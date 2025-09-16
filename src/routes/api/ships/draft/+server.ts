@@ -11,6 +11,7 @@ const zShip = z.object({
 	readme_url: z.string().url().startsWith('https')
 });
 export async function POST(req: Request) {
+	return new Response('Disabled for now', { status: 503 });
 	const session = req.cookies.get('session');
 	if (!session) {
 		return new Response(JSON.stringify({ message: 'No session' }), {
