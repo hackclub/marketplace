@@ -9,7 +9,7 @@
 	};
 	export let properData = null;
 	export async function onAction(action) {
-		fetch('/api/ship/action', {
+		fetch('/api/ships/action', {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('_secret_watchword')}`
 			},
@@ -19,7 +19,7 @@
 				id: properData.id
 			})
 		}).then(() => {
-			alert('Time ' + action.toLowerCase());
+			alert('Ship ' + action.toLowerCase());
 		});
 	}
 </script>
